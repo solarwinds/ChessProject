@@ -73,4 +73,12 @@ public class PawnTest {
         assertEquals("Current X: 2"+eol+"Current Y: 3"+eol+"Piece Color: BLACK",output);
     }
 
+    @Test
+    public void testPawn_Move_IllegalMove_OnExistingPawn_DoesNotMove(){
+        chessBoard.add(blackTestSubject,5,4);
+        chessBoard.add(whiteTestSubject,4,4);
+        blackTestSubject.move(MovementType.MOVE,4,4);
+        assertEquals(5,blackTestSubject.getXCoordinate());
+        assertEquals(4,blackTestSubject.getYCoordinate());
+    }
 }
