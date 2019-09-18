@@ -49,11 +49,9 @@ public class Pawn implements Piece {
     public void move(MovementType movementType, int newX, int newY) {
         if(chessBoard.isLegalBoardPosition(newX,newY)) {
             if(MovementType.MOVE.equals(movementType) && isLegalMove(newX,newY) ) {
-
                 chessBoard.move(this.xCoordinate, this.yCoordinate, newX, newY);
                 this.xCoordinate = newX;
                 this.yCoordinate = newY;
-
             }
         }
     }
