@@ -12,8 +12,8 @@ public class ChessBoard {
 
     }
 
-    public void Add(Piece pawn, int xCoordinate, int yCoordinate, PieceColor pieceColor) {
-        throw new UnsupportedOperationException("Need to implement ChessBoard.add()");
+    public void Add(Piece piece, int xCoordinate, int yCoordinate) {
+        pieces[xCoordinate][yCoordinate] = piece;
     }
 
     public boolean IsLegalBoardPosition(int xCoordinate, int yCoordinate) {
