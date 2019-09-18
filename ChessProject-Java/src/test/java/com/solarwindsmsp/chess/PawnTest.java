@@ -47,9 +47,9 @@ public class PawnTest {
 
     @Test
     public void testPawn_Move_LegalCoordinates_Forward_UpdatesCoordinates() {
-        chessBoard.add(testSubject, 6, 3);
-        testSubject.move(MovementType.MOVE, 6, 2);
-        assertEquals(6, testSubject.getXCoordinate());
+        chessBoard.add(testSubject, 6, 2);
+        testSubject.move(MovementType.MOVE, 5, 2);
+        assertEquals(5, testSubject.getXCoordinate());
         assertEquals(2, testSubject.getYCoordinate());
     }
 
@@ -57,7 +57,9 @@ public class PawnTest {
     public void testPawn_ToString_ReturnsTextInformation(){
         chessBoard.add(testSubject, 2, 3);
         String output = testSubject.toString();
-        assertEquals("Current X: 2\nCurrent Y: 3\nPiece Color: WHITE",output);
+        String eol = System.lineSeparator();
+
+        assertEquals("Current X: 2"+eol+"Current Y: 3"+eol+"Piece Color: BLACK",output);
     }
 
 }
