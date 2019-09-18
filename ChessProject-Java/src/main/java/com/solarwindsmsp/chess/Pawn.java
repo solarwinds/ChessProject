@@ -15,6 +15,7 @@ public class Pawn implements Piece {
         return chessBoard;
     }
 
+    @Override
     public void setChessBoard(ChessBoard chessBoard) {
         this.chessBoard = chessBoard;
     }
@@ -23,6 +24,7 @@ public class Pawn implements Piece {
         return xCoordinate;
     }
 
+    @Override
     public void setXCoordinate(int value) {
         this.xCoordinate = value;
     }
@@ -31,6 +33,7 @@ public class Pawn implements Piece {
         return yCoordinate;
     }
 
+    @Override
     public void setYCoordinate(int value) {
         this.yCoordinate = value;
     }
@@ -44,7 +47,9 @@ public class Pawn implements Piece {
     }
 
     public void move(MovementType movementType, int newX, int newY) {
-        throw new UnsupportedOperationException("Need to implement Pawn.move()") ;
+        chessBoard.move(this.xCoordinate, this.yCoordinate, newX, newY);
+        this.xCoordinate = newX;
+        this.yCoordinate = newY;
     }
 
     @Override
