@@ -1,6 +1,6 @@
 package com.solarwindsmsp.chess;
 
-public class Pawn {
+public class Pawn implements Piece {
 
     private ChessBoard chessBoard;
     private int xCoordinate;
