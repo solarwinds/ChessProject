@@ -7,7 +7,7 @@ All simulations take place on a chess board (class name: `ChessBoard`) that is a
 ![alt text](http://www.chessvariants.org/d.chess/startup.gif)
 
 Pieces are either Black or White.  Black pieces typically start at row x=7 and x=6, whereas white pieces typically start at rows x=0 and x=1.  That said, you can set up a board with many initial configurations to replay famous chess games (that last bit might be a paradox).  
-Additionally, Pieces can be given two commands: move and capture (we will ignore capture for this exercise).  Each piece has unique movements, but we are going to focus on commands for pawns.  For our limited implementation, Pawns can only more forward one space (toward their opponents side of the board) and can only capture in a forward and diagonal direction as seen in the next illustration.
+Additionally, Pieces can be given two commands: move and capture (we will ignore capture for this exercise).  Each piece has unique movements, but we are going to focus on commands for pawns.  For our limited implementation, Pawns can only move forward one space (toward their opponents side of the board) and can only capture in a forward and diagonal direction as seen in the next illustration.
 
 ![alt text](http://www.chessvariants.org/d.chess/pawnmove.gif)
 
