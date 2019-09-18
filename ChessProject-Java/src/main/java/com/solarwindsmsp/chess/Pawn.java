@@ -11,10 +11,6 @@ public class Pawn implements Piece {
         this.pieceColor = pieceColor;
     }
 
-    public ChessBoard getChesssBoard() {
-        return chessBoard;
-    }
-
     @Override
     public void setChessBoard(ChessBoard chessBoard) {
         this.chessBoard = chessBoard;
@@ -36,14 +32,6 @@ public class Pawn implements Piece {
     @Override
     public void setYCoordinate(int value) {
         this.yCoordinate = value;
-    }
-
-    public PieceColor getPieceColor() {
-        return this.pieceColor;
-    }
-
-    private void setPieceColor(PieceColor value) {
-        pieceColor = value;
     }
 
     public void move(MovementType movementType, int newX, int newY) {

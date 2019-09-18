@@ -40,6 +40,7 @@ public class PawnTest {
         assertEquals(5, blackTestSubject.getXCoordinate());
         assertEquals(2, blackTestSubject.getYCoordinate());
     }
+
     @Test
     public void whiteTestPawn_Move_IllegalCoordinates_Backward_DoesNotMove() {
         chessBoard.add(whiteTestSubject, 1, 3);
@@ -69,7 +70,6 @@ public class PawnTest {
         chessBoard.add(blackTestSubject, 2, 3);
         String output = blackTestSubject.toString();
         String eol = System.lineSeparator();
-
         assertEquals("Current X: 2"+eol+"Current Y: 3"+eol+"Piece Color: BLACK",output);
     }
 
