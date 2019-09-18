@@ -43,17 +43,14 @@ public class Pawn implements Piece {
         pieceColor = value;
     }
 
-    public void Move(MovementType movementType, int newX, int newY) {
-        throw new UnsupportedOperationException("Need to implement Pawn.Move()") ;
+    public void move(MovementType movementType, int newX, int newY) {
+        throw new UnsupportedOperationException("Need to implement Pawn.move()") ;
     }
 
     @Override
     public String toString() {
-        return CurrentPositionAsString();
-    }
-
-    protected String CurrentPositionAsString() {
         String eol = System.lineSeparator();
-        return String.format("Current X: {1}{0}Current Y: {2}{0}Piece Color: {3}", eol, xCoordinate, yCoordinate, pieceColor);
+        return String.format("Current X: %2$d%1$sCurrent Y: %2$d%1$sPiece Color: %4s",
+                eol, xCoordinate, yCoordinate, pieceColor);
     }
 }
