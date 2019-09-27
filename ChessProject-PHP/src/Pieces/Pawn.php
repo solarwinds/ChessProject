@@ -14,7 +14,7 @@ class Pawn implements PieceInterface
     const START_POSITION_BLACK = 6;
     const LEGAL_DISTANCE_MOVES = [
         PieceColorEnum::WHITE => [1, 2],
-        PieceColorEnum::BLACK => [-1, 2]
+        PieceColorEnum::BLACK => [-1, -2]
     ];
 
     /** @var PieceColorEnum */

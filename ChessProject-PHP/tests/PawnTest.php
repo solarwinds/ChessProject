@@ -75,4 +75,14 @@ class PawnTest extends \PHPUnit_Framework_TestCase
         $this->_chessBoard->add($testSubject, 1, 10);
     }
 
+    public function testPawn_Illegal_Distance()
+    {
+        $this->_testSubject = new Pawn(PieceColorEnum::BLACK());
+        $this->_chessBoard->add($this->_testSubject, 6, 3);
+        $this->_testSubject->move(MovementTypeEnum::MOVE(), 3, 3);
+
+        $this->assertEquals(6, $this->_testSubject->getXCoordinate());
+        $this->assertEquals(3, $this->_testSubject->getYCoordinate());
+    }
+
 }
