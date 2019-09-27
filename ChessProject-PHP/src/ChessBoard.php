@@ -24,7 +24,8 @@ class ChessBoard
             self::MAX_BOARD_WIDTH,
             array_fill(
                 self::START_BOARD_INDEX,
-                self::MAX_BOARD_HEIGHT, self::DEFAULT_BOARD_VALUE
+                self::MAX_BOARD_HEIGHT,
+                self::DEFAULT_BOARD_VALUE
             )
         );
     }
