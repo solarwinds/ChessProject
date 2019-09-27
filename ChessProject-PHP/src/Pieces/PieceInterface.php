@@ -53,5 +53,5 @@ interface PieceInterface
      * @param $newX
      * @param $newY
      */
-    public function move(MovementTypeEnum $movementTypeEnum, $newX, $newY): void;
+    public function move(MovementTypeEnum $movementTypeEnum, int $newX, int $newY): void;
 }
