@@ -20,4 +20,5 @@ class IllegalPosition extends \RuntimeException
 
         parent::__construct();
     }
+
 }

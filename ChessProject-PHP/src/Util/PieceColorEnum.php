@@ -57,4 +57,5 @@ class PieceColorEnum
     {
         return (string)$this->_id;
     }
+
 }

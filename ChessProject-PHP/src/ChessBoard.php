@@ -65,4 +65,5 @@ class ChessBoard
         return ($xCoordinate >= self::START_BOARD_INDEX && $xCoordinate < self::MAX_BOARD_WIDTH)
             && ($yCoordinate >= self::START_BOARD_INDEX && $yCoordinate < self::MAX_BOARD_HEIGHT);
     }
+
 }

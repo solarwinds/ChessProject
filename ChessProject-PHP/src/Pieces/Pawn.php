@@ -156,4 +156,5 @@ class Pawn implements PieceInterface
     {
         return [self::START_POSITION_WHITE, self::START_POSITION_BLACK];
     }
+
 }
