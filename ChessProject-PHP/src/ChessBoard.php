@@ -11,6 +11,7 @@ class ChessBoard
     const MAX_BOARD_HEIGHT = 8;
     const START_BOARD_INDEX = 0;
     const DEFAULT_BOARD_VALUE = 0;
+    const ILLEGAL_COORDINATE = -1;
 
     private $pieces;
 
@@ -44,7 +45,7 @@ class ChessBoard
 
         $pieceOnBoard = $this->pieces[$xCoordinate][$yCoordinate];
         if ($pieceOnBoard instanceof PieceInterface) {
-            $pieceToAdd->setXCoordinate(-1)->setYCoordinate(-1);
+            $pieceToAdd->setXCoordinate(self::ILLEGAL_COORDINATE)->setYCoordinate(self::ILLEGAL_COORDINATE);
             return false;
         }
 
