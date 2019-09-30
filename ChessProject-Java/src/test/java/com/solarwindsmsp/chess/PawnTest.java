@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 
 public class PawnTest {
 
-	private ChessBoard chessBoard;
+    private ChessBoard chessBoard;
     private ChessPiece testSubject;
     private ChessPiece testSubjectWhitePawn;
 
@@ -18,7 +18,7 @@ public class PawnTest {
         this.testSubject = new Pawn(PieceColor.BLACK);
         this.testSubjectWhitePawn = new Pawn(PieceColor.WHITE);
     }
-    
+
     // Calls to Add have been modified to remove color argument
 
     @Test
@@ -59,7 +59,7 @@ public class PawnTest {
     }
 
     // New tests added below
-    
+
     @Test
     public void testPawn_Move_IllegalCoordinates_Backward_DoesNotMove() {
         chessBoard.Add(testSubject, 4, 6);
@@ -84,21 +84,21 @@ public class PawnTest {
         assertEquals(5, testSubject.getYCoordinate());
     }
 
-    
-    
+
+
     // White Pawn Moves
     @Test
     public void testWhitePawn_Move_LegalCoordinates_Forward_UpdatesCoordinates() {
-    	chessBoard.Add(testSubjectWhitePawn, 4, 1);
-    	testSubjectWhitePawn.Move(MovementType.MOVE, 4, 2);
+        chessBoard.Add(testSubjectWhitePawn, 4, 1);
+        testSubjectWhitePawn.Move(MovementType.MOVE, 4, 2);
         assertEquals(4, testSubjectWhitePawn.getXCoordinate());
         assertEquals(2, testSubjectWhitePawn.getYCoordinate());    	
     }
 
     @Test
     public void testWhitePawn_Move_IllegalCoordinates_Backward_DoesNotMove() {
-    	chessBoard.Add(testSubjectWhitePawn, 4, 4);
-    	testSubjectWhitePawn.Move(MovementType.MOVE, 4, 3);
+        chessBoard.Add(testSubjectWhitePawn, 4, 4);
+        testSubjectWhitePawn.Move(MovementType.MOVE, 4, 3);
         assertEquals(4, testSubjectWhitePawn.getXCoordinate());
         assertEquals(4, testSubjectWhitePawn.getYCoordinate());    	
     }
@@ -119,23 +119,21 @@ public class PawnTest {
         assertEquals(7, testSubjectWhitePawn.getYCoordinate());
     }
 
-    
+
     // Other methods
-    
+
     @Test
     public void testPawn_getMaxPiecesPerColor_Returns_8() {
-    	assertEquals(8, testSubject.getMaxPiecesPerColor());
+        assertEquals(8, testSubject.getMaxPiecesPerColor());
     }
-    
+
     @Test
     public void testBlackPawn_toSymbol_Returns_Uppercase_P() {
-    	assertEquals("P", testSubject.toSymbol());
+        assertEquals("P", testSubject.toSymbol());
     }
 
     @Test
     public void testWhitePawn_toSymbol_Returns_Lowercase_p() {
-    	assertEquals("p", testSubjectWhitePawn.toSymbol());
+        assertEquals("p", testSubjectWhitePawn.toSymbol());
     }
-
-    
 }
