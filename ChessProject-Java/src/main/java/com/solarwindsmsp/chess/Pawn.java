@@ -1,59 +1,45 @@
 package com.solarwindsmsp.chess;
 
-public class Pawn {
+public class Pawn extends ChessPiece {
 
-    private ChessBoard chessBoard;
-    private int xCoordinate;
-    private int yCoordinate;
-    private PieceColor pieceColor;
-
-    public Pawn(PieceColor pieceColor) {
-        this.pieceColor = pieceColor;
-    }
-
-    public ChessBoard getChesssBoard() {
-        return chessBoard;
-    }
-
-    public void setChessBoard(ChessBoard chessBoard) {
-        this.chessBoard = chessBoard;
-    }
-
-    public int getXCoordinate() {
-        return xCoordinate;
-    }
-
-    public void setXCoordinate(int value) {
-        this.xCoordinate = value;
-    }
-
-    public int getYCoordinate() {
-        return yCoordinate;
-    }
-
-    public void setYCoordinate(int value) {
-        this.yCoordinate = value;
-    }
-
-    public PieceColor getPieceColor() {
-        return this.pieceColor;
-    }
-
-    private void setPieceColor(PieceColor value) {
-        pieceColor = value;
-    }
-
-    public void Move(MovementType movementType, int newX, int newY) {
-        throw new UnsupportedOperationException("Need to implement Pawn.Move()") ;
+	public Pawn(PieceColor pieceColor) {
+		super(pieceColor);
     }
 
     @Override
-    public String toString() {
-        return CurrentPositionAsString();
+	public void Move(MovementType movementType, int newX, int newY) {
+    	if (isValidMove(movementType, newX, newY)) {
+    		setXCoordinate(newX);
+    		setYCoordinate(newY);
+    	}
+    	return;
     }
 
-    protected String CurrentPositionAsString() {
-        String eol = System.lineSeparator();
-        return String.format("Current X: {1}{0}Current Y: {2}{0}Piece Color: {3}", eol, xCoordinate, yCoordinate, pieceColor);
+    @Override
+	public String toSymbol() {
+    	// Use convention of uppercase for black, lowercase for white to allow single character to be used for piece.
+    	return getPieceColor() == PieceColor.BLACK? "P" : "p";
     }
+
+	@Override
+	public boolean isValidMove(MovementType movementType, int newX, int newY) {
+		boolean isValid = false;
+		int numSquaresLeft = toRelativeLeftSquares(newX);
+		int numSquaresForward = toRelativeForwardSquares(newY);
+		
+    	if (movementType == MovementType.MOVE) {
+    		// TODO: Consider pawns allowed to move two spaces on first move. Initial version, always one space as per spec.
+    		isValid = numSquaresForward == 1 && numSquaresLeft == 0;
+    	} else {
+    		// Capture is diagonal move forward to left or right
+    		isValid = numSquaresForward == 1 && (numSquaresLeft == 1 || numSquaresLeft == -1);
+    	}
+		
+    	return isValid;
+	}
+
+	@Override
+	public int getMaxPiecesPerColor() {
+		return 8;
+	}
 }
