@@ -13,9 +13,22 @@
 *  The constants indicating board height and width have been changed to 8 for more idiomatic Java usage of array allocation and indexing (0 <= x < n)
 *  The element type of the board is now `ChessPiece` rather than `Pawn`
 
+##### Example board display
+```
+_01234567
+7........
+6PPP.PPPP
+5........
+4...p....
+3........
+2........
+1pp.ppppp
+0........
+```
+
+
 ### Modifications to tests and existing methods
   * These are detailed in the code
-
 
 
 # ChessProject - Java
