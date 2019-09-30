@@ -20,7 +20,6 @@ public class PawnTest {
     }
 
     // Calls to Add have been modified to remove color argument
-
     @Test
     public void testChessBoard_Add_Sets_XCoordinate() {
         this.chessBoard.Add(testSubject, 6, 3);
@@ -84,8 +83,6 @@ public class PawnTest {
         assertEquals(5, testSubject.getYCoordinate());
     }
 
-
-
     // White Pawn Moves
     @Test
     public void testWhitePawn_Move_LegalCoordinates_Forward_UpdatesCoordinates() {
@@ -119,21 +116,92 @@ public class PawnTest {
         assertEquals(7, testSubjectWhitePawn.getYCoordinate());
     }
 
+    @Test
+    public void testWhitePawn_Capture_LegalCoordinates_ForwardRight_UpdatesCoordinates() {
+        chessBoard.Add(testSubjectWhitePawn, 4, 6);
+               testSubjectWhitePawn.Move(MovementType.CAPTURE, 5, 7);
+        assertEquals(5, testSubjectWhitePawn.getXCoordinate());
+        assertEquals(7, testSubjectWhitePawn.getYCoordinate());
+    }
+
+    // Helper methods
+    
+    @Test
+    public void testPawn_toRelativeForwardSquares_ForBlack_NewYGreater_Negative() {
+        chessBoard.Add(testSubject, 2, 3);
+        int forward = testSubject.toRelativeForwardSquares(4);
+        assertEquals(forward, -1);
+    }
+
+    @Test
+    public void testPawn_toRelativeForwardSquares_ForBlack_NewYLess_Positive() {
+        chessBoard.Add(testSubject, 2, 3);
+        int forward = testSubject.toRelativeForwardSquares(2);
+        assertEquals(forward, 1);
+    }
+
+    @Test
+    public void testPawn_toRelativeForwardSquares_ForWhite_NewYGreater_Positive() {
+        chessBoard.Add(testSubjectWhitePawn, 2, 3);
+        int forward = testSubjectWhitePawn.toRelativeForwardSquares(4);
+        assertEquals(forward, 1);
+    }
+
+    @Test
+    public void testPawn_toRelativeForwardSquares_ForWhite_NewYLess_Negative() {
+        chessBoard.Add(testSubjectWhitePawn, 2, 3);
+        int forward = testSubjectWhitePawn.toRelativeForwardSquares(2);
+        assertEquals(forward, -1);
+    }
+
+    @Test
+    public void testPawn_toRelativeLeftSquares_ForBlack_NewYGreater_Positive() {
+        chessBoard.Add(testSubject, 2, 3);
+        int forward = testSubject.toRelativeLeftSquares(3);
+        assertEquals(forward, 1);
+    }
+
+    @Test
+    public void testPawn_toRelativeLeftSquares_ForBlack_NewYLess_Negative() {
+        chessBoard.Add(testSubject, 2, 3);
+        int forward = testSubject.toRelativeLeftSquares(1);
+        assertEquals(forward, -1);
+    }
+
+    @Test
+    public void testPawn_toRelativeLeftSquares_ForWhite_NewYGreater_Negative() {
+        chessBoard.Add(testSubjectWhitePawn, 2, 3);
+        int forward = testSubjectWhitePawn.toRelativeLeftSquares(3);
+        assertEquals(forward, -1);
+    }
+
+    @Test
+    public void testPawn_toRelativeLeftSquares_ForWhite_NewYLess_Positive() {
+        chessBoard.Add(testSubjectWhitePawn, 2, 3);
+        int forward = testSubjectWhitePawn.toRelativeLeftSquares(1);
+        assertEquals(forward, 1);
+    }
 
     // Other methods
-
     @Test
     public void testPawn_getMaxPiecesPerColor_Returns_8() {
         assertEquals(8, testSubject.getMaxPiecesPerColor());
     }
 
     @Test
-    public void testBlackPawn_toSymbol_Returns_Uppercase_P() {
+    public void testBlackPawn_toSymbol_Uppercase_P() {
         assertEquals("P", testSubject.toSymbol());
     }
 
     @Test
-    public void testWhitePawn_toSymbol_Returns_Lowercase_p() {
+    public void testWhitePawn_toSymbol_Lowercase_p() {
         assertEquals("p", testSubjectWhitePawn.toSymbol());
+    }
+    
+    @Test 
+    public void testPawn_toString_ColourAndCoordsInString() {
+       chessBoard.Add(testSubject, 2, 3);
+       String strRep = testSubject.toString();
+       assertTrue(strRep.indexOf("BLACK")>0 && strRep.indexOf("2") >0 && strRep.indexOf("3")>0);
     }
 }

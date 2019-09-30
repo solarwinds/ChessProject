@@ -166,7 +166,7 @@ public class ChessBoardTest extends TestCase {
     }
 
     @Test
-    public void testCreateBoardRepresentation_Occupied_Squares_White_X_EQUALS_1_Y_EQUALS_2_Black_X_EQUALS_5_Y_EQUALS_6() {
+    public void testCreateBoardRepresentation_Occupied_Squares_White_X_equals_1_Y_equals_2_Black_X_equals_5_Y_equals_6() {
         testSubject.Add(PieceType.PAWN,  PieceColor.WHITE, 1,2);
         testSubject.Add(PieceType.PAWN,  PieceColor.BLACK, 5,6);
 
@@ -183,15 +183,12 @@ public class ChessBoardTest extends TestCase {
                 testSubject.CreateBoardRepresentation());
     }
 
-
     @Test
     public void testAdd_BoardSetup_BlackPawnRowWhitePawnRow() {
-
         for (int i = 0; i < 8; ++i) {
             testSubject.Add(PieceType.PAWN,  PieceColor.WHITE, i,1);
             testSubject.Add(PieceType.PAWN,  PieceColor.BLACK, i,6);
         }
-
         assertEquals(
                 "_01234567"+ eol + 
                 "7........"+ eol + 
@@ -204,7 +201,6 @@ public class ChessBoardTest extends TestCase {
                 "0........"+ eol,
                 testSubject.CreateBoardRepresentation());
     }
-
 
     @Test
     public void testMove_FromUnoccupied_DoesNothing() {
@@ -219,13 +215,11 @@ public class ChessBoardTest extends TestCase {
                 "2........"+ eol + 
                 "1........"+ eol +
                 "0........"+ eol,
-                testSubject.CreateBoardRepresentation());    	
+                testSubject.CreateBoardRepresentation());
     }
-
 
     @Test
     public void testMove_FromOpponentsPiece_DoesNothing() {
-
         testSubject.Add(PieceType.PAWN, PieceColor.BLACK, 4,1);
         assertEquals(
                 "_01234567"+ eol + 
@@ -237,7 +231,7 @@ public class ChessBoardTest extends TestCase {
                 "2........"+ eol + 
                 "1....P..."+ eol +
                 "0........"+ eol,
-                testSubject.CreateBoardRepresentation());    	
+                testSubject.CreateBoardRepresentation());  	
         testSubject.Move(PieceColor.WHITE, 4, 1, 4,2);
         assertEquals(
                 "_01234567"+ eol + 
@@ -249,42 +243,11 @@ public class ChessBoardTest extends TestCase {
                 "2........"+ eol + 
                 "1....P..."+ eol +
                 "0........"+ eol,
-                testSubject.CreateBoardRepresentation());    	
+                testSubject.CreateBoardRepresentation());
     }
-
-    @Test
-    public void testMove_OffBoard_DoesNothing() {
-
-        testSubject.Add(PieceType.PAWN, PieceColor.WHITE, 7,7);
-        assertEquals(
-                "_01234567"+ eol + 
-                "7.......p"+ eol + 
-                "6........"+ eol + 
-                "5........"+ eol + 
-                "4........"+ eol + 
-                "3........"+ eol + 
-                "2........"+ eol + 
-                "1........"+ eol +
-                "0........"+ eol,
-                testSubject.CreateBoardRepresentation());    	
-        testSubject.Move(PieceColor.WHITE, 7, 7, 7,8);
-        assertEquals(
-                "_01234567"+ eol + 
-                "7.......p"+ eol + 
-                "6........"+ eol + 
-                "5........"+ eol + 
-                "4........"+ eol + 
-                "3........"+ eol + 
-                "2........"+ eol + 
-                "1........"+ eol +
-                "0........"+ eol,
-                testSubject.CreateBoardRepresentation());    	
-    }
-
 
     @Test
     public void testMove_FromSelf_UpdatesBoard() {
-
         testSubject.Add(PieceType.PAWN, PieceColor.WHITE, 4,1);
         assertEquals(
                 "_01234567"+ eol + 
@@ -308,12 +271,39 @@ public class ChessBoardTest extends TestCase {
                 "2....p..."+ eol + 
                 "1........"+ eol +
                 "0........"+ eol,
-                testSubject.CreateBoardRepresentation());    	
+                testSubject.CreateBoardRepresentation());
+    }
+    
+    @Test
+    public void testMove_InvalidMove_DoesNothing() {
+        testSubject.Add(PieceType.PAWN, PieceColor.BLACK, 7,6);
+        assertEquals(
+                "_01234567"+ eol + 
+                "7........"+ eol + 
+                "6.......P"+ eol + 
+                "5........"+ eol + 
+                "4........"+ eol + 
+                "3........"+ eol + 
+                "2........"+ eol + 
+                "1........"+ eol +
+                "0........"+ eol,
+                testSubject.CreateBoardRepresentation());       
+        testSubject.Move(PieceColor.BLACK, 7,6, 6,4);
+        assertEquals(
+                "_01234567"+ eol + 
+                "7........"+ eol + 
+                "6.......P"+ eol + 
+                "5........"+ eol + 
+                "4........"+ eol + 
+                "3........"+ eol + 
+                "2........"+ eol + 
+                "1........"+ eol +
+                "0........"+ eol,
+                testSubject.CreateBoardRepresentation());
     }
 
     @Test
     public void testCapture_FromSelfToSelf_DoesNothing() {
-
         testSubject.Add(PieceType.PAWN, PieceColor.WHITE, 4,1);
         testSubject.Add(PieceType.PAWN, PieceColor.WHITE, 5,2);    	
         assertEquals(
@@ -338,14 +328,14 @@ public class ChessBoardTest extends TestCase {
                 "2.....p.."+ eol + 
                 "1....p..."+ eol +
                 "0........"+ eol,
-                testSubject.CreateBoardRepresentation());    	
+                testSubject.CreateBoardRepresentation());
     }
 
     @Test
     public void testCapture_FromSelfToOpponent_UpdatesBoard() {
         // White captures
         testSubject.Add(PieceType.PAWN, PieceColor.WHITE, 4,1);
-        testSubject.Add(PieceType.PAWN, PieceColor.BLACK, 5,2);    	
+        testSubject.Add(PieceType.PAWN, PieceColor.BLACK, 5,2);     
         assertEquals(
                 "_01234567"+ eol + 
                 "7........"+ eol + 
@@ -356,7 +346,7 @@ public class ChessBoardTest extends TestCase {
                 "2.....P.."+ eol + 
                 "1....p..."+ eol +
                 "0........"+ eol,
-                testSubject.CreateBoardRepresentation());    	
+                testSubject.CreateBoardRepresentation());       
         testSubject.Move(PieceColor.WHITE, 4, 1, 5,2);
         assertEquals(
                 "_01234567"+ eol + 
@@ -368,9 +358,23 @@ public class ChessBoardTest extends TestCase {
                 "2.....p.."+ eol + 
                 "1........"+ eol +
                 "0........"+ eol,
-                testSubject.CreateBoardRepresentation());    	
+                testSubject.CreateBoardRepresentation());
     }
 
+    @Test
+    public void testPawnCount_Capture_DecrementsCount() {
+        // White captures
+        testSubject.Add(PieceType.PAWN, PieceColor.WHITE, 4,1);
+        testSubject.Add(PieceType.PAWN, PieceColor.BLACK, 5,2);     
+        assertEquals(1,  testSubject.getCountBlackPawns());
+        assertEquals(1,  testSubject.getCountWhitePawns());
+
+        testSubject.Move(PieceColor.WHITE, 4, 1, 5,2);
+
+        assertEquals(0,  testSubject.getCountBlackPawns());
+        assertEquals(1,  testSubject.getCountWhitePawns());
+    }   
+    
     @Test
     public void testCapture_FromSelfToOpponentReversed_UpdatesBoard() {
         //Black captures
@@ -398,9 +402,8 @@ public class ChessBoardTest extends TestCase {
                 "2........"+ eol + 
                 "1....P..."+ eol +
                 "0........"+ eol,
-                testSubject.CreateBoardRepresentation());    	
+                testSubject.CreateBoardRepresentation());
     }
-
 
     @Test
     public void testValidMoveSeries_UpdatesBoard() {
@@ -443,5 +446,4 @@ public class ChessBoardTest extends TestCase {
                 "0........"+ eol,
                 testSubject.CreateBoardRepresentation());
     }
-
 }

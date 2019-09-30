@@ -2,12 +2,13 @@ package com.solarwindsmsp.chess;
 
 public abstract class ChessPiece {
 
-    // TODO: Consider if pieces need to store their co-ords at all- information is redundant as encoded in their position on board.
+    // TODO: Consider if pieces need to store their co-ords at all:
+    // information is redundant as encoded in their position on board.
     // Reference to ChessBoard has been removed to avoid circular dependency on containing type.    
 
     private int xCoordinate = -1;  // Initialise to invalid value
     private int yCoordinate = -1;
-    protected PieceColor pieceColor;
+    private PieceColor pieceColor;
 
     public ChessPiece(PieceColor value) {
         super();
@@ -42,9 +43,9 @@ public abstract class ChessPiece {
     protected int toRelativeLeftSquares(int newX) {
         // Num squares to the left from point of view of black or white
         if (pieceColor == PieceColor.BLACK) {
-            return getXCoordinate() - newX;
+            return newX - getXCoordinate();
         } else {
-            return newX - getXCoordinate();			
+            return getXCoordinate() - newX;
         }
     }
 
@@ -53,13 +54,14 @@ public abstract class ChessPiece {
         if (pieceColor == PieceColor.BLACK) {
             return getYCoordinate() - newY;
         } else {
-            return newY - getYCoordinate();			
+            return newY - getYCoordinate();
         }
     }
 
     protected String CurrentPositionAsString() {
         String eol = System.lineSeparator();
-        return String.format("Current X: {1}{0}Current Y: {2}{0}Piece Color: {3}", eol, xCoordinate, yCoordinate, pieceColor);
+        // Fix formatting for Java String.format
+        return String.format("Current X: %d%s,Current Y:%d%sPiece Color: %s%s", xCoordinate, eol, yCoordinate, eol, pieceColor, eol);
     }
 
     // Piece type-specific methods

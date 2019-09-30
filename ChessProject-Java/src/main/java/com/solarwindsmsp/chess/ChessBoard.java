@@ -3,7 +3,8 @@ package com.solarwindsmsp.chess;
 
 public class ChessBoard {
 
-    public static int MAX_BOARD_WIDTH = 8; 	// Changed to 8. More idiomatic Java for array allocation and specifying ranges as 0 <= x < n
+    // Changed to 8. More idiomatic Java for array allocation and specifying ranges as 0 <= x < n
+    public static int MAX_BOARD_WIDTH = 8;
     public static int MAX_BOARD_HEIGHT = 8;
 
     public static int INVALID_POSITION = -1;
@@ -13,7 +14,7 @@ public class ChessBoard {
 
     private int blackPawnCount = 0;
     private int whitePawnCount = 0;
-    // TODO: Once other piece types added, need to change, e.g. to EnumMap
+    // TODO: When other types of piece added, need to change, e.g. to EnumMap
 
     public ChessBoard() {
         pieces = new ChessPiece[MAX_BOARD_WIDTH][MAX_BOARD_HEIGHT]; // Note: Arrays index 0..n-1 
@@ -108,7 +109,6 @@ public class ChessBoard {
         }
     }
 
-
     public String toString() {
         return CreateBoardRepresentation();
     }
@@ -132,7 +132,6 @@ public class ChessBoard {
         return strBoard;
     }
 
-
     public boolean IsLegalBoardPosition(int xCoordinate, int yCoordinate) {
         return xCoordinate >= 0 && xCoordinate < MAX_BOARD_WIDTH
                 && yCoordinate >=0 && yCoordinate < MAX_BOARD_HEIGHT;
@@ -140,6 +139,14 @@ public class ChessBoard {
 
     public boolean IsOccupiedBoardPosition(int xCoordinate, int yCoordinate) {
         return pieces[xCoordinate][yCoordinate] != null;
+    }
+
+    public int getCountBlackPawns() {
+        return blackPawnCount;
+    }
+
+    public int getCountWhitePawns() {
+        return whitePawnCount;
     }
 
     public boolean IsMaxNumberPieces(ChessPiece piece) {

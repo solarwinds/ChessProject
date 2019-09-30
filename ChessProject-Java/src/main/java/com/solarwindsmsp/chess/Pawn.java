@@ -29,6 +29,7 @@ public class Pawn extends ChessPiece {
 
         if (movementType == MovementType.MOVE) {
             // TODO: Consider pawns allowed to move two spaces on first move. Initial version, always one space as per spec.
+            // TODO: Consider pawn promotion. Will require caller to create new instance of different subclass type
             isValid = numSquaresForward == 1 && numSquaresLeft == 0;
         } else {
             // Capture is diagonal move forward to left or right
