@@ -13,5 +13,8 @@
     },
     "autoload": {
         "psr-4": { "SolarWinds\\Chess\\": "src/" }
+    },
+    "scripts": {
+        "tests" : "php vendor/phpunit/phpunit/phpunit tests/"
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace SolarWinds\Chess;
+namespace SolarWinds\Chess\Domain\Piece;
 
 class MovementTypeEnum
 {
