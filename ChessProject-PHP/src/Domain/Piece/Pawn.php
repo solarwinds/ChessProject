@@ -163,11 +163,14 @@ class Pawn implements PieceInterface
      */
     private function isLegalWhiteMove(int $newY): bool
     {
-        return $this->getYCoordinate() + self::PAWN_DEFAULT_STEP_WITHOUT_CAPTURE === $newY
-            || (
-                $this->getYCoordinate() === self::DEFAULT_POSITION_WHITE
-                && in_array($newY - $this->getYCoordinate(), self::PAWN_FIRST_STEP_WITHOUT_CAPTURE)
-            );
+        $allowedSquare = $this->getYCoordinate() + self::PAWN_DEFAULT_STEP_WITHOUT_CAPTURE;
+        $isDefaultPosition = $this->getYCoordinate() === self::DEFAULT_POSITION_WHITE;
+        $allowedSquaresOnDefaultPosition = in_array(
+            $newY - $this->getYCoordinate(),
+            self::PAWN_FIRST_STEP_WITHOUT_CAPTURE
+        );
+
+        return $newY === $allowedSquare || ($isDefaultPosition && $allowedSquaresOnDefaultPosition);
     }
 
     /**
@@ -180,11 +183,14 @@ class Pawn implements PieceInterface
      */
     private function isLegalBlackMove(int $newY): bool
     {
-        return $this->getYCoordinate() - self::PAWN_DEFAULT_STEP_WITHOUT_CAPTURE === $newY
-            || (
-                $this->getYCoordinate() === self::DEFAULT_POSITION_BLACK
-                && in_array($this->getYCoordinate() - $newY, self::PAWN_FIRST_STEP_WITHOUT_CAPTURE)
-            );
+        $allowedSquare = $this->getYCoordinate() - self::PAWN_DEFAULT_STEP_WITHOUT_CAPTURE === $newY;
+        $isDefaultPosition = $this->getYCoordinate() === self::DEFAULT_POSITION_BLACK;
+        $allowedSquaresOnDefaultPosition = in_array(
+            $this->getYCoordinate() - $newY,
+            self::PAWN_FIRST_STEP_WITHOUT_CAPTURE
+        );
+
+        return $newY === $allowedSquare || ($isDefaultPosition && $allowedSquaresOnDefaultPosition);
     }
 
     /**
