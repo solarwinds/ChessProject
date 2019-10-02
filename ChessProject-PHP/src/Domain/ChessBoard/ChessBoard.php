@@ -50,7 +50,6 @@ class ChessBoard
             array_fill(
                 self::MIN_BOARD_HEIGHT,
                 self::MAX_BOARD_HEIGHT, self::EMPTY_FIELD
-
             )
         );
     }
