@@ -183,7 +183,7 @@ class Pawn implements PieceInterface
      */
     private function isLegalBlackMove(int $newY): bool
     {
-        $allowedSquare = $this->getYCoordinate() - self::PAWN_DEFAULT_STEP_WITHOUT_CAPTURE === $newY;
+        $allowedSquare = $this->getYCoordinate() - self::PAWN_DEFAULT_STEP_WITHOUT_CAPTURE;
         $isDefaultPosition = $this->getYCoordinate() === self::DEFAULT_POSITION_BLACK;
         $allowedSquaresOnDefaultPosition = in_array(
             $this->getYCoordinate() - $newY,
