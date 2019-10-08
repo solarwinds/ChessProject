@@ -1,79 +1,68 @@
 package com.solarwindsmsp.chess;
 
-import junit.framework.TestCase;
-import org.junit.Assert;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
-public class ChessBoardTest extends TestCase {
+public class ChessBoardTest {
 
     private ChessBoard testSubject;
+    private List<Cell> positions;
 
     @Before
     public void setUp() throws Exception {
         testSubject = new ChessBoard();
     }
 
-    @Test
-    public void testHas_MaxBoardWidth_of_7() {
-        assertEquals(7, ChessBoard.MAX_BOARD_HEIGHT);
+	@Test
+    public void testBoardWidth() {
+        assertEquals(ChessConstants.BOARD_WIDTH, testSubject.getWidth());
     }
 
     @Test
-    public void testHas_MaxBoardHeight_of_7() {
-        assertEquals(7, ChessBoard.MAX_BOARD_HEIGHT);
+    public void testBoardHeight() {
+        assertEquals(ChessConstants.BOARD_HEIGHT, testSubject.getHeight());
     }
 
     @Test
-    public void testIsLegalBoardPosition_True_X_equals_0_Y_equals_0() {
-        boolean isValidPosition = testSubject.IsLegalBoardPosition(0, 0);
-        assertTrue(isValidPosition);
+    public void testLegalBoardPositions() {
+    	setUpValidPositions();
+    	for(Cell c: positions) {
+    		assertTrue("Invalid position found " + positionString(c),
+    					testSubject.IsLegalBoardPosition(c.getxPosition(), c.getyPosition()));
+    	}
     }
 
     @Test
-    public void testIsLegalBoardPosition_True_X_equals_5_Y_equals_5() {
-        boolean isValidPosition = testSubject.IsLegalBoardPosition(5, 5);
-        Assert.assertTrue(isValidPosition);
+    public void testIllegalBoardPositions() {
+    	setUpInvalidPositions();
+    	for(Cell c: positions) {
+    		assertFalse("Unexpected valid position found " + positionString(c),
+    					testSubject.IsLegalBoardPosition(c.getxPosition(), c.getyPosition()));
+    	}
     }
 
-    @Test
-    public void testIsLegalBoardPosition_False_X_equals_11_Y_equals_5() {
-        boolean isValidPosition = testSubject.IsLegalBoardPosition(11, 5);
-        assertTrue(isValidPosition);
-    }
+    private String positionString(Cell c) {
+		return "x: " + c.getxPosition() + " y: " + c.getyPosition();
+	}
 
-    @Test
-    public void testIsLegalBoardPosition_False_X_equals_0_Y_equals_9() {
-        boolean isValidPosition = testSubject.IsLegalBoardPosition(0, 9);
-        assertFalse(isValidPosition);
-    }
-
-    @Test
-    public void testIsLegalBoardPosition_False_X_equals_11_Y_equals_0() {
-        boolean isValidPosition = testSubject.IsLegalBoardPosition(11, 0);
-        assertFalse(isValidPosition);
-    }
-
-    @Test
-    public void testIsLegalBoardPosition_False_For_Negative_Y_Values() {
-        boolean isValidPosition = testSubject.IsLegalBoardPosition(5, -1);
-        Assert.assertFalse(isValidPosition);
-    }
-
-    @Test
-    public void Avoids_Duplicate_Positioning() {
+    @Test(expected=CellOccupiedException.class)
+    public void aCellMayNotBeOccupiedByTwoPieces() throws CellOccupiedException {
         Pawn firstPawn = new Pawn(PieceColor.BLACK);
         Pawn secondPawn = new Pawn(PieceColor.BLACK);
-        testSubject.Add(firstPawn, 6, 3, PieceColor.BLACK);
-        testSubject.Add(secondPawn, 6, 3, PieceColor.BLACK);
-        assertEquals(6, firstPawn.getXCoordinate());
-        assertEquals(3, firstPawn.getYCoordinate());
-        assertEquals(-1, secondPawn.getXCoordinate());
-        assertEquals(-1, secondPawn.getYCoordinate());
+        testSubject.add(firstPawn, 6, 3);
+        assertEquals(6, firstPawn.getCell().getxPosition());
+        assertEquals(3, firstPawn.getCell().getyPosition());
+        testSubject.add(secondPawn, 6, 3);
     }
 
+    /*
     @Test
     public void testLimits_The_Number_Of_Pawns()
     {
@@ -94,4 +83,20 @@ public class ChessBoardTest extends TestCase {
             }
         }
     }
+    */
+
+	private void setUpValidPositions() {
+		positions = new ArrayList<>();
+	    positions.add(new Cell(0,0));
+	    positions.add(new Cell(5,5));
+	    positions.add(new Cell(7,7));
+	}
+
+	private void setUpInvalidPositions() {
+		positions = new ArrayList<>();
+	    positions.add(new Cell(11,5));
+	    positions.add(new Cell(0,9));
+	    positions.add(new Cell(11,0));
+	    positions.add(new Cell(5,-1));
+	}
 }

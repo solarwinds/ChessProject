@@ -1,22 +1,48 @@
 package com.solarwindsmsp.chess;
 
-public class ChessBoard {
+class ChessBoard {
 
-    public static int MAX_BOARD_WIDTH = 7;
-    public static int MAX_BOARD_HEIGHT = 7;
-
-    private Pawn[][] pieces;
+    private Cell [][] board;
 
     public ChessBoard() {
-        pieces = new Pawn[MAX_BOARD_WIDTH][MAX_BOARD_HEIGHT];
-
+        board = new Cell[ChessConstants.BOARD_WIDTH][ChessConstants.BOARD_HEIGHT];
+        buildBoard();
     }
 
-    public void Add(Pawn pawn, int xCoordinate, int yCoordinate, PieceColor pieceColor) {
-        throw new UnsupportedOperationException("Need to implement ChessBoard.add()");
+    void add(Pawn pawn, int xCoordinate, int yCoordinate) throws CellOccupiedException {
+    	Cell cell = getCell(xCoordinate, yCoordinate);
+    	pawn.setCell(cell);
+    	cell.setPiece(pawn);
     }
 
-    public boolean IsLegalBoardPosition(int xCoordinate, int yCoordinate) {
-        throw new UnsupportedOperationException("Need to implement ChessBoard.IsLegalBoardPosition()");
+    private Cell getCell(int x, int y) {
+		return board[x][y];
+	}
+
+	boolean IsLegalBoardPosition(int xCoordinate, int yCoordinate) {
+    	return isLegal(xCoordinate) && isLegal(yCoordinate);
     }
+
+	private boolean isLegal(int coordinate) {
+		return(coordinate >= 0 && coordinate < ChessConstants.BOARD_SIZE);
+	}
+
+	private void buildBoard() {
+		for (int x = 0; x < ChessConstants.BOARD_WIDTH; x++) {
+			for (int y = 0; y < ChessConstants.BOARD_HEIGHT; y++) {
+				board[x][y] = new Cell(x,y);
+			}
+		}
+	}
+	
+	int getWidth(){
+		return board[0].length;
+	}
+	int getHeight(){
+		return board.length;
+	}
+
+	public Cell[][] getBoard() {
+		return board;
+	}
 }
