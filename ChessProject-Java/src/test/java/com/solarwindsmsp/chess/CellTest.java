@@ -8,6 +8,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class CellTest {
+	
+	private static final String EXPECTED_POSITION_STRING = "Current X: 3 \r\nCurrent Y: 4 \r\n";
 	private static final int FOUR = 4;
 	private static final int THREE = 3;
 	private Cell cell;
@@ -42,5 +44,10 @@ public class CellTest {
 		cell.setPiece(new Pawn(PieceColor.WHITE));
 		cell.clear();
 		assertNull(cell.getPiece());
+	}
+	
+	@Test
+	public void positionAsString() {
+		assertEquals(EXPECTED_POSITION_STRING, cell.positionAsString());
 	}
 }

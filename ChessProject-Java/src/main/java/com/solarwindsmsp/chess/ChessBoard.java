@@ -9,10 +9,10 @@ class ChessBoard {
         buildBoard();
     }
 
-    void add(Pawn pawn, int xCoordinate, int yCoordinate) throws CellOccupiedException {
+    void add(Piece piece, int xCoordinate, int yCoordinate) throws CellOccupiedException {
     	Cell cell = getCell(xCoordinate, yCoordinate);
-    	pawn.setCell(cell);
-    	cell.setPiece(pawn);
+    	piece.setCell(cell);
+    	cell.setPiece(piece);
     }
 
     private Cell getCell(int x, int y) {

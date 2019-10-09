@@ -37,4 +37,9 @@ class Cell {
 	public int getyPosition() {
 		return yPosition;
 	}
+	
+	protected String positionAsString() {
+		String eol = System.lineSeparator();
+		return String.format("Current X: %2$s %1$sCurrent Y: %3$s %1$s", eol, xPosition, yPosition);
+	}
 }

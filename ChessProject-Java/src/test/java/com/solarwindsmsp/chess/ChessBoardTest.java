@@ -54,14 +54,30 @@ public class ChessBoardTest {
 
     @Test(expected=CellOccupiedException.class)
     public void aCellMayNotBeOccupiedByTwoPieces() throws CellOccupiedException {
-        Pawn firstPawn = new Pawn(PieceColor.BLACK);
-        Pawn secondPawn = new Pawn(PieceColor.BLACK);
+        Piece firstPawn = new Pawn(PieceColor.BLACK);
+        Piece secondPawn = new Pawn(PieceColor.BLACK);
         testSubject.add(firstPawn, 6, 3);
         assertEquals(6, firstPawn.getCell().getxPosition());
         assertEquals(3, firstPawn.getCell().getyPosition());
         testSubject.add(secondPawn, 6, 3);
     }
 
+    @Test
+    public void addSetsXcoordinate() throws CellOccupiedException {
+    	Pawn p = new Pawn(PieceColor.WHITE);
+    	testSubject.add(p, 4, 3);
+    	Cell c = p.getCell();
+    	assertEquals(4, c.getxPosition());
+    }
+    
+    @Test
+    public void addSetsYcoordinate() throws CellOccupiedException {
+    	Pawn p = new Pawn(PieceColor.WHITE);
+    	testSubject.add(p, 4, 3);
+    	Cell c = p.getCell();
+        assertEquals(3, c.getyPosition());
+    }
+    
     /*
     @Test
     public void testLimits_The_Number_Of_Pawns()
