@@ -1,21 +1,58 @@
 package com.solarwindsmsp.chess.chessboard;
 
-import com.solarwindsmsp.chess.piece.Pawn;
-import com.solarwindsmsp.chess.piece.PieceColor;
+import com.solarwindsmsp.chess.piece.ChessPiece;
 
-import static com.solarwindsmsp.chess.chessboard.ChessBoardConstants.*;
+import static com.solarwindsmsp.chess.chessboard.ChessBoardConstants.MAX_BOARD_WIDTH;
 import static com.solarwindsmsp.chess.chessboard.ChessBoardConstants.MIN_BOARD_WIDTH;
+import static com.solarwindsmsp.chess.chessboard.ChessBoardConstants.MAX_BOARD_HEIGHT;
+import static com.solarwindsmsp.chess.chessboard.ChessBoardConstants.MIN_BOARD_HEIGHT;
 
 public class ChessBoard {
 
     private Square[][] board;
 
     public ChessBoard() {
-        board = new Square[MAX_BOARD_WIDTH][MAX_BOARD_HEIGHT];
+        board = BoardFactory.create();
     }
 
-    public void add(Pawn pawn, int xCoordinate, int yCoordinate, PieceColor pieceColor) {
-        throw new UnsupportedOperationException("Need to implement ChessBoard.add()");
+    public Square[][] getBoard() {
+        return board;
+    }
+
+    public boolean add(ChessPiece chessPiece, int xCoordinate, int yCoordinate) {
+        if (isInvalidBoardPosition(xCoordinate, yCoordinate)) {
+            return false;
+        }
+
+        Square square = board[xCoordinate][yCoordinate];
+
+        chessPiece.setChessBoard(this);
+        chessPiece.setXCoordinate(xCoordinate);
+        chessPiece.setYCoordinate(yCoordinate);
+
+        square.setPiece(chessPiece);
+
+        return true;
+    }
+
+    public boolean move(int oldXCoordinate, int oldYCoordinate, int newXCoordinate, int newYCoordinate) {
+        if (isInvalidBoardPosition(newXCoordinate, newYCoordinate)) {
+            return false;
+        }
+
+        Square oldPosition = board[oldXCoordinate][oldYCoordinate];
+        if (!oldPosition.getChessPiece().isPresent()) {
+            return false;
+        }
+
+        ChessPiece chessPiece = oldPosition.getChessPiece().get();
+        chessPiece.setXCoordinate(newXCoordinate);
+        chessPiece.setYCoordinate(newYCoordinate);
+
+        board[newXCoordinate][newYCoordinate].setPiece(chessPiece);
+        board[oldXCoordinate][oldYCoordinate].removePiece();
+
+        return true;
     }
 
     boolean isInvalidBoardPosition(int xCoordinate, int yCoordinate) {
