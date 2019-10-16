@@ -22,9 +22,4 @@ public class Pawn extends ChessPiece {
                 throw new IllegalArgumentException("Unknown Piece Colour: " + getPieceColor());
         }
     }
-
-    @Override
-    public void move(MovementType movementType, int newX, int newY) {
-        throw new UnsupportedOperationException("Need to implement Pawn.move()") ;
-    }
 }

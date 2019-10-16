@@ -56,5 +56,4 @@ public abstract class ChessPiece {
 
     abstract PieceName getName();
     abstract boolean isValidMoveForPiece(int newXCoordinate, int newYCoordinate);
-    abstract void move(MovementType movementType, int newX, int newY);
 }
