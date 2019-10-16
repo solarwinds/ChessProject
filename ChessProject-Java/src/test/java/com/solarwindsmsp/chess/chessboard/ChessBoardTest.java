@@ -2,10 +2,11 @@ package com.solarwindsmsp.chess.chessboard;
 
 import com.solarwindsmsp.chess.piece.Pawn;
 import com.solarwindsmsp.chess.piece.PieceColor;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import static com.solarwindsmsp.chess.chessboard.ChessBoardConstants.MAX_BOARD_HEIGHT;
+import static com.solarwindsmsp.chess.chessboard.ChessBoardConstants.MAX_BOARD_WIDTH;
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 import static junit.framework.TestCase.assertFalse;
@@ -21,52 +22,65 @@ public class ChessBoardTest {
 
     @Test
     public void testHas_MaxBoardWidth_of_7() {
-        Assert.assertEquals(7, ChessBoard.MAX_BOARD_HEIGHT);
+        assertEquals(7, MAX_BOARD_HEIGHT);
     }
 
     @Test
     public void testHas_MaxBoardHeight_of_7() {
-        Assert.assertEquals(7, ChessBoard.MAX_BOARD_HEIGHT);
+        assertEquals(7, MAX_BOARD_HEIGHT);
     }
 
     @Test
-    public void testIsLegalBoardPosition_True_X_equals_0_Y_equals_0() {
-        boolean isValidPosition = testSubject.isLegalBoardPosition(0, 0);
-        Assert.assertTrue(isValidPosition);
+    public void testIsIllegalBoardPosition_True_X_equals_0_Y_equals_0() {
+        boolean isInvalidPosition = testSubject.isIllegalBoardPosition(0, 0);
+
+        assertFalse(isInvalidPosition);
     }
 
     @Test
-    public void testIsLegalBoardPosition_True_X_equals_5_Y_equals_5() {
-        boolean isValidPosition = testSubject.isLegalBoardPosition(5, 5);
-        Assert.assertTrue(isValidPosition);
+    public void testIsIllegalBoardPosition_False_X_equals_5_Y_equals_5() {
+        boolean isInvalidPosition = testSubject.isIllegalBoardPosition(5, 5);
+
+        assertFalse(isInvalidPosition);
     }
 
     @Test
-    public void testIsLegalBoardPosition_False_X_equals_11_Y_equals_5() {
-        boolean isValidPosition = testSubject.isLegalBoardPosition(11, 5);
-        assertTrue(isValidPosition);
+    public void testIsIllegalBoardPosition_True_X_equals_11_Y_equals_5() {
+        boolean isInvalidPosition = testSubject.isIllegalBoardPosition(11, 5);
+
+        assertTrue(isInvalidPosition);
     }
 
     @Test
-    public void testIsLegalBoardPosition_False_X_equals_0_Y_equals_9() {
-        boolean isValidPosition = testSubject.isLegalBoardPosition(0, 9);
-        assertFalse(isValidPosition);
+    public void testIsIllegalBoardPosition_True_X_equals_0_Y_equals_9() {
+        boolean isInvalidPosition = testSubject.isIllegalBoardPosition(0, 9);
+
+        assertTrue(isInvalidPosition);
     }
 
     @Test
-    public void testIsLegalBoardPosition_False_X_equals_11_Y_equals_0() {
-        boolean isValidPosition = testSubject.isLegalBoardPosition(11, 0);
-        assertFalse(isValidPosition);
+    public void testIsIllegalBoardPosition_False_X_equals_11_Y_equals_0() {
+        boolean isInvalidPosition = testSubject.isIllegalBoardPosition(11, 0);
+
+        assertTrue(isInvalidPosition);
     }
 
     @Test
-    public void testIsLegalBoardPosition_False_For_Negative_Y_Values() {
-        boolean isValidPosition = testSubject.isLegalBoardPosition(5, -1);
-        assertFalse(isValidPosition);
+    public void testIsIllegalBoardPosition_False_For_Negative_X_Values() {
+        boolean isInvalidPosition = testSubject.isIllegalBoardPosition(-1, 5);
+
+        assertTrue(isInvalidPosition);
     }
 
     @Test
-    public void testAdd_Avoids_Duplicate_Positioning() {
+    public void testIsIllegalBoardPosition_False_For_Negative_Y_Values() {
+        boolean isInvalidPosition = testSubject.isIllegalBoardPosition(5, -1);
+
+        assertTrue(isInvalidPosition);
+    }
+
+    @Test
+    public void testAdd_False_For_Duplicate_Positioning() {
         Pawn firstPawn = new Pawn(PieceColor.BLACK);
         Pawn secondPawn = new Pawn(PieceColor.BLACK);
         testSubject.add(firstPawn, 6, 3, PieceColor.BLACK);
@@ -83,12 +97,12 @@ public class ChessBoardTest {
         for (int i = 0; i < 10; i++)
         {
             Pawn pawn = new Pawn(PieceColor.BLACK);
-            int row = i / ChessBoard.MAX_BOARD_WIDTH;
-            testSubject.add(pawn, 6 + row, i % ChessBoard.MAX_BOARD_WIDTH, PieceColor.BLACK);
+            int row = i / MAX_BOARD_WIDTH;
+            testSubject.add(pawn, 6 + row, i % MAX_BOARD_WIDTH, PieceColor.BLACK);
             if (row < 1)
             {
                 assertEquals(6 + row, pawn.getXCoordinate());
-                assertEquals(i % ChessBoard.MAX_BOARD_WIDTH, pawn.getYCoordinate());
+                assertEquals(i % MAX_BOARD_WIDTH, pawn.getYCoordinate());
             }
             else
             {
