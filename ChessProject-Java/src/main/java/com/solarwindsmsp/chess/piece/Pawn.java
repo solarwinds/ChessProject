@@ -1,4 +1,6 @@
-package com.solarwindsmsp.chess;
+package com.solarwindsmsp.chess.piece;
+
+import com.solarwindsmsp.chess.chessboard.ChessBoard;
 
 public class Pawn {
 

@@ -1,7 +1,7 @@
-package com.solarwindsmsp.chess;
+package com.solarwindsmsp.chess.piece;
 
 public enum MovementType {
 
     MOVE, CAPTURE;
-    
+
 }

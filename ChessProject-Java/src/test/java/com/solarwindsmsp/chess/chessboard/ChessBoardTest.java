@@ -1,5 +1,7 @@
-package com.solarwindsmsp.chess;
+package com.solarwindsmsp.chess.chessboard;
 
+import com.solarwindsmsp.chess.piece.Pawn;
+import com.solarwindsmsp.chess.piece.PieceColor;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

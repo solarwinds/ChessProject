@@ -1,4 +1,7 @@
-package com.solarwindsmsp.chess;
+package com.solarwindsmsp.chess.chessboard;
+
+import com.solarwindsmsp.chess.piece.Pawn;
+import com.solarwindsmsp.chess.piece.PieceColor;
 
 public class ChessBoard {
 
