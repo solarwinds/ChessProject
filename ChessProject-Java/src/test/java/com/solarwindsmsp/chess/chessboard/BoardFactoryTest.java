@@ -1,5 +1,7 @@
 package com.solarwindsmsp.chess.chessboard;
 
+import com.solarwindsmsp.chess.chessboard.square.Square;
+import com.solarwindsmsp.chess.chessboard.square.SquareColor;
 import org.junit.Test;
 
 import static com.solarwindsmsp.chess.chessboard.ChessBoardConstants.MAX_BOARD_HEIGHT;

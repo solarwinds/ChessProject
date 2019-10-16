@@ -54,6 +54,6 @@ public abstract class ChessPiece {
         return currentPositionAsString();
     }
 
-    abstract PieceName getName();
-    abstract boolean isValidMoveForPiece(int newXCoordinate, int newYCoordinate);
+    public abstract PieceName getName();
+    public abstract boolean isValidMoveForPiece(int newXCoordinate, int newYCoordinate);
 }

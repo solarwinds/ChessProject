@@ -1,6 +1,11 @@
-package com.solarwindsmsp.chess.piece;
+package com.solarwindsmsp.chess.piece.manager;
 
 import com.solarwindsmsp.chess.chessboard.ChessBoard;
+import com.solarwindsmsp.chess.piece.ChessPiece;
+import com.solarwindsmsp.chess.piece.Pawn;
+import com.solarwindsmsp.chess.piece.PieceColor;
+import com.solarwindsmsp.chess.piece.manager.ChessPieceManager;
+import com.solarwindsmsp.chess.piece.manager.MovementType;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertEquals;

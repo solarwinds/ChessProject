@@ -7,12 +7,12 @@ public class Pawn extends ChessPiece {
     }
 
     @Override
-    protected PieceName getName() {
+    public PieceName getName() {
         return PieceName.PAWN;
     }
 
     @Override
-    protected boolean isValidMoveForPiece(int newXCoordinate, int newYCoordinate) {
+    public boolean isValidMoveForPiece(int newXCoordinate, int newYCoordinate) {
         switch (this.getPieceColor()) {
             case WHITE:
                 return newYCoordinate - this.getYCoordinate() == 1;

@@ -1,4 +1,4 @@
-package com.solarwindsmsp.chess.chessboard;
+package com.solarwindsmsp.chess.chessboard.square;
 
 import com.solarwindsmsp.chess.piece.ChessPiece;
 
@@ -9,7 +9,7 @@ public class Square {
     private final SquareColor squareColor;
     private ChessPiece chessPiece;
 
-    Square(SquareColor squareColor) {
+    public Square(SquareColor squareColor) {
         this.squareColor = squareColor;
     }
 
@@ -25,7 +25,7 @@ public class Square {
         this.chessPiece = chessPiece;
     }
 
-    void removePiece() {
+    public void removePiece() {
         this.chessPiece = null;
     }
 }

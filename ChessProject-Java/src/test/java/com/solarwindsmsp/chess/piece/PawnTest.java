@@ -1,6 +1,8 @@
 package com.solarwindsmsp.chess.piece;
 
 import com.solarwindsmsp.chess.chessboard.ChessBoard;
+import com.solarwindsmsp.chess.piece.manager.ChessPieceManager;
+import com.solarwindsmsp.chess.piece.manager.MovementType;
 import org.junit.Before;
 import org.junit.Test;
 

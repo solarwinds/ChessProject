@@ -1,4 +1,4 @@
-package com.solarwindsmsp.chess.piece;
+package com.solarwindsmsp.chess.piece.manager;
 
 public enum MovementType {
 

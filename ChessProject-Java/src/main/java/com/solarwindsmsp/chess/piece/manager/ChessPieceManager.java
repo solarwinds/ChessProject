@@ -1,4 +1,6 @@
-package com.solarwindsmsp.chess.piece;
+package com.solarwindsmsp.chess.piece.manager;
+
+import com.solarwindsmsp.chess.piece.ChessPiece;
 
 public class ChessPieceManager {
 
@@ -6,7 +8,7 @@ public class ChessPieceManager {
         //Utility Class
     }
 
-    static boolean performAction(ChessPiece chessPiece, MovementType movementType, int xCoordinate, int yCoordinate) {
+    public static boolean performAction(ChessPiece chessPiece, MovementType movementType, int xCoordinate, int yCoordinate) {
         switch (movementType) {
             case MOVE:
                 if (chessPiece.isValidMoveForPiece(xCoordinate, yCoordinate)) {

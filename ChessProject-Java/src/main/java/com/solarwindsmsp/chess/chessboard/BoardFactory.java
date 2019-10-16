@@ -1,5 +1,8 @@
 package com.solarwindsmsp.chess.chessboard;
 
+import com.solarwindsmsp.chess.chessboard.square.Square;
+import com.solarwindsmsp.chess.chessboard.square.SquareColor;
+
 import static com.solarwindsmsp.chess.chessboard.ChessBoardConstants.MAX_BOARD_HEIGHT;
 import static com.solarwindsmsp.chess.chessboard.ChessBoardConstants.MAX_BOARD_WIDTH;
 

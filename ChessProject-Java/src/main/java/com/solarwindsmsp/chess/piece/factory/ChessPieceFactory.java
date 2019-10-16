@@ -1,4 +1,9 @@
-package com.solarwindsmsp.chess.piece;
+package com.solarwindsmsp.chess.piece.factory;
+
+import com.solarwindsmsp.chess.piece.ChessPiece;
+import com.solarwindsmsp.chess.piece.Pawn;
+import com.solarwindsmsp.chess.piece.PieceColor;
+import com.solarwindsmsp.chess.piece.PieceName;
 
 public class ChessPieceFactory {
 
