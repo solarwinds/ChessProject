@@ -11,7 +11,7 @@ public class ChessPieceFactory {
         //Static Factory Class
     }
 
-    static ChessPiece create(PieceName pieceName, PieceColor pieceColor) {
+    public static ChessPiece create(PieceName pieceName, PieceColor pieceColor) {
         switch (pieceName) {
             case PAWN:
                 return new Pawn(pieceColor);
