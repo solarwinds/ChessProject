@@ -55,18 +55,18 @@ public class ChessBoard {
         return true;
     }
 
-    boolean isInvalidBoardPosition(int xCoordinate, int yCoordinate) {
-        return isIllegalBoardPosition(xCoordinate, yCoordinate) || isBoardPositionTaken(xCoordinate, yCoordinate);
-    }
-
-    boolean isBoardPositionTaken(int xCoordinate, int yCoordinate) {
-        return board[xCoordinate][yCoordinate].getChessPiece().isPresent();
-    }
-
     boolean isIllegalBoardPosition(int xCoordinate, int yCoordinate) {
         boolean invalidXCoordinate = xCoordinate < MIN_BOARD_HEIGHT || xCoordinate > MAX_BOARD_HEIGHT;
         boolean invalidYCoordinate = yCoordinate < MIN_BOARD_WIDTH || yCoordinate > MAX_BOARD_WIDTH;
 
         return invalidXCoordinate || invalidYCoordinate;
+    }
+
+    private boolean isInvalidBoardPosition(int xCoordinate, int yCoordinate) {
+        return isIllegalBoardPosition(xCoordinate, yCoordinate) || isBoardPositionTaken(xCoordinate, yCoordinate);
+    }
+
+    private boolean isBoardPositionTaken(int xCoordinate, int yCoordinate) {
+        return board[xCoordinate][yCoordinate].getChessPiece().isPresent();
     }
 }
