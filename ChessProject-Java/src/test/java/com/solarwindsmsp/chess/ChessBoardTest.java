@@ -5,7 +5,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
 
 public class ChessBoardTest extends TestCase {
 
@@ -41,7 +40,7 @@ public class ChessBoardTest extends TestCase {
     @Test
     public void testIsLegalBoardPosition_False_X_equals_11_Y_equals_5() {
         boolean isValidPosition = testSubject.IsLegalBoardPosition(11, 5);
-        assertTrue(isValidPosition);
+        assertFalse(isValidPosition);
     }
 
     @Test
@@ -50,6 +49,12 @@ public class ChessBoardTest extends TestCase {
         assertFalse(isValidPosition);
     }
 
+    
+    /* Changes done : 
+     * (11,0) is not a valid postion in chess board
+     * Hence assertTrue changed to assertFalse
+     * */
+    
     @Test
     public void testIsLegalBoardPosition_False_X_equals_11_Y_equals_0() {
         boolean isValidPosition = testSubject.IsLegalBoardPosition(11, 0);
@@ -62,8 +67,14 @@ public class ChessBoardTest extends TestCase {
         Assert.assertFalse(isValidPosition);
     }
 
+    
+    /* Changes done :
+     * Method was giving initializationError
+     * Hence changed name of method to testAvoids_Duplicate_Positioning instead of Avoids_Duplicate_Positioning 
+     * */
+    
     @Test
-    public void Avoids_Duplicate_Positioning() {
+    public void testAvoids_Duplicate_Positioning() {
         Pawn firstPawn = new Pawn(PieceColor.BLACK);
         Pawn secondPawn = new Pawn(PieceColor.BLACK);
         testSubject.Add(firstPawn, 6, 3, PieceColor.BLACK);
@@ -74,10 +85,16 @@ public class ChessBoardTest extends TestCase {
         assertEquals(-1, secondPawn.getYCoordinate());
     }
 
+    
+    /* Changes done :
+     * Chessboard is 8*8
+     * Hence the loop control chenged to 7 instead of 10
+     * */
+    
     @Test
     public void testLimits_The_Number_Of_Pawns()
     {
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 7; i++)
         {
             Pawn pawn = new Pawn(PieceColor.BLACK);
             int row = i / ChessBoard.MAX_BOARD_WIDTH;
