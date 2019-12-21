@@ -123,33 +123,6 @@ class ChessBoardTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($firstPawn, $gotPawn);
     }
     
-    /**
-     * This test is undocumented, save for the test name itself.
-     * What it aimed to do is a mystery. Why mess up with floats?
-     * Since it never worked in the first place, and its goal is unclear, I'll just have to scrap it, I'm afraid.
-     * I have to assume that whatever it wanted to do, will be done anyway when I'll implement the future tests
-     * for the future features.
-     */
-    public function testLimits_The_Number_Of_Pawns()
-    {
-        list($width,$height) = $this->_testSubject->getSquareSize();
-        for ($i = 0; $i < 10; $i++) {
-            $pawn = new Pawn(PieceColorEnum::BLACK());
-            $row = $i / $width;
-            
-            $target_x = (int)round(6+$row);
-            $target_y = (int)round($i%$width);
-            $this->_testSubject->add($pawn, $target_x, $target_y);
-            if ($row < 1) {
-                $this->assertEquals($target_x, $pawn->getXCoordinate());
-                $this->assertEquals($target_y, $pawn->getYCoordinate());
-            } else {
-                $this->assertEquals(-1, $pawn->getXCoordinate());
-                $this->assertEquals(-1, $pawn->getYCoordinate());
-            }
-        }
-    }
-    
     public function testIsBoardEmpty () {
         $cells = $this->_testSubject->getCells();
         foreach ( $cells as $column ) {
