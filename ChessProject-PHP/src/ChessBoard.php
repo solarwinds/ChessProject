@@ -24,13 +24,18 @@ class ChessBoard
     /**
  	 * @return boolean
  	 **/
-    public function isLegalBoardPosition($xCoordinate, $yCoordinate)
+    public function isLegalBoardPosition($xCoordinate, $yCoordinate, $THROW=FALSE)
     {
         // NOTE: doing this is better than checking if they are between 0 and BOARD_*, since it technically supports different board configurations, and since it actually checks if that cell really exists, which is the point
-        return isset($this->cells[$xCoordinate][$yCoordinate]);
+        
+        $ret = isset($this->cells[$xCoordinate][$yCoordinate]);
+        if ( $THROW && !$ret )
+            throw new \InvalidArgumentException("Not a legal board position [$xCoordinate, $yCoordinate].");
+        return $ret;
     }
     
     public function isCellEmpty ($xCoordinate, $yCoordinate) {
+        $this->isLegalBoardPosition($xCoordinate, $yCoordinate, TRUE);
         return $this->cells[$xCoordinate][$yCoordinate] === self::EMPTY;
     }
     
