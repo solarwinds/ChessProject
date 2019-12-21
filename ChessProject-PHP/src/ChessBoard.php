@@ -24,7 +24,8 @@ class ChessBoard
  	 **/
     public function isLegalBoardPosition($xCoordinate, $yCoordinate)
     {
-        throw new \ErrorException("Need to implement " . __METHOD__);
+        // NOTE: doing this is better than checking if they are between 0 and BOARD_*, since it technically supports different board configurations, and since it actually checks if that cell really exists, which is the point
+        return isset($this->cells[$xCoordinate][$yCoordinate]);
     }
     
     public function getCells () {
