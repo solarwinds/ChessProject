@@ -98,5 +98,13 @@ class ChessBoardTest extends \PHPUnit_Framework_TestCase
             }
         }
     }
-
+    
+    public function testIsBoardEmpty () {
+        $cells = $this->_testSubject->getCells();
+        foreach ( $cells as $column ) {
+            foreach ( $column as $cell ) {
+                $this->assertEquals(ChessBoard::EMPTY, $cell);
+            }
+        }
+    }
 }

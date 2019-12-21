@@ -4,6 +4,7 @@ namespace SolarWinds\Chess;
 
 class ChessBoard
 {
+    const EMPTY = -1;
     const BOARD_WIDTH = 8;
     const BOARD_HEIGHT = 8;
 
@@ -11,7 +12,8 @@ class ChessBoard
 
     public function __construct()
     {
-        $this->cells = array_fill(0, self::BOARD_WIDTH, array_fill(0, self::BOARD_HEIGHT, 0));
+        // NOTE: BOARD_* should be static::, not self::, because they should be overridable by a child class
+        $this->cells = array_fill(0, static::BOARD_WIDTH, array_fill(0, static::BOARD_HEIGHT, self::EMPTY));
     }
 
     public function add(Pawn $pawn, $xCoordinate, $yCoordinate)
@@ -26,6 +28,10 @@ class ChessBoard
     {
         // NOTE: doing this is better than checking if they are between 0 and BOARD_*, since it technically supports different board configurations, and since it actually checks if that cell really exists, which is the point
         return isset($this->cells[$xCoordinate][$yCoordinate]);
+    }
+    
+    public function isCellEmpty ($xCoordinate, $yCoordinate) {
+        return $this->cells[$xCoordinate][$yCoordinate] === self::EMPTY;
     }
     
     public function getCells () {
