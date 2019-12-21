@@ -54,7 +54,21 @@ class ChessBoard
      * Returns the board size, assuming the board is square shaped.
      */
     public function getSquareSize () {
-        return [count($this->cells),count($this->cells[0])];
+        return [$this->getWidth(),$this->getSquareHeight()];
+    }
+    
+    /**
+     * Returns the board width, regardless of the board shape.
+     */
+    public function getWidth () {
+        return count($this->cells);
+    }
+    
+    /**
+     * Returns the board height, assuming the board is square shaped.
+     */
+    public function getSquareHeight () {
+        return count($this->cells[0]);
     }
     
     /**
