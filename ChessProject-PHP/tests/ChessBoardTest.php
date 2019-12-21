@@ -8,25 +8,20 @@ use SolarWinds\Chess\Pawn;
 
 class ChessBoardTest extends \PHPUnit_Framework_TestCase
 {
-
     /** @var  ChessBoard */
     private $_testSubject;
-
-    public function setUp()
-    {
+    
+    public function setUp () {
         $this->_testSubject = new ChessBoard();
     }
-
-    public function testHas_Correct_Width()
-    {
+    
+    public function testHas_Correct_Width () {
         $cells = $this->_testSubject->getCells();
         $count = count($cells);
         $req = ChessBoard::BOARD_WIDTH;
         $this->assertEquals($req, $count, "Required width[$req] != count[$count].");
     }
-
-    public function testHas_Correct_Height()
-    {
+    public function testHas_Correct_Height () {
         $cells = $this->_testSubject->getCells();
         $req = ChessBoard::BOARD_HEIGHT;
         for ( $col=0; $col<count($cells); $col++ ) {
@@ -34,45 +29,33 @@ class ChessBoardTest extends \PHPUnit_Framework_TestCase
             $this->assertEquals($req, $count, "Required height[$req] != count[$count] at column[$col].");
         }
     }
-
-    public function testIsLegalBoardPosition_True_X_equals_0_Y_equals_0()
-    {
+    
+    public function testIsLegalBoardPosition_True_X_equals_0_Y_equals_0 () {
         $isValidPosition = $this->_testSubject->isLegalBoardPosition(0, 0);
         $this->assertTrue($isValidPosition);
     }
-
-    public function testIsLegalBoardPosition_True_X_equals_5_Y_equals_5()
-    {
+    public function testIsLegalBoardPosition_True_X_equals_5_Y_equals_5 () {
         $isValidPosition = $this->_testSubject->isLegalBoardPosition(5, 5);
         $this->assertTrue($isValidPosition);
     }
-
-    public function testIsLegalBoardPosition_False_X_equals_11_Y_equals_5()
-    {
+    public function testIsLegalBoardPosition_False_X_equals_11_Y_equals_5 () {
         $isValidPosition = $this->_testSubject->isLegalBoardPosition(11, 5);
         $this->assertFalse($isValidPosition);
     }
-
-    public function testIsLegalBoardPosition_False_X_equals_0_Y_equals_9()
-    {
+    public function testIsLegalBoardPosition_False_X_equals_0_Y_equals_9 () {
         $isValidPosition = $this->_testSubject->isLegalBoardPosition(0, 9);
         $this->assertFalse($isValidPosition);
     }
-
-    public function testIsLegalBoardPosition_False_X_equals_11_Y_equals_0()
-    {
+    public function testIsLegalBoardPosition_False_X_equals_11_Y_equals_0 () {
         $isValidPosition = $this->_testSubject->isLegalBoardPosition(11, 0);
         $this->assertFalse($isValidPosition);
     }
-
-    public function testIsLegalBoardPosition_False_For_Negative_Y_Values()
-    {
+    public function testIsLegalBoardPosition_False_For_Negative_Y_Values () {
         $isValidPosition = $this->_testSubject->isLegalBoardPosition(5, -1);
         $this->assertFalse($isValidPosition);
     }
-
-    public function testAvoids_Duplicate_Positioning()
-    {
+    
+    public function testAvoids_Duplicate_Positioning () {
         $firstPawn = new Pawn(PieceColorEnum::BLACK());
         $secondPawn = new Pawn(PieceColorEnum::BLACK());
         $this->_testSubject->add($firstPawn, 6, 3);

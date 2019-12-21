@@ -7,17 +7,15 @@ class ChessBoard
     const EMPTY = -1;
     const BOARD_WIDTH = 8;
     const BOARD_HEIGHT = 8;
-
+    
     private $cells;
-
-    public function __construct()
-    {
+    
+    public function __construct () {
         // NOTE: BOARD_* should be static::, not self::, because they should be overridable by a child class
         $this->cells = array_fill(0, static::BOARD_WIDTH, array_fill(0, static::BOARD_HEIGHT, self::EMPTY));
     }
-
-    public function add(Pawn $pawn, $xCoordinate, $yCoordinate)
-    {
+    
+    public function add (Pawn $pawn, $xCoordinate, $yCoordinate) {
         if ( !$this->isLegalBoardPosition($xCoordinate, $yCoordinate) )
             throw new \InvalidArgumentException("Invalid board position [$xCoordinate, $yCoordinate].");
         
@@ -31,12 +29,11 @@ class ChessBoard
         $pawn->setXCoordinate($xCoordinate);
         $pawn->setYCoordinate($yCoordinate);
     }
-
+    
     /**
  	 * @return boolean
  	 **/
-    public function isLegalBoardPosition($xCoordinate, $yCoordinate, $THROW=FALSE)
-    {
+    public function isLegalBoardPosition ($xCoordinate, $yCoordinate, $THROW=FALSE) {
         // NOTE: doing this is better than checking if they are between 0 and BOARD_*, since it technically supports different board configurations, and since it actually checks if that cell really exists, which is the point
         
         $ret = isset($this->cells[$xCoordinate][$yCoordinate]);
