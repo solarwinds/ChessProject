@@ -24,6 +24,9 @@ class ChessBoard
         if ( !$this->isCellEmpty($xCoordinate, $yCoordinate) )
             throw new \InvalidArgumentException("Cell not empty [$xCoordinate, $yCoordinate].");
         
+        if ( !is_int($xCoordinate) || !is_int($yCoordinate) )
+            throw new \InvalidArgumentException("Non‑integer coordinate ($xCoordinate, $yCoordinate)(".gettype($xCoordinate).", ".gettype($yCoordinate).").");
+        
         $this->cells[$xCoordinate][$yCoordinate] = $pawn;
         $pawn->setXCoordinate($xCoordinate);
         $pawn->setYCoordinate($yCoordinate);
