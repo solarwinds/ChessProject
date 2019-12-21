@@ -45,6 +45,8 @@ class Pawn
     }
     
     public function move ($newX, $newY) {
+        $this->chessBoard->isLegalBoardPosition($newX,$newY,TRUE);
+        
         throw new \Exception("Need to implement " . __METHOD__);
     }
     
