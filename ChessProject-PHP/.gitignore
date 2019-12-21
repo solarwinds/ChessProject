@@ -2,3 +2,5 @@ vendor
 vendor/*
 .idea/
 composer.phar
+result_tests.txt
+Test.php
