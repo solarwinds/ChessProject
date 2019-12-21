@@ -26,8 +26,7 @@ class ChessBoard
             throw new \InvalidArgumentException("Non‑integer coordinate ($xCoordinate, $yCoordinate)(".gettype($xCoordinate).", ".gettype($yCoordinate).").");
         
         $this->cells[$xCoordinate][$yCoordinate] = $pawn;
-        $pawn->setXCoordinate($xCoordinate);
-        $pawn->setYCoordinate($yCoordinate);
+        $pawn->initialise($this,$xCoordinate,$yCoordinate);
     }
     
     /**

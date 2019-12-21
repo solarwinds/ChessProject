@@ -24,8 +24,10 @@ class Pawn
         $this->pieceColorEnum = $pieceColorEnum;
     }
     
-    public function setChessBoard (ChessBoard $chessBoard) {
+    public function initialise (ChessBoard $chessBoard, int $xCoordinate, int $yCoordinate) {
         $this->chessBoard = $chessBoard;
+        $this->xCoordinate = $xCoordinate;
+        $this->yCoordinate = $yCoordinate;
     }
     
     /** @return int */
@@ -33,19 +35,9 @@ class Pawn
         return $this->xCoordinate;
     }
     
-    /** @var int */
-    public function setXCoordinate ($value) {
-        $this->xCoordinate = $value;
-    }
-    
     /** @return int */
     public function getYCoordinate () {
         return $this->yCoordinate;
-    }
-    
-    /** @var int */
-    public function setYCoordinate ($value) {
-        $this->yCoordinate = $value;
     }
     
     public function getPieceColor () {
