@@ -5,6 +5,8 @@ namespace SolarWinds\Chess;
 
 class Pawn
 {
+    const INVALID = -1;
+    
     /** @var PieceColorEnum */
     private $pieceColorEnum;
 
@@ -19,6 +21,8 @@ class Pawn
 
     public function __construct(PieceColorEnum $pieceColorEnum)
     {
+        $this->xCoordinate = static::INVALID;
+        $this->yCoordinate = static::INVALID;
         $this->pieceColorEnum = $pieceColorEnum;
     }
 

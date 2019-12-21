@@ -79,8 +79,8 @@ class ChessBoardTest extends \PHPUnit_Framework_TestCase
         $this->_testSubject->add($secondPawn, 6, 3);
         $this->assertEquals(6, $firstPawn->getXCoordinate());
         $this->assertEquals(3, $firstPawn->getYCoordinate());
-        $this->assertEquals(-1, $secondPawn->getXCoordinate());
-        $this->assertEquals(-1, $secondPawn->getYCoordinate());
+        $this->assertEquals(Pawn::INVALID, $secondPawn->getXCoordinate());
+        $this->assertEquals(Pawn::INVALID, $secondPawn->getYCoordinate());
     }
 
     public function testLimits_The_Number_Of_Pawns()
