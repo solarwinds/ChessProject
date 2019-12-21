@@ -24,9 +24,6 @@ class Pawn
         $this->pieceColorEnum = $pieceColorEnum;
     }
     
-    public function getChesssBoard () {
-        return $this->chessBoard;
-    }
     public function setChessBoard (ChessBoard $chessBoard) {
         $this->chessBoard = $chessBoard;
     }
