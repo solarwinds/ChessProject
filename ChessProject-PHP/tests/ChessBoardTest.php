@@ -77,8 +77,15 @@ class ChessBoardTest extends \PHPUnit_Framework_TestCase
         $secondPawn = new Pawn(PieceColorEnum::BLACK());
         $this->_testSubject->add($firstPawn, 6, 3);
         
-        $this->expectException(\InvalidArgumentException::class);
-        $this->_testSubject->add($secondPawn, 6, 3);
+        // NOTE: we cannot simply use expectException() here, since the test will stop right after that, ignoring what follows!
+        $ex = NULL;
+        try {
+            $this->_testSubject->add($secondPawn, 6, 3);
+        }
+        catch ( \Exception $cought ) {
+            $ex = $cought;
+        }
+        $this->assertInstanceOf('InvalidArgumentException',$ex);
         
         $this->assertEquals(6, $firstPawn->getXCoordinate());
         $this->assertEquals(3, $firstPawn->getYCoordinate());
