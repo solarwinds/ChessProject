@@ -59,7 +59,7 @@ class Pawn
         $this->pieceColorEnum = $value;
     }
     
-    public function move (MovementTypeEnum $movementTypeEnum, $newX, $newY) {
+    public function move ($newX, $newY) {
         throw new \Exception("Need to implement " . __METHOD__);
     }
     

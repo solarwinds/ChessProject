@@ -29,10 +29,10 @@ However the current implementation fails to achieve that anyway: it often hardco
 As it is now, there's no benefit in keeping this as an enum, hence I'll modify it.
 
 ### MovementTypeEnum
-With our current structure, it might seem to make sense to have the movement implemented as an enum: the Pawn can move in only so many ways.
+There is no reason to differentiate between "move" and "capture" actions, since there never is any ambiguity about your intent: if in the target cell there is an opponent's piece, it's a capture. Otherwise, it's a move.
 
-However, the current "move / capture" implementation is already failing, since there are two possible capture: left and right.
+In either case, it may be legal or not.
 
-With the future pieces it will be even worse, since their movement range will be much more complicated than that.
+Even special moves, such as the castling, the en‑passant, or the promotion, are simply defined by your destination: if you aim to go there with that piece, the move you are attempting is always unambiguous.
 
-Even in this case, I see no benefit in keeping the current (draft) implementation, especially considering the future developements. I'll likely have to alter that too.
+As a result, this class is entirely unnecessary.
