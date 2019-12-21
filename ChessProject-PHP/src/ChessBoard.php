@@ -42,4 +42,19 @@ class ChessBoard
     public function getCells () {
         return $this->cells; // NOTE: returns a copy
     }
+    
+    /**
+     * Returns the board size, assuming the board is square shaped.
+     */
+    public function getSquareSize () {
+        return [count($this->cells),count($this->cells[0])];
+    }
+    
+    /**
+     * @return Pawn|EMPTY
+     */
+    public function getCell ($xCoordinate, $yCoordinate) {
+        $this->isLegalBoardPosition($xCoordinate, $yCoordinate, TRUE);
+        return $this->cells[$xCoordinate][$yCoordinate];
+    }
 }
