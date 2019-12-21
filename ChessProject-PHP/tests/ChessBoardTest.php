@@ -76,11 +76,44 @@ class ChessBoardTest extends \PHPUnit_Framework_TestCase
         $firstPawn = new Pawn(PieceColorEnum::BLACK());
         $secondPawn = new Pawn(PieceColorEnum::BLACK());
         $this->_testSubject->add($firstPawn, 6, 3);
+        
+        $this->expectException(\InvalidArgumentException::class);
         $this->_testSubject->add($secondPawn, 6, 3);
+        
         $this->assertEquals(6, $firstPawn->getXCoordinate());
         $this->assertEquals(3, $firstPawn->getYCoordinate());
         $this->assertEquals(Pawn::INVALID, $secondPawn->getXCoordinate());
         $this->assertEquals(Pawn::INVALID, $secondPawn->getYCoordinate());
+    }
+    
+    public function testInvalidPositionX () {
+        $firstPawn = new Pawn(PieceColorEnum::BLACK());
+        list($width,$height) = $this->_testSubject->getSquareSize();
+        
+        $this->expectException(\InvalidArgumentException::class);
+        $this->_testSubject->add($firstPawn, $width, $height-1);
+    }
+    public function testInvalidPositionXY () {
+        $firstPawn = new Pawn(PieceColorEnum::BLACK());
+        list($width,$height) = $this->_testSubject->getSquareSize();
+        
+        $this->expectException(\InvalidArgumentException::class);
+        $this->_testSubject->add($firstPawn, $width, $height);
+    }
+    public function testInvalidPositionY () {
+        $firstPawn = new Pawn(PieceColorEnum::BLACK());
+        list($width,$height) = $this->_testSubject->getSquareSize();
+        
+        $this->expectException(\InvalidArgumentException::class);
+        $this->_testSubject->add($firstPawn, $width-1, $height);
+    }
+    public function testValidPosition () {
+        $firstPawn = new Pawn(PieceColorEnum::BLACK());
+        list($width,$height) = $this->_testSubject->getSquareSize();
+        
+        $this->_testSubject->add($firstPawn, $width-1, $height-1);
+        $gotPawn = $this->_testSubject->getCell($width-1, $height-1);
+        $this->assertEquals($firstPawn, $gotPawn);
     }
 
     public function testLimits_The_Number_Of_Pawns()

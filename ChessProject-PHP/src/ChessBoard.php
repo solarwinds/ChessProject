@@ -18,7 +18,15 @@ class ChessBoard
 
     public function add(Pawn $pawn, $xCoordinate, $yCoordinate)
     {
-        throw new \ErrorException("Need to implement " . __METHOD__);
+        if ( !$this->isLegalBoardPosition($xCoordinate, $yCoordinate) )
+            throw new \InvalidArgumentException("Invalid board position [$xCoordinate, $yCoordinate].");
+        
+        if ( !$this->isCellEmpty($xCoordinate, $yCoordinate) )
+            throw new \InvalidArgumentException("Cell not empty [$xCoordinate, $yCoordinate].");
+        
+        $this->cells[$xCoordinate][$yCoordinate] = $pawn;
+        $pawn->setXCoordinate($xCoordinate);
+        $pawn->setYCoordinate($yCoordinate);
     }
 
     /**
