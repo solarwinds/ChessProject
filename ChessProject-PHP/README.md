@@ -14,3 +14,25 @@ Additionally, Pieces can be given two commands: move and capture (we will ignore
 Your task is to get all unit tests found under the Tests folder passing. Since you plan to be on the project long term, think about how you would implement the solution, what other test coverage might be necessary and what you would do to make future features easier to implement.
 
 Good luck, and please reach out to us if you have any questions!
+
+# Notes
+
+## The enums
+
+### PieceColorEnum
+In chess there are two colours: white, and black.
+
+Implementing the colour as an enum might seem to be beneficial if we wanted to have a versatile library, supporting more than two players (hence more than two colours).
+
+However the current implementation fails to achieve that anyway: it often hardcodes the values of WHITE and BLACK, so much that supporting extra colours will require a extensive rewriting anyway.
+
+As it is now, there's no benefit in keeping this as an enum, hence I'll modify it.
+
+### MovementTypeEnum
+With our current structure, it might seem to make sense to have the movement implemented as an enum: the Pawn can move in only so many ways.
+
+However, the current "move / capture" implementation is already failing, since there are two possible capture: left and right.
+
+With the future pieces it will be even worse, since their movement range will be much more complicated than that.
+
+Even in this case, I see no benefit in keeping the current (draft) implementation, especially considering the future developements. I'll likely have to alter that too.
