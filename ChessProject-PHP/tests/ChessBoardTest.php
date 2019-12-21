@@ -75,8 +75,8 @@ class ChessBoardTest extends \PHPUnit_Framework_TestCase
     {
         $firstPawn = new Pawn(PieceColorEnum::BLACK());
         $secondPawn = new Pawn(PieceColorEnum::BLACK());
-        $this->_testSubject->add($firstPawn, 6, 3, PieceColorEnum::BLACK());
-        $this->_testSubject->add($secondPawn, 6, 3, PieceColorEnum::BLACK());
+        $this->_testSubject->add($firstPawn, 6, 3);
+        $this->_testSubject->add($secondPawn, 6, 3);
         $this->assertEquals(6, $firstPawn->getXCoordinate());
         $this->assertEquals(3, $firstPawn->getYCoordinate());
         $this->assertEquals(-1, $secondPawn->getXCoordinate());
@@ -88,7 +88,7 @@ class ChessBoardTest extends \PHPUnit_Framework_TestCase
         for ($i = 0; $i < 10; $i++) {
             $pawn = new Pawn(PieceColorEnum::BLACK());
             $row = $i / ChessBoard::MAX_BOARD_WIDTH;
-            $this->_testSubject->add($pawn, 6 + $row, $i % ChessBoard::MAX_BOARD_WIDTH, PieceColorEnum::BLACK());
+            $this->_testSubject->add($pawn, 6 + $row, $i % ChessBoard::MAX_BOARD_WIDTH);
             if ($row < 1) {
                 $this->assertEquals(6 + $row, $pawn->getXCoordinate());
                 $this->assertEquals($i % ChessBoard::MAX_BOARD_WIDTH, $pawn->getYCoordinate());

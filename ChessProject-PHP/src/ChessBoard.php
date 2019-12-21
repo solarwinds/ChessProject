@@ -14,7 +14,7 @@ class ChessBoard
         $this->cells = array_fill(0, self::BOARD_WIDTH, array_fill(0, self::BOARD_HEIGHT, 0));
     }
 
-    public function add(Pawn $pawn, $xCoordinate, $yCoordinate, PieceColorEnum $pieceColor)
+    public function add(Pawn $pawn, $xCoordinate, $yCoordinate)
     {
         throw new \ErrorException("Need to implement " . __METHOD__);
     }
