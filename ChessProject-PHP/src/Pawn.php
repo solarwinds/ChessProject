@@ -55,10 +55,6 @@ class Pawn
         return $this->pieceColorEnum;
     }
     
-    public function setPieceColor (PieceColorEnum $value) {
-        $this->pieceColorEnum = $value;
-    }
-    
     public function move ($newX, $newY) {
         throw new \Exception("Need to implement " . __METHOD__);
     }
