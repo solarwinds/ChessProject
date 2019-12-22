@@ -79,5 +79,22 @@ class PawnTest extends \PHPUnit_Framework_TestCase
         $this->_testBlack->move(4, 5);
     }
     
-    // TODO: test captures
+    public function testPawn_White_Capture () {
+        $this->_chessBoard->add($this->_testWhite, 4, 1);
+        $this->_chessBoard->add($this->_testBlack, 5, 2);
+        
+        // Checks the capture move itself
+        $this->_testWhite->move(5, 2);
+        $this->assertEquals(5, $this->_testWhite->getXCoordinate());
+        $this->assertEquals(2, $this->_testWhite->getYCoordinate());
+        
+        // Checks that in the target cell there is the active piece
+        $pieceGot = $this->_chessBoard->getCell(5, 2);
+        $this->assertEquals($this->_testWhite, $pieceGot);
+        
+        // Checks that the victim has actually been captured
+        $this->assertTrue( $this->_testBlack->isCaptured() );
+    }
+    // TODO: test black captures white
+    // TODO: test failed captures
 }
