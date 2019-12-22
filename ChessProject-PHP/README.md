@@ -39,3 +39,8 @@ As a result, this class is entirely unnecessary.
 
 ## The plan
 I've created [a planning file](Plan.md), feel free to have a look.
+
+## The captures
+There's an ambiguity in the text of the exercise.
+
+First it says "we will ignore capture for this exercise", then it says "and can only capture in a forward and diagonal direction", implying that captures are indeed within the scope.
