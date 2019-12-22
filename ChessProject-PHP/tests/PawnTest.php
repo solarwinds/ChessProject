@@ -54,6 +54,10 @@ class PawnTest extends \PHPUnit_Framework_TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->_testWhite->move(5, 3);
     }
+    public function testPawn_Move_Illegal_Obstacle () {
+        // TODO: trying to move a Pawn forward into a cell containing another Pawn of the same colour
+        throw new \Exception("Not implemented");
+    }
     
     public function testPawn_Move_White_Upwards () {
         $this->_chessBoard->add($this->_testWhite, 6, 2);
@@ -114,5 +118,15 @@ class PawnTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(Piece::INVALID, $this->_testWhite->getXCoordinate());
         $this->assertEquals(Piece::INVALID, $this->_testWhite->getYCoordinate());
     }
-    // TODO: test failed captures
+    public function testPawn_White_FailedCapture_Forward () {
+        // TODO: trying to move a Pawn straight into a Pawn of a different colour
+        throw new \Exception("Not implemented");
+    }
+    public function testPawn_Black_FailedCapture_Forward () {
+        throw new \Exception("Not implemented");
+    }
+    public function testPawn_FailedCapture_SameColour () {
+        // TODO: trying to capture a Piece of the same Colour (doing the correct diagonal move)
+        throw new \Exception("Not implemented");
+    }
 }

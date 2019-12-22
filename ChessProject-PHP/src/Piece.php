@@ -58,6 +58,7 @@ abstract class Piece
         
         // TODO: captures
         // TODO: promotions
+        // TODO: update the board
     }
     
     /**
@@ -65,7 +66,10 @@ abstract class Piece
      * It features checks that are common for any Piece.
      */
     protected function validMoveBase (int $newX, int $newY) {
-        return $this->chessBoard->isLegalBoardPosition($newX,$newY);
+        if ( !$this->chessBoard->isLegalBoardPosition($newX,$newY) )
+            return FALSE;
+        
+        return TRUE;
     }
     
     /**

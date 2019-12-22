@@ -8,7 +8,7 @@ class ChessBoard
     const BOARD_WIDTH = 8;
     const BOARD_HEIGHT = 8;
     
-    private $cells;
+    private $cells; // Keep in mind this is basically a cache of the Piece positions, since each Piece will have its own coodrinates stored.
     
     public function __construct () {
         // NOTE: BOARD_* should be static::, not self::, because they should be overridable by a child class
@@ -25,7 +25,7 @@ class ChessBoard
         if ( !is_int($xCoordinate) || !is_int($yCoordinate) )
             throw new \InvalidArgumentException("Non‑integer coordinate ($xCoordinate, $yCoordinate)(".gettype($xCoordinate).", ".gettype($yCoordinate).").");
         
-        $this->cells[$xCoordinate][$yCoordinate] = $pawn;
+        $this->cells[$xCoordinate][$yCoordinate] = $pawn; // NOTE: remember to update this!
         $pawn->initialise($this,$xCoordinate,$yCoordinate);
     }
     

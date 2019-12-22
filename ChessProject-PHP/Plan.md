@@ -18,7 +18,7 @@ We need to check that the tests that currently exist:
 ## 3. Add missing tests
 There may be normal cases or corner cases that should be tested but currently aren't.
 
-Find those and create the missing tests.
+Find those and create the missing tests (and pass them).
 
 ## 4. Add new features
 Now that we have fixed what we have, we still have to complete the project.
