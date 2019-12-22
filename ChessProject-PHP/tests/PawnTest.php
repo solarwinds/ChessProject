@@ -53,7 +53,7 @@ class PawnTest extends \PHPUnit_Framework_TestCase
     public function testPawn_Move_IllegalCoordinates_Left_DoesNotMove () {
         $this->_chessBoard->add($this->_testSubject, 6, 3);
         $this->expectException(\InvalidArgumentException::class);
-        $this->_testSubject->move(4, 3);
+        $this->_testSubject->move(5, 3);
     }
     public function testPawn_Move_LegalCoordinates_Forward_UpdatesCoordinates () {
         $this->_chessBoard->add($this->_testSubject, 6, 3);

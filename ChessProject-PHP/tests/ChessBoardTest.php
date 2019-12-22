@@ -16,8 +16,7 @@ class ChessBoardTest extends \PHPUnit_Framework_TestCase
     }
     
     public function testHas_Correct_Width () {
-        $cells = $this->_testSubject->getCells();
-        $count = count($cells);
+        $count = $this->_testSubject->getWidth();
         $req = ChessBoard::BOARD_WIDTH;
         $this->assertEquals($req, $count, "Required width[$req] != count[$count].");
     }
@@ -50,6 +49,10 @@ class ChessBoardTest extends \PHPUnit_Framework_TestCase
         $isValidPosition = $this->_testSubject->isLegalBoardPosition(11, 0);
         $this->assertFalse($isValidPosition);
     }
+    public function testIsLegalBoardPosition_False_For_Negative_X_Values () {
+        $isValidPosition = $this->_testSubject->isLegalBoardPosition(-1, 5);
+        $this->assertFalse($isValidPosition);
+    }
     public function testIsLegalBoardPosition_False_For_Negative_Y_Values () {
         $isValidPosition = $this->_testSubject->isLegalBoardPosition(5, -1);
         $this->assertFalse($isValidPosition);
@@ -60,7 +63,7 @@ class ChessBoardTest extends \PHPUnit_Framework_TestCase
         $secondPawn = new Pawn(PieceColorEnum::BLACK());
         $this->_testSubject->add($firstPawn, 6, 3);
         
-        // NOTE: we cannot simply use expectException() here, since the test will stop right after that, ignoring what follows!
+        // NOTE: we cannot simply use expectException() here, since the test would stop right after that, ignoring what follows!
         $ex = NULL;
         try {
             $this->_testSubject->add($secondPawn, 6, 3);
@@ -72,8 +75,8 @@ class ChessBoardTest extends \PHPUnit_Framework_TestCase
         
         $this->assertEquals(6, $firstPawn->getXCoordinate());
         $this->assertEquals(3, $firstPawn->getYCoordinate());
-        $this->assertEquals(Pawn::INVALID, $secondPawn->getXCoordinate());
-        $this->assertEquals(Pawn::INVALID, $secondPawn->getYCoordinate());
+        $this->assertEquals(Piece::INVALID, $secondPawn->getXCoordinate());
+        $this->assertEquals(Piece::INVALID, $secondPawn->getYCoordinate());
     }
     
     public function testInvalidPositionX () {

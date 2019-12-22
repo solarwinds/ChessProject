@@ -1,7 +1,7 @@
 # This is the plan on how to complete this project
 
 - [x] 1. Pass all the tests
-- [ ] 2. Check the tests
+- [x] 2. Check the tests
 - [ ] 3. Add missing tests
 - [ ] 4. Add new features
 - [ ] 5. Add missing documentation
