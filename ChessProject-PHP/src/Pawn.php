@@ -2,55 +2,34 @@
 
 namespace SolarWinds\Chess;
 
-class Pawn
+class Pawn extends Piece
 {
-    const INVALID = -1;
-    
-    /** @var PieceColorEnum */
-    private $pieceColorEnum;
-    
-    /** @var ChessBoard */
-    private $chessBoard;
-    
-    /** @var int */
-    private $xCoordinate;
-    
-    /** @var int */
-    private $yCoordinate;
-    
-    public function __construct (PieceColorEnum $pieceColorEnum) {
-        $this->xCoordinate = static::INVALID;
-        $this->yCoordinate = static::INVALID;
-        $this->pieceColorEnum = $pieceColorEnum;
-    }
-    
-    public function initialise (ChessBoard $chessBoard, int $xCoordinate, int $yCoordinate) {
-        $this->chessBoard = $chessBoard;
-        $this->xCoordinate = $xCoordinate;
-        $this->yCoordinate = $yCoordinate;
-    }
-    
-    /** @return int */
-    public function getXCoordinate () {
-        return $this->xCoordinate;
-    }
-    
-    /** @return int */
-    public function getYCoordinate () {
-        return $this->yCoordinate;
-    }
-    
-    public function getPieceColor () {
-        return $this->pieceColorEnum;
-    }
-    
-    public function move ($newX, $newY) {
-        $this->chessBoard->isLegalBoardPosition($newX,$newY,TRUE);
+    public function validMove (int $newX, int $newY) {
+        if ( !$this->validMoveBase($newX,$newY) )
+            return FALSE;
         
-        throw new \Exception("Need to implement " . __METHOD__);
+        if ( !$this->validPattern($newX, $newY) )
+            return FALSE;
+        
+        // TODO: check the destination cell
+        
+        return TRUE;
     }
-    
-    public function toString () {
-		return "x({$this->xCoordinate}), y({$this->yCoordinate}), pieceColor({$this->pieceColorEnum})";
+    public function validPattern (int $newX, int $newY) {
+        // TODO: direction
+        // TODO: captures
+        // TODO: double‑move
+        // TODO: promotion
+        
+        if ( $newX != $this->xCoordinate )
+            return FALSE;
+        
+        if ( $newY == $this->yCoordinate+1 )
+            return TRUE;
+        
+        if ( $newY == $this->yCoordinate-1 )
+            return TRUE;
+        
+        return FALSE;
     }
 }

@@ -1,6 +1,6 @@
 # This is the plan on how to complete this project
 
-- [ ] 1. Pass all the tests
+- [x] 1. Pass all the tests
 - [ ] 2. Check the tests
 - [ ] 3. Add missing tests
 - [ ] 4. Add new features
@@ -33,8 +33,8 @@ We should add as much documentation as possible.
 # Movement
 Movement is by far the most complex part of this project, so it's better to have a specific plan for it.
 
-- [ ] Forward movement
-- [ ] Piece class
+- [x] Forward movement
+- [x] Piece class
 - [ ] validMove()
 - [ ] move()
 - [ ] BoardSetup class
