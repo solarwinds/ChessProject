@@ -55,10 +55,29 @@ class PawnTest extends \PHPUnit_Framework_TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->_testSubject->move(5, 3);
     }
-    public function testPawn_Move_LegalCoordinates_Forward_UpdatesCoordinates () {
-        $this->_chessBoard->add($this->_testSubject, 6, 3);
-        $this->_testSubject->move(6, 2);
+    
+    public function testPawn_Move_White_Upwards () {
+        $this->_chessBoard->add($this->_testSubject, 6, 2);
+        $this->_testSubject->move(6, 3);
         $this->assertEquals(6, $this->_testSubject->getXCoordinate());
-        $this->assertEquals(2, $this->_testSubject->getYCoordinate());
+        $this->assertEquals(3, $this->_testSubject->getYCoordinate());
     }
+    public function testPawn_Move_White_Downwards () {
+        $this->_chessBoard->add($this->_testSubject, 6, 3);
+        $this->expectException(\InvalidArgumentException::class);
+        $this->_testSubject->move(6, 2);
+    }
+    public function testPawn_Move_Black_Downwards () {
+        $this->_chessBoard->add($this->_testBlack, 4, 4);
+        $this->_testBlack->move(4, 3);
+        $this->assertEquals(4, $this->_testBlack->getXCoordinate());
+        $this->assertEquals(3, $this->_testBlack->getYCoordinate());
+    }
+    public function testPawn_Move_Black_Upwards () {
+        $this->_chessBoard->add($this->_testBlack, 4, 4);
+        $this->expectException(\InvalidArgumentException::class);
+        $this->_testBlack->move(4, 5);
+    }
+    
+    // TODO: test captures
 }
