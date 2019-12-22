@@ -3,7 +3,7 @@
 - [x] 1. Pass all the tests
 - [x] 2. Check the tests
 - [ ] 3. Add missing tests
-- [ ] 4. Add new features
+- [x] 4. Add new features
 - [ ] 5. Add missing documentation
 
 ## 1. Pass all the tests
