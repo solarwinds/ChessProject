@@ -30,12 +30,12 @@ abstract class Piece
     }
     
     /** @return int */
-    public function getXCoordinate () {
+    public function getX () {
         return $this->xCoordinate;
     }
     
     /** @return int */
-    public function getYCoordinate () {
+    public function getY () {
         return $this->yCoordinate;
     }
     

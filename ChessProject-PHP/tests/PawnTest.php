@@ -23,11 +23,11 @@ class PawnTest extends \PHPUnit_Framework_TestCase
     
     public function testChessBoard_Add_Sets_XCoordinate () {
         $this->_chessBoard->add($this->_testWhite, 6, 3);
-        $this->assertEquals(6, $this->_testWhite->getXCoordinate());
+        $this->assertEquals(6, $this->_testWhite->getX());
     }
     public function testChessBoard_Add_Sets_YCoordinate () {
         $this->_chessBoard->add($this->_testWhite, 6, 3);
-        $this->assertEquals(3, $this->_testWhite->getYCoordinate());
+        $this->assertEquals(3, $this->_testWhite->getY());
     }
     
     public function testPawn_Move_IllegalDestination_High () {
@@ -70,8 +70,8 @@ class PawnTest extends \PHPUnit_Framework_TestCase
     public function testPawn_Move_White_Upwards () {
         $this->_chessBoard->add($this->_testWhite, 6, 2);
         $this->_testWhite->move(6, 3);
-        $this->assertEquals(6, $this->_testWhite->getXCoordinate());
-        $this->assertEquals(3, $this->_testWhite->getYCoordinate());
+        $this->assertEquals(6, $this->_testWhite->getX());
+        $this->assertEquals(3, $this->_testWhite->getY());
     }
     public function testPawn_Move_White_Downwards () {
         $this->_chessBoard->add($this->_testWhite, 6, 3);
@@ -81,8 +81,8 @@ class PawnTest extends \PHPUnit_Framework_TestCase
     public function testPawn_Move_Black_Downwards () {
         $this->_chessBoard->add($this->_testBlack, 4, 4);
         $this->_testBlack->move(4, 3);
-        $this->assertEquals(4, $this->_testBlack->getXCoordinate());
-        $this->assertEquals(3, $this->_testBlack->getYCoordinate());
+        $this->assertEquals(4, $this->_testBlack->getX());
+        $this->assertEquals(3, $this->_testBlack->getY());
     }
     public function testPawn_Move_Black_Upwards () {
         $this->_chessBoard->add($this->_testBlack, 4, 4);
@@ -96,8 +96,8 @@ class PawnTest extends \PHPUnit_Framework_TestCase
         
         // Checks the capture move itself
         $this->_testWhite->move(5, 2);
-        $this->assertEquals(5, $this->_testWhite->getXCoordinate());
-        $this->assertEquals(2, $this->_testWhite->getYCoordinate());
+        $this->assertEquals(5, $this->_testWhite->getX());
+        $this->assertEquals(2, $this->_testWhite->getY());
         
         // Checks that in the target cell there is the active piece
         $pieceGot = $this->_chessBoard->getCell(5, 2);
@@ -105,8 +105,8 @@ class PawnTest extends \PHPUnit_Framework_TestCase
         
         // Checks that the victim has actually been captured
         $this->assertTrue( $this->_testBlack->isCaptured() );
-        $this->assertEquals(Piece::INVALID, $this->_testBlack->getXCoordinate());
-        $this->assertEquals(Piece::INVALID, $this->_testBlack->getYCoordinate());
+        $this->assertEquals(Piece::INVALID, $this->_testBlack->getX());
+        $this->assertEquals(Piece::INVALID, $this->_testBlack->getY());
     }
     public function testPawn_Black_Capture () {
         $this->_chessBoard->add($this->_testWhite, 6, 5);
@@ -114,8 +114,8 @@ class PawnTest extends \PHPUnit_Framework_TestCase
         
         // Checks the capture move itself
         $this->_testBlack->move(6, 5);
-        $this->assertEquals(6, $this->_testBlack->getXCoordinate());
-        $this->assertEquals(5, $this->_testBlack->getYCoordinate());
+        $this->assertEquals(6, $this->_testBlack->getX());
+        $this->assertEquals(5, $this->_testBlack->getY());
         
         // Checks that in the target cell there is the active piece
         $pieceGot = $this->_chessBoard->getCell(6, 5);
@@ -123,8 +123,8 @@ class PawnTest extends \PHPUnit_Framework_TestCase
         
         // Checks that the victim has actually been captured
         $this->assertTrue( $this->_testWhite->isCaptured() );
-        $this->assertEquals(Piece::INVALID, $this->_testWhite->getXCoordinate());
-        $this->assertEquals(Piece::INVALID, $this->_testWhite->getYCoordinate());
+        $this->assertEquals(Piece::INVALID, $this->_testWhite->getX());
+        $this->assertEquals(Piece::INVALID, $this->_testWhite->getY());
     }
     
     /**

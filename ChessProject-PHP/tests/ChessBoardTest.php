@@ -71,10 +71,10 @@ class ChessBoardTest extends \PHPUnit_Framework_TestCase
         }
         $this->assertInstanceOf('SolarWinds\Chess\InvalidMoveException',$ex);
         
-        $this->assertEquals(6, $firstPawn->getXCoordinate());
-        $this->assertEquals(3, $firstPawn->getYCoordinate());
-        $this->assertEquals(Piece::INVALID, $secondPawn->getXCoordinate());
-        $this->assertEquals(Piece::INVALID, $secondPawn->getYCoordinate());
+        $this->assertEquals(6, $firstPawn->getX());
+        $this->assertEquals(3, $firstPawn->getY());
+        $this->assertEquals(Piece::INVALID, $secondPawn->getX());
+        $this->assertEquals(Piece::INVALID, $secondPawn->getY());
     }
     
     public function testInvalidPositionX () {
