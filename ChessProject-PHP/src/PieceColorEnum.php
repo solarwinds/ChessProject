@@ -48,5 +48,8 @@ class PieceColorEnum
         self::$_white = new PieceColorEnum(1);
         self::$_black = new PieceColorEnum(2);
     }
-
+    
+    public function __toString () {
+        return __CLASS__.":".$this->_id;
+    }
 }
