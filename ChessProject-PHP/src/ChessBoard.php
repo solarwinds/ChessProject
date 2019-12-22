@@ -17,13 +17,13 @@ class ChessBoard
     
     public function add (Pawn $pawn, $xCoordinate, $yCoordinate) {
         if ( !$this->isLegalBoardPosition($xCoordinate, $yCoordinate) )
-            throw new \InvalidArgumentException("Invalid board position [$xCoordinate, $yCoordinate].");
+            throw new InvalidMoveException("Invalid board position [$xCoordinate, $yCoordinate].");
         
         if ( !$this->isCellEmpty($xCoordinate, $yCoordinate) )
-            throw new \InvalidArgumentException("Cell not empty [$xCoordinate, $yCoordinate].");
+            throw new InvalidMoveException("Cell not empty [$xCoordinate, $yCoordinate].");
         
         if ( !is_int($xCoordinate) || !is_int($yCoordinate) )
-            throw new \InvalidArgumentException("Non‑integer coordinate ($xCoordinate, $yCoordinate)(".gettype($xCoordinate).", ".gettype($yCoordinate).").");
+            throw new InvalidMoveException("Non‑integer coordinate ($xCoordinate, $yCoordinate)(".gettype($xCoordinate).", ".gettype($yCoordinate).").");
         
         $this->cells[$xCoordinate][$yCoordinate] = $pawn; // NOTE: remember to update this!
         $pawn->initialise($this,$xCoordinate,$yCoordinate);
@@ -37,7 +37,7 @@ class ChessBoard
         
         $ret = isset($this->cells[$xCoordinate][$yCoordinate]);
         if ( $THROW && !$ret )
-            throw new \InvalidArgumentException("Not a legal board position [$xCoordinate, $yCoordinate].");
+            throw new InvalidMoveException("Not a legal board position [$xCoordinate, $yCoordinate].");
         return $ret;
     }
     

@@ -2,8 +2,7 @@
 
 namespace SolarWinds\Chess;
 
-use SolarWinds\Chess\ChessBoard;
-use SolarWinds\Chess\Pawn;
+require_once 'vendor/autoload.php';
 
 class ChessBoardTest extends \PHPUnit_Framework_TestCase
 {
@@ -70,7 +69,7 @@ class ChessBoardTest extends \PHPUnit_Framework_TestCase
         catch ( \Exception $cought ) {
             $ex = $cought;
         }
-        $this->assertInstanceOf('InvalidArgumentException',$ex);
+        $this->assertInstanceOf('SolarWinds\Chess\InvalidMoveException',$ex);
         
         $this->assertEquals(6, $firstPawn->getXCoordinate());
         $this->assertEquals(3, $firstPawn->getYCoordinate());
@@ -82,21 +81,21 @@ class ChessBoardTest extends \PHPUnit_Framework_TestCase
         $firstPawn = new Pawn(FALSE);
         list($width,$height) = $this->_testSubject->getSquareSize();
         
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidMoveException::class);
         $this->_testSubject->add($firstPawn, $width, $height-1);
     }
     public function testInvalidPositionXY () {
         $firstPawn = new Pawn(FALSE);
         list($width,$height) = $this->_testSubject->getSquareSize();
         
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidMoveException::class);
         $this->_testSubject->add($firstPawn, $width, $height);
     }
     public function testInvalidPositionY () {
         $firstPawn = new Pawn(FALSE);
         list($width,$height) = $this->_testSubject->getSquareSize();
         
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidMoveException::class);
         $this->_testSubject->add($firstPawn, $width-1, $height);
     }
     public function testValidPosition () {

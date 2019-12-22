@@ -75,19 +75,19 @@ abstract class Piece
     }
     
     /**
-     * Throws \InvalidArgumentException if the move is invalid.
+     * Throws InvalidMoveException if the move is invalid.
      * Returns TRUE if the move is valid and the destination cell is empty.
      * Returns the captured Piece otherwise.
      */
     public function validMove (int $newX, int $newY) {
         if ( !$this->chessBoard->isLegalBoardPosition($newX,$newY) )
-            throw new \InvalidArgumentException("$this: Illegal board position [$newX, $newY].");
+            throw new InvalidMoveException("$this: Illegal board position [$newX, $newY].");
         
         if ( !$this->validPattern($newX, $newY) )
-            throw new \InvalidArgumentException("$this: Illegal moving pattern [$newX, $newY].");
+            throw new InvalidMoveException("$this: Illegal moving pattern [$newX, $newY].");
         
         if ( !$this->validPath($newX, $newY) )
-            throw new \InvalidArgumentException("$this: Illegal moving path [$newX, $newY].");
+            throw new InvalidMoveException("$this: Illegal moving path [$newX, $newY].");
         
         $dest_cell = $this->chessBoard->getCell($newX,$newY);
         if ( $dest_cell === ChessBoard::EMPTY ) {
@@ -99,10 +99,10 @@ abstract class Piece
             // The Piece in the destination cell must be of a different colour
             
             if ( $dest_cell->isFriendly($this) )
-                throw new \InvalidArgumentException("$this: Can't capture your own piece [$newX, $newY].");
+                throw new InvalidMoveException("$this: Can't capture your own piece [$newX, $newY].");
             
             if ( !$this->validCapture($newX,$newY) )
-                throw new \InvalidArgumentException("$this: Illegal capture move [$newX, $newY].");
+                throw new InvalidMoveException("$this: Illegal capture move [$newX, $newY].");
             
             return $dest_cell; // Returning the to‑be‑captured Piece
         }

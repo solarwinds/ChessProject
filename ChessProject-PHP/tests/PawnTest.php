@@ -2,10 +2,7 @@
 
 namespace SolarWinds\Chess;
 
-use SolarWinds\Chess\ChessBoard;
-use SolarWinds\Chess\Pawn;
-
-// TODO: we should swap the \InvalidArgumentException with a custom InvalidMoveException
+require_once 'vendor/autoload.php';
 
 class PawnTest extends \PHPUnit_Framework_TestCase
 {
@@ -37,23 +34,23 @@ class PawnTest extends \PHPUnit_Framework_TestCase
         $height = $this->_chessBoard->getSquareHeight();
         $this->_chessBoard->add($this->_testWhite, 0, $height-1);
         
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidMoveException::class);
         $this->_testWhite->move(0, $height);
     }
     public function testPawn_Move_IllegalDestination_Low () {
         $this->_chessBoard->add($this->_testBlack, 0, 0);
         
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidMoveException::class);
         $this->_testBlack->move(0, -1);
     }
     public function testPawn_Move_IllegalCoordinates_Right_DoesNotMove () {
         $this->_chessBoard->add($this->_testWhite, 6, 3);
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidMoveException::class);
         $this->_testWhite->move(7, 3);
     }
     public function testPawn_Move_IllegalCoordinates_Left_DoesNotMove () {
         $this->_chessBoard->add($this->_testWhite, 6, 3);
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidMoveException::class);
         $this->_testWhite->move(5, 3);
     }
     
@@ -66,7 +63,7 @@ class PawnTest extends \PHPUnit_Framework_TestCase
         $this->_chessBoard->add($this->_testWhite, 5, 5);
         $this->_chessBoard->add($secondWhite, 5, 6);
         
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidMoveException::class);
         $this->_testWhite->move(5, 6);
     }
     
@@ -78,7 +75,7 @@ class PawnTest extends \PHPUnit_Framework_TestCase
     }
     public function testPawn_Move_White_Downwards () {
         $this->_chessBoard->add($this->_testWhite, 6, 3);
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidMoveException::class);
         $this->_testWhite->move(6, 2);
     }
     public function testPawn_Move_Black_Downwards () {
@@ -89,7 +86,7 @@ class PawnTest extends \PHPUnit_Framework_TestCase
     }
     public function testPawn_Move_Black_Upwards () {
         $this->_chessBoard->add($this->_testBlack, 4, 4);
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidMoveException::class);
         $this->_testBlack->move(4, 5);
     }
     
@@ -137,7 +134,7 @@ class PawnTest extends \PHPUnit_Framework_TestCase
         $this->_chessBoard->add($this->_testWhite, 4, 1);
         $this->_chessBoard->add($this->_testBlack, 4, 2);
         
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidMoveException::class);
         $this->_testWhite->move(4, 2);
     }
     
