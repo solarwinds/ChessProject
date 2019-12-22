@@ -94,6 +94,8 @@ class PawnTest extends \PHPUnit_Framework_TestCase
         
         // Checks that the victim has actually been captured
         $this->assertTrue( $this->_testBlack->isCaptured() );
+        $this->assertEquals(Piece::INVALID, $this->_testBlack->getXCoordinate());
+        $this->assertEquals(Piece::INVALID, $this->_testBlack->getYCoordinate());
     }
     // TODO: test black captures white
     // TODO: test failed captures
