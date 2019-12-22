@@ -5,6 +5,8 @@ namespace SolarWinds\Chess;
 use SolarWinds\Chess\ChessBoard;
 use SolarWinds\Chess\Pawn;
 
+// TODO: we should swap the \InvalidArgumentException with a custom InvalidMoveException
+
 class PawnTest extends \PHPUnit_Framework_TestCase
 {
     /** @var  ChessBoard */
