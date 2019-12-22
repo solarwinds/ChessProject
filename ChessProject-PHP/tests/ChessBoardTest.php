@@ -3,7 +3,6 @@
 namespace SolarWinds\Chess;
 
 use SolarWinds\Chess\ChessBoard;
-use SolarWinds\Chess\PieceColorEnum;
 use SolarWinds\Chess\Pawn;
 
 class ChessBoardTest extends \PHPUnit_Framework_TestCase
@@ -59,8 +58,8 @@ class ChessBoardTest extends \PHPUnit_Framework_TestCase
     }
     
     public function testAvoids_Duplicate_Positioning () {
-        $firstPawn = new Pawn(PieceColorEnum::BLACK());
-        $secondPawn = new Pawn(PieceColorEnum::BLACK());
+        $firstPawn = new Pawn(FALSE);
+        $secondPawn = new Pawn(FALSE);
         $this->_testSubject->add($firstPawn, 6, 3);
         
         // NOTE: we cannot simply use expectException() here, since the test would stop right after that, ignoring what follows!
@@ -80,28 +79,28 @@ class ChessBoardTest extends \PHPUnit_Framework_TestCase
     }
     
     public function testInvalidPositionX () {
-        $firstPawn = new Pawn(PieceColorEnum::BLACK());
+        $firstPawn = new Pawn(FALSE);
         list($width,$height) = $this->_testSubject->getSquareSize();
         
         $this->expectException(\InvalidArgumentException::class);
         $this->_testSubject->add($firstPawn, $width, $height-1);
     }
     public function testInvalidPositionXY () {
-        $firstPawn = new Pawn(PieceColorEnum::BLACK());
+        $firstPawn = new Pawn(FALSE);
         list($width,$height) = $this->_testSubject->getSquareSize();
         
         $this->expectException(\InvalidArgumentException::class);
         $this->_testSubject->add($firstPawn, $width, $height);
     }
     public function testInvalidPositionY () {
-        $firstPawn = new Pawn(PieceColorEnum::BLACK());
+        $firstPawn = new Pawn(FALSE);
         list($width,$height) = $this->_testSubject->getSquareSize();
         
         $this->expectException(\InvalidArgumentException::class);
         $this->_testSubject->add($firstPawn, $width-1, $height);
     }
     public function testValidPosition () {
-        $firstPawn = new Pawn(PieceColorEnum::BLACK());
+        $firstPawn = new Pawn(FALSE);
         list($width,$height) = $this->_testSubject->getSquareSize();
         
         $this->_testSubject->add($firstPawn, $width-1, $height-1);

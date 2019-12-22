@@ -4,7 +4,6 @@ namespace SolarWinds\Chess;
 
 use SolarWinds\Chess\ChessBoard;
 use SolarWinds\Chess\Pawn;
-use SolarWinds\Chess\PieceColorEnum;
 
 class PawnTest extends \PHPUnit_Framework_TestCase
 {
@@ -19,8 +18,8 @@ class PawnTest extends \PHPUnit_Framework_TestCase
     
     protected function setUp () {
         $this->_chessBoard = new ChessBoard();
-        $this->_testWhite = new Pawn(PieceColorEnum::WHITE());
-        $this->_testBlack = new Pawn(PieceColorEnum::BLACK());
+        $this->_testWhite = new Pawn(TRUE);
+        $this->_testBlack = new Pawn(FALSE);
     }
     
     public function testChessBoard_Add_Sets_XCoordinate () {

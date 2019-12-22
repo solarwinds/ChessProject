@@ -6,9 +6,6 @@ abstract class Piece
 {
     const INVALID = -1;
     
-    /** @var PieceColorEnum */
-    protected $pieceColorEnum;
-    
     /** @var ChessBoard */
     protected $chessBoard;
     
@@ -18,10 +15,12 @@ abstract class Piece
     /** @var int */
     protected $yCoordinate;
     
-    public function __construct (PieceColorEnum $pieceColorEnum) {
+    private $_isWhite;
+    
+    public function __construct (bool $isWhite) {
         $this->xCoordinate = static::INVALID;
         $this->yCoordinate = static::INVALID;
-        $this->pieceColorEnum = $pieceColorEnum;
+        $this->_isWhite = $isWhite;
     }
     
     public function initialise (ChessBoard $chessBoard, int $xCoordinate, int $yCoordinate) {
@@ -40,8 +39,11 @@ abstract class Piece
         return $this->yCoordinate;
     }
     
-    public function getPieceColor () {
-        return $this->pieceColorEnum;
+    public function isWhite () {
+        return $this->_isWhite;
+    }
+    public function isBlack () {
+        return !$this->_isWhite;
     }
     
     /**
@@ -81,6 +83,6 @@ abstract class Piece
     abstract protected function validPattern (int $newX, int $newY);
     
     public function __toString () {
-		return "x({$this->xCoordinate}), y({$this->yCoordinate}), pieceColor({$this->pieceColorEnum})";
+        return get_class($this)." ".($this->isWhite()?'white':'black')." @({$this->xCoordinate}, {$this->yCoordinate})";
     }
 }
