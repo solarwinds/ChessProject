@@ -11,21 +11,9 @@ class Pawn extends Piece
         return $this->isBlack();
     }
     
-    public function validMove (int $newX, int $newY) {
-        if ( !$this->validMoveBase($newX,$newY) )
-            return FALSE;
-        
-        if ( !$this->validPattern($newX, $newY) )
-            return FALSE;
-        
-        // TODO: check the destination cell
-        
-        return TRUE;
-    }
-    public function validPattern (int $newX, int $newY) {
+    protected function validPattern (int $newX, int $newY) {
         // TODO: captures
         // TODO: double‑move
-        // TODO: promotion
         
         if ( $newX != $this->xCoordinate )
             return FALSE;
@@ -37,5 +25,10 @@ class Pawn extends Piece
             return TRUE;
         
         return FALSE;
+    }
+    protected function validPath (int $newX, int $newY) {
+        // TODO: double‑move
+        
+        return TRUE;
     }
 }

@@ -64,8 +64,7 @@ abstract class Piece
      * This function must call validMove().
      */
     public function move (int $newX, int $newY) {
-        if ( !$this->validMove($newX,$newY) )
-            throw new \InvalidArgumentException($this.": invalid move [$newX, $newY].");
+        $dest_cell = $this->validMove($newX,$newY);
         
         $this->xCoordinate = $newX;
         $this->yCoordinate = $newY;
@@ -76,30 +75,37 @@ abstract class Piece
     }
     
     /**
-     * This has to be called by validMove().
-     * It features checks that are common for any Piece.
+     * Throws \InvalidArgumentException if the move is invalid.
+     * Returns TRUE if the move is valid and the destination cell is empty.
+     * Returns the captured Piece otherwise.
      */
-    protected function validMoveBase (int $newX, int $newY) {
+    public function validMove (int $newX, int $newY) {
         if ( !$this->chessBoard->isLegalBoardPosition($newX,$newY) )
-            return FALSE;
+            throw new \InvalidArgumentException("$this: Illegal board position [$newX, $newY].");
+        
+        if ( !$this->validPattern($newX, $newY) )
+            throw new \InvalidArgumentException("$this: Illegal moving pattern [$newX, $newY].");
+        
+        if ( !$this->validPath($newX, $newY) )
+            throw new \InvalidArgumentException("$this: Illegal moving path [$newX, $newY].");
         
         $dest_cell = $this->chessBoard->getCell($newX,$newY);
-        if ( $dest_cell !== ChessBoard::EMPTY ) {
-            // Must not be of the same colour
+        if ( $dest_cell === ChessBoard::EMPTY ) {
+            // The destination cell is empty
+            
+            return TRUE;
+        }
+        else {
+            // The Piece in the destination cell must be of a different colour
             
             if ( $dest_cell->isFriendly($this) )
-                return FALSE;
+                throw new \InvalidArgumentException("$this: Can't capture your own piece [$newX, $newY].");
+            
+            return $dest_cell; // Returning the to‑be‑captured Piece
         }
         
-        return TRUE;
+        throw new \LogicException("Should never end up here.");
     }
-    
-    /**
-     * This must call validPattern(), and also check other related constraints, relative to the Board and its status.
-     * For instance, it must check if the cell exists, and if it's not occupied by a piece of yours, and it there
-     * are no pieces blocking its way, etc.
-     */
-    abstract public function validMove (int $newX, int $newY);
     
     /**
      * This only checks if the moving pattern is correct.
@@ -107,6 +113,13 @@ abstract class Piece
      * It only and solely checks the pattern (i.e. the direction, the distance, etc.)
      */
     abstract protected function validPattern (int $newX, int $newY);
+    
+    /**
+     * This checks if the path that the Piece has to walk is clear.
+     * Pieces that move by a single square (King), or that ignore the path (Knight) will just return TRUE.
+     * This DOES NOT check the destination cell, only the path towards it!
+     */
+    abstract protected function validPath (int $newX, int $newY);
     
     public function __toString () {
         return get_class($this)." ".($this->isWhite()?'white':'black')." @({$this->xCoordinate}, {$this->yCoordinate})";
