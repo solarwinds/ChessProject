@@ -36,3 +36,6 @@ In either case, it may be legal or not.
 Even special moves, such as the castling, the en‑passant, or the promotion, are simply defined by your destination: if you aim to go there with that piece, the move you are attempting is always unambiguous.
 
 As a result, this class is entirely unnecessary.
+
+## The plan
+I've created [a planning file](Plan.md), feel free to have a look.
