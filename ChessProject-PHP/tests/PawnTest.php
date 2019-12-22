@@ -96,6 +96,23 @@ class PawnTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(Piece::INVALID, $this->_testBlack->getXCoordinate());
         $this->assertEquals(Piece::INVALID, $this->_testBlack->getYCoordinate());
     }
-    // TODO: test black captures white
+    public function testPawn_Black_Capture () {
+        $this->_chessBoard->add($this->_testWhite, 6, 5);
+        $this->_chessBoard->add($this->_testBlack, 7, 6);
+        
+        // Checks the capture move itself
+        $this->_testBlack->move(6, 5);
+        $this->assertEquals(6, $this->_testBlack->getXCoordinate());
+        $this->assertEquals(5, $this->_testBlack->getYCoordinate());
+        
+        // Checks that in the target cell there is the active piece
+        $pieceGot = $this->_chessBoard->getCell(6, 5);
+        $this->assertEquals($this->_testBlack, $pieceGot);
+        
+        // Checks that the victim has actually been captured
+        $this->assertTrue( $this->_testWhite->isCaptured() );
+        $this->assertEquals(Piece::INVALID, $this->_testWhite->getXCoordinate());
+        $this->assertEquals(Piece::INVALID, $this->_testWhite->getYCoordinate());
+    }
     // TODO: test failed captures
 }
