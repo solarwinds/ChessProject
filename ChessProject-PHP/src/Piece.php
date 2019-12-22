@@ -17,10 +17,13 @@ abstract class Piece
     
     private $_isWhite;
     
+    private $_isCaptured;
+    
     public function __construct (bool $isWhite) {
         $this->xCoordinate = static::INVALID;
         $this->yCoordinate = static::INVALID;
         $this->_isWhite = $isWhite;
+        $this->_isCaptured = FALSE;
     }
     
     public function initialise (ChessBoard $chessBoard, int $xCoordinate, int $yCoordinate) {
@@ -52,6 +55,12 @@ abstract class Piece
             return 'black';
         throw new \InvalidArgumentException("Unknown colour for [$this].");
     }
+    public function isActive () {
+        if ( $this->_isCaptured )
+            return FALSE;
+        
+        return TRUE;
+    }
     
     /**
      * Returns TRUE if $check is of the same colour of $this.
@@ -80,6 +89,9 @@ abstract class Piece
      * Returns the captured Piece otherwise.
      */
     public function validMove (int $newX, int $newY) {
+        if ( !$this->isActive() )
+            throw new InvalidMoveException("$this: Inactive pieces can't move.");
+        
         if ( !$this->chessBoard->isLegalBoardPosition($newX,$newY) )
             throw new InvalidMoveException("$this: Illegal board position [$newX, $newY].");
         

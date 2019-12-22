@@ -104,7 +104,8 @@ class PawnTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($this->_testWhite, $pieceGot);
         
         // Checks that the victim has actually been captured
-        $this->assertTrue( $this->_testBlack->isCaptured() );
+        $this->assertFalse( $this->_testBlack->isActive() );
+        $this->assertTrue( $this->_testWhite->isActive() );
         $this->assertEquals(Piece::INVALID, $this->_testBlack->getX());
         $this->assertEquals(Piece::INVALID, $this->_testBlack->getY());
     }
@@ -122,7 +123,8 @@ class PawnTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($this->_testBlack, $pieceGot);
         
         // Checks that the victim has actually been captured
-        $this->assertTrue( $this->_testWhite->isCaptured() );
+        $this->assertFalse( $this->_testWhite->isActive() );
+        $this->assertTrue( $this->_testBlack->isActive() );
         $this->assertEquals(Piece::INVALID, $this->_testWhite->getX());
         $this->assertEquals(Piece::INVALID, $this->_testWhite->getY());
     }
