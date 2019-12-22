@@ -43,8 +43,8 @@ Minimum viable product:
 
 - [x] Forward movement
 - [x] Piece class
-- [ ] validMove()
-- [ ] move()
+- [x] validMove()
+- [x] move()
 
 ---
 
