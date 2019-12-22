@@ -101,9 +101,6 @@ abstract class Piece
             if ( $dest_cell->isFriendly($this) )
                 throw new InvalidMoveException("$this: Can't capture your own piece [$newX, $newY].");
             
-            if ( !$this->validCapture($newX,$newY) )
-                throw new InvalidMoveException("$this: Illegal capture move [$newX, $newY].");
-            
             return $dest_cell; // Returning the to‑be‑captured Piece
         }
         
@@ -123,14 +120,6 @@ abstract class Piece
      * This DOES NOT check the destination cell, only the path towards it!
      */
     abstract protected function validPath (int $newX, int $newY);
-    
-    /**
-     * Checks if it is valid for this Piece to move there and capture a Piece.
-     * For every Piece save for the Pawn, the answer is TRUE (assuming validPattern and validPath).
-     */
-    protected function validCapture (int $newX, int $newY) {
-        return TRUE;
-    }
     
     public function __toString () {
         return get_class($this)." ".($this->isWhite()?'white':'black')." @({$this->xCoordinate}, {$this->yCoordinate})";

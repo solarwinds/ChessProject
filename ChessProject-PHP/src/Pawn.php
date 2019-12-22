@@ -31,7 +31,4 @@ class Pawn extends Piece
         
         return TRUE;
     }
-    protected function validCapture (int $newX, int $newY) {
-        throw new \Exception("Not implemented");
-    }
 }
