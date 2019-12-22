@@ -73,14 +73,17 @@ abstract class Piece
      * This function must call validMove().
      */
     public function move (int $newX, int $newY) {
+        $former_x = $this->xCoordinate;
+        $former_y = $this->yCoordinate;
+        
         $dest_cell = $this->validMove($newX,$newY);
         
         $this->xCoordinate = $newX;
         $this->yCoordinate = $newY;
         
-        // TODO: captures
+        $this->chessBoard->handleMove($this,$dest_cell,$former_x,$former_y);
+        
         // TODO: promotions
-        // TODO: update the board
     }
     
     /**
@@ -132,6 +135,14 @@ abstract class Piece
      * This DOES NOT check the destination cell, only the path towards it!
      */
     abstract protected function validPath (int $newX, int $newY);
+    
+    public function capturedBy (Piece $by) {
+        // NOTE: while $by isn't currently used, we might easily need it for displaying, or for logging.
+        
+        $this->_isCaptured = TRUE;
+        $this->xCoordinate = static::INVALID;
+        $this->yCoordinate = static::INVALID;
+    }
     
     public function __toString () {
         return get_class($this)." ".($this->isWhite()?'white':'black')." @({$this->xCoordinate}, {$this->yCoordinate})";
