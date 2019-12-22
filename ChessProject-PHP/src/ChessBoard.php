@@ -15,7 +15,7 @@ class ChessBoard
         $this->cells = array_fill(0, static::BOARD_WIDTH, array_fill(0, static::BOARD_HEIGHT, self::EMPTY));
     }
     
-    public function add (Pawn $pawn, $xCoordinate, $yCoordinate) {
+    public function add (Pawn $pawn, int $xCoordinate, int $yCoordinate) {
         if ( !$this->isLegalBoardPosition($xCoordinate, $yCoordinate) )
             throw new InvalidMoveException("Invalid board position [$xCoordinate, $yCoordinate].");
         
@@ -32,7 +32,7 @@ class ChessBoard
     /**
  	 * @return boolean
  	 **/
-    public function isLegalBoardPosition ($xCoordinate, $yCoordinate, $THROW=FALSE) {
+    public function isLegalBoardPosition (int $xCoordinate, int $yCoordinate, bool $THROW=FALSE) {
         // NOTE: doing this is better than checking if they are between 0 and BOARD_*, since it technically supports different board configurations, and since it actually checks if that cell really exists, which is the point
         
         $ret = isset($this->cells[$xCoordinate][$yCoordinate]);
@@ -41,7 +41,7 @@ class ChessBoard
         return $ret;
     }
     
-    public function isCellEmpty ($xCoordinate, $yCoordinate) {
+    public function isCellEmpty (int $xCoordinate, int $yCoordinate) {
         $this->isLegalBoardPosition($xCoordinate, $yCoordinate, TRUE);
         return $this->cells[$xCoordinate][$yCoordinate] === self::EMPTY;
     }
@@ -74,7 +74,7 @@ class ChessBoard
     /**
      * @return Pawn|EMPTY
      */
-    public function getCell ($xCoordinate, $yCoordinate) {
+    public function getCell (int $xCoordinate, int $yCoordinate) {
         $this->isLegalBoardPosition($xCoordinate, $yCoordinate, TRUE);
         return $this->cells[$xCoordinate][$yCoordinate];
     }
