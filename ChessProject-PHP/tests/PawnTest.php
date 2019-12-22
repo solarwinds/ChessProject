@@ -54,9 +54,18 @@ class PawnTest extends \PHPUnit_Framework_TestCase
         $this->expectException(\InvalidArgumentException::class);
         $this->_testWhite->move(5, 3);
     }
+    
+    /**
+     * Trying to move a Pawn forward into a cell containing another Pawn of the same colour.
+     */
     public function testPawn_Move_Illegal_Obstacle () {
-        // TODO: trying to move a Pawn forward into a cell containing another Pawn of the same colour
-        throw new \Exception("Not implemented");
+        $secondWhite = new Pawn(TRUE);
+        
+        $this->_chessBoard->add($this->_testWhite, 5, 5);
+        $this->_chessBoard->add($secondWhite, 5, 6);
+        
+        $this->expectException(\InvalidArgumentException::class);
+        $this->_testWhite->move(5, 6);
     }
     
     public function testPawn_Move_White_Upwards () {

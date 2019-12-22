@@ -45,6 +45,20 @@ abstract class Piece
     public function isBlack () {
         return !$this->_isWhite;
     }
+    public function colourName () {
+        if ( $this->isWhite() )
+            return 'white';
+        if ( $this->isBlack() )
+            return 'black';
+        throw new \InvalidArgumentException("Unknown colour for [$this].");
+    }
+    
+    /**
+     * Returns TRUE if $check is of the same colour of $this.
+     */
+    public function isFriendly (Piece $check) {
+        return $check->colourName()===$this->colourName();
+    }
     
     /**
      * This function must call validMove().
@@ -68,6 +82,14 @@ abstract class Piece
     protected function validMoveBase (int $newX, int $newY) {
         if ( !$this->chessBoard->isLegalBoardPosition($newX,$newY) )
             return FALSE;
+        
+        $dest_cell = $this->chessBoard->getCell($newX,$newY);
+        if ( $dest_cell !== ChessBoard::EMPTY ) {
+            // Must not be of the same colour
+            
+            if ( $dest_cell->isFriendly($this) )
+                return FALSE;
+        }
         
         return TRUE;
     }
