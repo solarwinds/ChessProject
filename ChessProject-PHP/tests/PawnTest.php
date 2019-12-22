@@ -101,7 +101,7 @@ class PawnTest extends \PHPUnit_Framework_TestCase
         
         // Checks that in the target cell there is the active piece
         $pieceGot = $this->_chessBoard->getCell(5, 2);
-        $this->assertEquals($this->_testWhite, $pieceGot);
+        $this->assertSame($this->_testWhite, $pieceGot);
         
         // Checks that the victim has actually been captured
         $this->assertTrue( $this->_testBlack->isCaptured() );
@@ -119,7 +119,7 @@ class PawnTest extends \PHPUnit_Framework_TestCase
         
         // Checks that in the target cell there is the active piece
         $pieceGot = $this->_chessBoard->getCell(6, 5);
-        $this->assertEquals($this->_testBlack, $pieceGot);
+        $this->assertSame($this->_testBlack, $pieceGot);
         
         // Checks that the victim has actually been captured
         $this->assertTrue( $this->_testWhite->isCaptured() );

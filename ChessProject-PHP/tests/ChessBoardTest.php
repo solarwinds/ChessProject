@@ -104,7 +104,7 @@ class ChessBoardTest extends \PHPUnit_Framework_TestCase
         
         $this->_testSubject->add($firstPawn, $width-1, $height-1);
         $gotPawn = $this->_testSubject->getCell($width-1, $height-1);
-        $this->assertEquals($firstPawn, $gotPawn);
+        $this->assertSame($firstPawn, $gotPawn);
     }
     
     public function testIsBoardEmpty () {
