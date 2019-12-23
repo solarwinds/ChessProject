@@ -79,13 +79,8 @@ class ChessBoard
         return $this->cells[$xCoordinate][$yCoordinate];
     }
     
-    public function handleMove (Piece $movedPiece, $capturedPiece, int $formerX, int $formerY) {
+    public function handleMove (Piece $movedPiece, int $formerX, int $formerY) {
         $this->cells[$formerX][$formerY] = static::EMPTY;
         $this->cells[$movedPiece->getX()][$movedPiece->getY()] = $movedPiece;
-        
-        if ($capturedPiece instanceof Piece) {
-            // Capture
-            $capturedPiece->CapturedBy($movedPiece);
-        }
     }
 }

@@ -23,13 +23,13 @@ abstract class Piece
         $this->xCoordinate = static::INVALID;
         $this->yCoordinate = static::INVALID;
         $this->_isWhite = $isWhite;
-        $this->_isCaptured = FALSE;
     }
     
     public function initialise (ChessBoard $chessBoard, int $xCoordinate, int $yCoordinate) {
         $this->chessBoard = $chessBoard;
         $this->xCoordinate = $xCoordinate;
         $this->yCoordinate = $yCoordinate;
+        $this->_isCaptured = FALSE;
     }
     
     /** @return int */
@@ -78,10 +78,15 @@ abstract class Piece
         
         $dest_cell = $this->validMove($newX,$newY);
         
+        if ($dest_cell instanceof Piece) {
+            // Capture
+            $dest_cell->CapturedBy($this);
+        }
+        
         $this->xCoordinate = $newX;
         $this->yCoordinate = $newY;
         
-        $this->chessBoard->handleMove($this,$dest_cell,$former_x,$former_y);
+        $this->chessBoard->handleMove($this,$former_x,$former_y);
         
         // TODO: promotions
     }
