@@ -13,6 +13,7 @@ class Pawn extends Piece
     
     protected function validPattern (int $newX, int $newY) {
         // TODO: double‑move
+        // TODO: en‑passant
         
         if ( $this->goingUp() && $newY!=$this->yCoordinate+1 )
             return FALSE;
