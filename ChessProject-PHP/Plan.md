@@ -4,7 +4,7 @@
 - [x] 2. Check the tests
 - [x] 3. Add missing tests
 - [x] 4. Add new features
-- [ ] 5. Add missing documentation
+- [x] 5. Add missing documentation
 
 ## 1. Pass all the tests
 We need to pass all the tests that are here, implementing the features that may be required for that.
