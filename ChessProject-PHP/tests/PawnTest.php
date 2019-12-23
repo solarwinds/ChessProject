@@ -160,4 +160,13 @@ class PawnTest extends \PHPUnit_Framework_TestCase
         $this->expectException(InvalidMoveException::class);
         $this->_testWhite->move(5, 2);
     }
+    
+    public function testPawn_ColourName_White () {
+        $this->assertEquals($this->_testWhite->colourName(),'white');
+        $this->assertNotEquals($this->_testWhite->colourName(),'black');
+    }
+    public function testPawn_ColourName_Black () {
+        $this->assertEquals($this->_testBlack->colourName(),'black');
+        $this->assertNotEquals($this->_testBlack->colourName(),'white');
+    }
 }

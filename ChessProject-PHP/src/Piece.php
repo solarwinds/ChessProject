@@ -150,6 +150,6 @@ abstract class Piece
     }
     
     public function __toString () {
-        return get_class($this)." ".($this->isWhite()?'white':'black')." @({$this->xCoordinate}, {$this->yCoordinate})";
+        return get_class($this)." ".$this->colourName()." @({$this->xCoordinate}, {$this->yCoordinate})";
     }
 }
