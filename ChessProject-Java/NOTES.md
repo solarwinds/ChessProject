@@ -101,17 +101,9 @@ I'm doing the Java version of the project.
     rather than just a single "board size" value).
 
   - But that (of course) doesn't fix the failing test. Looking at the test in more detail, it's
-    trying to place 10 pawns - 8 on the penultimate row ("row 6"), and the remaining 2 on the last
-    row ("row 7"). Then it's expecting all of the pawns placed on "row 6" to have the
-    assigned coordinates, and all of the pawns placed on "row 7" to be invalid (with coordinates of
-    -1). I've changed the width and height to 8, so these expectations don't work any more.
-
-    Actually I'm not sure what value this test brings, if all its really doing is checking
-    legality of positions (which there are already other tests for). Its name implies that
-    its trying to test that once its placed 8 pawns, it's not allowed to place any more. I don't
-    know how chess works, but that sounds like a plausible thing to want to be able to test
-    (in terms of checking for valid start positions). So I think that means that the *Add()*
-    method needs to have an extra check to impose a limit on the number of pawns allowed.
+    trying to place 10 black pawns. Then it's expecting the first 8 to be ok, and the remaining
+    2 to be invalid (with coordinates of -1).  So I think that means that the *Add()* method needs
+    to have an extra check to impose a limit on the number of pawns allowed for each colour.
 
     So I'll do that. For now I'll do it really explicitly inside the *ChessBoard* class, as a check
     in its *Add()* method. Eventually we'll need to handle different types of pieces, and this
@@ -119,10 +111,10 @@ I'm doing the Java version of the project.
     the *Pawn* class itself.
 
     An alternative thing that the test might be trying to do (though I don't think so, because
-    of its name) is to test that BLACK isn't allowed to have any pawns on "row 7" and WHITE isn't
-    allowed to have any pawns on "row 0". The movement rules (and initial-placement rules) should
-    prohibit that. That would be a good thing to test too, but I think I'll add that later as
-    an additional test, once I've got this initial set all passing.
+    of its name, and because its using Black pawns) is to test that White isn't allowed to have any
+    pawns on "row 0". The movement rules (and initial-placement rules) should prohibit that.
+    That would be a good thing to test too, but I think I'll add that later as an additional test,
+    once I've got this initial set all passing.
 
   - Now I get 3 errors from my 14 tests, all because of the unimplemented *Move() method  in the
     *Pawn* class. According to the spec in thw README file, pawns can only move forward one space
@@ -155,8 +147,47 @@ I'm doing the Java version of the project.
   - Now all 14 tests are passing.
 
 
+## Cleaning things up
+
+  - Now all the tests are passing, and I've got a clearer idea of how the code is intending to
+    work, I'll address some of the things that are making things unclear or hard to understand,
+    in both the code and the tests.
+
+  - I'll start by adding comments. No need to comment absolutely every obvious thing, but there
+    are some non-obvious things going on that would be clearer with a few comments. So I'll do that
+    (including some block javadoc comments for the big "API" things).
+
+  - And I'll fix other issues I come across while doing so (and I'll try to write new tests for
+    anything I find that's wrong, since clearly the existing tests aren't detecting them):
+
+      - My logic for checking that it's ok to add a pawn at a particular position wasn't taking
+        into account that you shouldn't be allowed to add a pawn on a square that already has a
+        piece on it. So I'll fix that, and add an additional test. Actually, it turns out there
+        was a test for this, so I don't need to add one. The test was there but it wasn't running,
+        because the *ChessBoardTest* class was running under old-style JUnit 3 rules (because it was
+        explicitly extending *junit.framework.TestCase*). Fixed that, so now there are 15 passing
+        tests.
+
+      - My logic for imposing a limit on the number of pawns you're allowed to add wasn't
+        quite right (in that it wasn't taking account of the colour of the pawn). I'll fix that,
+        and add an additional test, no now there are 16 passing tests.
+
+      - One of the existing tests was written in what-C-people-call "Berkeley brace style" rather
+        than what-C-people-call "K&amp;R brace style". So I'll change that to match the rest of
+        the code.
+
+  - It's not usual to write lots of specific tests to check that getters and setters are working
+    correctly, so I won't do that. There had been a problem with misspelling of *Pawn.getChessBoard()*
+    but I've fixed that, and I've checked the rest are ok by looking at them carefuly.
+
+  - The *Pawn* class provides its own *toString()* method, but there is no test for this, so
+    I'll add one. And just as well I did, since it turns out it was using *String.format()*
+    incorrectly. Fixed that by using *java.text.MessageFormat* instead, and now there are 17
+    passing tests.
+
 
 ## Refactoring
 
 
+## Additional thoughts
 

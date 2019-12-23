@@ -1,8 +1,9 @@
 package com.solarwindsmsp.chess;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
 
 import static org.junit.Assert.*;
 
@@ -29,7 +30,6 @@ public class PawnTest {
         assertEquals(3, testSubject.getYCoordinate());
     }
 
-
     @Test
     public void testPawn_Move_IllegalCoordinates_Right_DoesNotMove() {
         chessBoard.Add(testSubject, 6, 3, PieceColor.BLACK);
@@ -54,4 +54,11 @@ public class PawnTest {
         assertEquals(2, testSubject.getYCoordinate());
     }
 
+    @Test
+    public void testPawn_toString() {
+        chessBoard.Add(testSubject, 6, 3, PieceColor.BLACK);
+        String eol = System.lineSeparator();
+        String expected = String.format("Current X: 6%sCurrent Y: 3%sPiece Color: BLACK", eol, eol);
+        assertEquals(expected, testSubject.toString());
+    }
 }
