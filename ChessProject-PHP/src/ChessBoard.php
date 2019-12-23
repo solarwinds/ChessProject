@@ -15,7 +15,7 @@ class ChessBoard
         $this->cells = array_fill(0, static::BOARD_WIDTH, array_fill(0, static::BOARD_HEIGHT, self::EMPTY));
     }
     
-    public function add (Pawn $pawn, int $xCoordinate, int $yCoordinate) {
+    public function add (Piece $piece, int $xCoordinate, int $yCoordinate) {
         if ( !$this->isLegalBoardPosition($xCoordinate, $yCoordinate) )
             throw new InvalidMoveException("Invalid board position [$xCoordinate, $yCoordinate].");
         
@@ -25,8 +25,8 @@ class ChessBoard
         if ( !is_int($xCoordinate) || !is_int($yCoordinate) )
             throw new InvalidMoveException("Non‑integer coordinate ($xCoordinate, $yCoordinate)(".gettype($xCoordinate).", ".gettype($yCoordinate).").");
         
-        $this->cells[$xCoordinate][$yCoordinate] = $pawn; // NOTE: remember to update this!
-        $pawn->initialise($this,$xCoordinate,$yCoordinate);
+        $this->cells[$xCoordinate][$yCoordinate] = $piece; // NOTE: remember to update this!
+        $piece->initialise($this,$xCoordinate,$yCoordinate);
     }
     
     /**
@@ -72,7 +72,7 @@ class ChessBoard
     }
     
     /**
-     * @return Pawn|EMPTY
+     * @return Piece|EMPTY
      */
     public function getCell (int $xCoordinate, int $yCoordinate) {
         $this->isLegalBoardPosition($xCoordinate, $yCoordinate, TRUE);
