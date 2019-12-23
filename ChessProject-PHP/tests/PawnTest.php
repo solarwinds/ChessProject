@@ -141,7 +141,11 @@ class PawnTest extends \PHPUnit_Framework_TestCase
     }
     
     public function testPawn_Black_FailedCapture_Forward () {
-        throw new \Exception("Not implemented");
+        $this->_chessBoard->add($this->_testBlack, 0, 7);
+        $this->_chessBoard->add($this->_testWhite, 0, 6);
+        
+        $this->expectException(InvalidMoveException::class);
+        $this->_testBlack->move(0, 6);
     }
     public function testPawn_FailedCapture_SameColour () {
         // TODO: trying to capture a Piece of the same Colour (doing the correct diagonal move)
