@@ -4,7 +4,7 @@ package com.solarwindsmsp.chess;
  * Class to represent a single chessboard.
  *
  * Chess piece placement is represented as an X coordinate and a Y coordinate, both indexed from 0.
- * The X coordinate is the row ("rank"), and the Y coordinate is the column ("file").
+ * The X coordinate is the row index ("rank"), and the Y coordinate is the column index ("file").
  */
 public class ChessBoard {
 
@@ -43,10 +43,11 @@ public class ChessBoard {
     }
 
     /**
-     * Check if a specified pair of coordinates are valid (i.e. contained within the board).
+     * Check if a specified pair of coordinates are valid.
      *
      * @param xCoordinate   X coordinate
      * @param yCoordinate   Y coordinate
+     * @return true if these coordinates are contained within the board, otherwise false.
      */
     public boolean IsLegalBoardPosition(int xCoordinate, int yCoordinate) {
         if (xCoordinate < 0 || xCoordinate >= MAX_BOARD_WIDTH) {
@@ -59,11 +60,27 @@ public class ChessBoard {
     }
 
     /**
+     * Fetch the piece at the specified coordinates.
+     *
+     * @param xCoordinate   X coordinate (must be valid)
+     * @param yCoordinate   Y coordinate (must be valid)
+     * @return the piece object at the given coordinates, otherwise null.
+     */
+    public Pawn pieceAt(int xCoordinate, int yCoordinate) {
+        return pieces[xCoordinate][yCoordinate];
+    }
+
+    /**
      * Check if there is already a piece placed at the specified pair of coordinates.
+     *
+     * @param xCoordinate   X coordinate (must be valid)
+     * @param yCoordinate   Y coordinate (must be valid)
+     * @return true if there is a piece already placed at this position, otherwise false.
      */
     public boolean isOccupied(int xCoordinate, int yCoordinate) {
-        return pieces[xCoordinate][yCoordinate] != null;
+        return pieceAt(xCoordinate, yCoordinate) != null;
     }
+
 
     /**
      * Change the position of an existing piece on the board.
@@ -74,7 +91,7 @@ public class ChessBoard {
      */
     public void ChangePosition(Pawn pawn, int newX, int newY) {
         pieces[pawn.getXCoordinate()][pawn.getYCoordinate()] = null;
-        pieces[newX][newY] = null;
+        pieces[newX][newY] = pawn;
     }
 
     /*

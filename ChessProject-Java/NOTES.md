@@ -185,6 +185,33 @@ I'm doing the Java version of the project.
     incorrectly. Fixed that by using *java.text.MessageFormat* instead, and now there are 17
     passing tests.
 
+  - I'm concerned about the risk of having piece coordinates being stored separately in two
+    different places (in the pawn object, and also in the board object). I'm tempted to refactor
+    this so that this info is stored **only** in the board, and make it so that if a piece needs to
+    find out where it's currently placed, it should ask the board. But maybe there is a good reason
+    for piece to be able to **efficiently** find out its location (like maybe this chess program
+    is going to be used for exploring hundreds of millions of possible advance moves, and needs
+    to be super-fast)? In real life, this would spark off a conversation and maybe some questions
+    back to the business about use cases.
+
+    For now, I'll mitigate the risk a bit by at least adding an extra test to check that if a
+    piece moves itself, then the board state is correctly updated and in-sync. And... it's very
+    good (and a bit embarassing) that I did this, as it's highlighted a bug in the *ChangePosition*
+    method I'd added. If only there'd been a bit of pair-programming or code-review! But it also
+    highlights that it **is** risky to have the representation in two places.
+
+    To implement that test, I've added a new public method on the *ChessBoard* class, to fetch
+    the piece at a particular (x, y) coordinate pair. I'm happy for this to be a public method,
+    as I'm anticipating that this will be needed later anyway, outside of the tests.
+
+    So now I have 18 passing tests.
+
+  - I'm also going to change the names of variables in the tests where it refers to "row" and
+    "column", renaming these to "rowIndex" and "columnIndex" instead. The terminology is a bit
+    confusing, but it's important to be clear that by "rowIndex" we mean a particular square on
+    a given row (we're not referring to "which row it is", we're referring to "where on that row
+    it is").
+
 
 ## Refactoring
 

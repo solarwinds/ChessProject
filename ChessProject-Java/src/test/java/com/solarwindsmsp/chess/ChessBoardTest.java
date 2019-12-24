@@ -77,10 +77,10 @@ public class ChessBoardTest {
     public void testLimits_The_Number_Of_Pawns() {
         for (int i = 0; i < 10; i++) {
             Pawn pawn = new Pawn(PieceColor.BLACK);
-            int row = i / ChessBoard.MAX_BOARD_WIDTH;
-            testSubject.Add(pawn, 6 + row, i % ChessBoard.MAX_BOARD_HEIGHT, PieceColor.BLACK);
-            if (row < 1) {
-                assertEquals(6 + row, pawn.getXCoordinate());
+            int rowIndex = i / ChessBoard.MAX_BOARD_WIDTH;
+            testSubject.Add(pawn, 6 + rowIndex, i % ChessBoard.MAX_BOARD_HEIGHT, PieceColor.BLACK);
+            if (rowIndex < 1) {
+                assertEquals(6 + rowIndex, pawn.getXCoordinate());
                 assertEquals(i % ChessBoard.MAX_BOARD_HEIGHT, pawn.getYCoordinate());
             } else {
                 assertEquals(-1, pawn.getXCoordinate());
@@ -90,16 +90,38 @@ public class ChessBoardTest {
     }
 
     @Test
-    public void testEight_Pawns_Of_Each_Color() {
+    public void testEight_Pawns_Of_Each_Color_Are_Allowed() {
         PieceColor[] colors = {PieceColor.BLACK, PieceColor.WHITE};
         for (PieceColor color: colors) {
-            int column = (color == PieceColor.BLACK ? 6 : 1);
-            for (int row = 0; row < 8; row++) {
+            int columnIndex = (color == PieceColor.BLACK ? 6 : 1);
+            for (int rowIndex = 0; rowIndex < 8; rowIndex++) {
                 Pawn pawn = new Pawn(color);
-                testSubject.Add(pawn, row, column, color);
-                assertEquals(row, pawn.getXCoordinate());
-                assertEquals(column, pawn.getYCoordinate());
+                testSubject.Add(pawn, rowIndex, columnIndex, color);
+                assertEquals(rowIndex, pawn.getXCoordinate());
+                assertEquals(columnIndex, pawn.getYCoordinate());
             }
+        }
+    }
+
+    @Test
+    public void testBoard_Coordinates_Match_Piece_Coordinates_After_Move() {
+        PieceColor[] colors = {PieceColor.BLACK, PieceColor.WHITE};
+        for (PieceColor color: colors) {
+            int rowIndex = 6;
+            int columnIndex = (color == PieceColor.BLACK ? 6 : 1);
+            int newColumnIndex = (color == PieceColor.BLACK ? 5 : 2);
+            Pawn pawn = new Pawn(color);
+
+            testSubject.Add(pawn, rowIndex, columnIndex, color);
+            assertEquals(rowIndex, pawn.getXCoordinate());
+            assertEquals(columnIndex, pawn.getYCoordinate());
+            assertEquals(pawn, testSubject.pieceAt(rowIndex, columnIndex));
+
+            pawn.Move(MovementType.MOVE, rowIndex, newColumnIndex);
+            assertEquals(rowIndex, pawn.getXCoordinate());
+            assertEquals(newColumnIndex, pawn.getYCoordinate());
+            assertNull(testSubject.pieceAt(rowIndex, columnIndex));
+            assertEquals(pawn, testSubject.pieceAt(rowIndex, newColumnIndex));
         }
     }
 }
