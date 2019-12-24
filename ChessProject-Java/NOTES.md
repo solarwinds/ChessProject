@@ -88,7 +88,7 @@ I'm doing the Java version of the project.
     ia constructed, but I'll leave that to a refactoring stage, since my initial priority is to
     change as little as possible until I've got a full set of tests running).
 
-    Now I get 1 failure and 3 errors, from my 14 tests. 
+    Now I get 1 failure and 3 errors, from my 14 tests.
 
   - The one failure I'm getting is from that *testLimits_The_Number_Of_Pawns* test that I was
     concerned about earlier. So I'll look at that in more detail now.
@@ -215,6 +215,13 @@ I'm doing the Java version of the project.
 
 
 ## Refactoring
+
+  - Anticipating that we're going to want to have more piece types than just pawns (though not
+    for this sprint), it feels like it's a good idea to, as early as possible, start to prepare
+    for that. I'll introduce an abstract base class called *Piece*, which will provide all of
+    the functionality that will be common across all pieces (with abstract methods for the
+    details of how to do things that are specific to particular piece types, i.e. initially pawns).
+    I won't change any of the API, so all of the existing tests should still all work unchanged.
 
 
 ## Additional thoughts
