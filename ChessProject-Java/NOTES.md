@@ -210,7 +210,8 @@ I'm doing the Java version of the project.
     "column", renaming these to "rowIndex" and "columnIndex" instead. The terminology is a bit
     confusing, but it's important to be clear that by "rowIndex" we mean a particular square on
     a given row (we're not referring to "which row it is", we're referring to "where on that row
-    it is").
+    it is"). Maybe we should always just use "x" and "y", as that's clearer? Actually yes, that's
+    even better, so I'll do that (in the tests). Done that, and still have 18 passing tests.
 
 
 ## Refactoring
