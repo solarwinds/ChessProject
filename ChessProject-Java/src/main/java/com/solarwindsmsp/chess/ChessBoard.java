@@ -13,33 +13,36 @@ public class ChessBoard {
 
     private static int MAX_PAWNS_ALLOWED = MAX_BOARD_WIDTH;
 
-    private Pawn[][] pieces;
+    private Piece[][] pieces;
 
     public ChessBoard() {
-        pieces = new Pawn[MAX_BOARD_WIDTH][MAX_BOARD_HEIGHT];
-
+        pieces = new Piece[MAX_BOARD_WIDTH][MAX_BOARD_HEIGHT];
     }
 
     /**
-     * Add a pawn to the board.
+     * Add a piece to the board.
      *
-     * @param pawn          the pawn to be added
+     * If the coordinates are invalid, or if there is already another piece placed at that
+     * position on the board, then the piece will bad added with special "invalid coordinate"
+     * values of [-1, -1], but no exception will be raised.
+     *
+     * @param piece         the piece to be added
      * @param xCoordinate   X coordinate
      * @param yCoordinate   Y coordinate
      * @param pieceColor    piece colour (overwriting whatever colour the piece already was)
      */
-    public void Add(Pawn pawn, int xCoordinate, int yCoordinate, PieceColor pieceColor) {
+    public void Add(Piece piece, int xCoordinate, int yCoordinate, PieceColor pieceColor) {
         if (!IsLegalBoardPosition(xCoordinate, yCoordinate)
                 || isOccupied(xCoordinate, yCoordinate)
-                || numberOfPawns(pieceColor) >= MAX_PAWNS_ALLOWED) {
+                || ((piece instanceof Pawn) && numberOfPawns(pieceColor) >= MAX_PAWNS_ALLOWED)) {
             xCoordinate = yCoordinate = -1;
         } else {
-            pieces[xCoordinate][yCoordinate] = pawn;
+            pieces[xCoordinate][yCoordinate] = piece;
         }
-        pawn.setChessBoard(this);
-        pawn.setPieceColor(pieceColor);
-        pawn.setXCoordinate(xCoordinate);
-        pawn.setYCoordinate(yCoordinate);
+        piece.setChessBoard(this);
+        piece.setPieceColor(pieceColor);
+        piece.setXCoordinate(xCoordinate);
+        piece.setYCoordinate(yCoordinate);
     }
 
     /**
@@ -66,7 +69,7 @@ public class ChessBoard {
      * @param yCoordinate   Y coordinate (must be valid)
      * @return the piece object at the given coordinates, otherwise null.
      */
-    public Pawn pieceAt(int xCoordinate, int yCoordinate) {
+    public Piece pieceAt(int xCoordinate, int yCoordinate) {
         return pieces[xCoordinate][yCoordinate];
     }
 
@@ -85,13 +88,13 @@ public class ChessBoard {
     /**
      * Change the position of an existing piece on the board.
      *
-     * @param pawn      The piece to be moved
+     * @param piece      The piece to be moved
      * @param newX      New X coordinate
      * @param newY      New Y coordinate
      */
-    public void ChangePosition(Pawn pawn, int newX, int newY) {
-        pieces[pawn.getXCoordinate()][pawn.getYCoordinate()] = null;
-        pieces[newX][newY] = pawn;
+    public void ChangePosition(Piece piece, int newX, int newY) {
+        pieces[piece.getXCoordinate()][piece.getYCoordinate()] = null;
+        pieces[newX][newY] = piece;
     }
 
     /*
@@ -99,9 +102,9 @@ public class ChessBoard {
      */
     private int numberOfPawns(PieceColor pieceColor) {
         int nPawns = 0;
-        for (Pawn[] columns: pieces) {
-            for (Pawn pawn: columns) {
-                if (pawn != null && pawn.getPieceColor() == pieceColor) {
+        for (Piece[] columns: pieces) {
+            for (Piece piece: columns) {
+                if (piece != null && piece.getPieceColor() == pieceColor) {
                     nPawns++;
                 }
             }

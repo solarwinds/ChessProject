@@ -59,20 +59,31 @@ public abstract class Piece {
      *
      * The piece must already be placed on the board, the new coordinates must be valid,
      * and the target square must be unoccupied.
+     *
      * If the movement is disallowed, this method silently does nothing.
      *
      * @param movementType      movement type (MOVE or CAPTURE)
      * @param newX              new X coordinate
      * @param newY              new Y coordinate
      */
-    public abstract void Move(MovementType movementType, int newX, int newY);
+    public void Move(MovementType movementType, int newX, int newY) {
+        ChessBoard board = this.getChessBoard();
+        if (board.IsLegalBoardPosition(newX, newY) && !board.isOccupied(newX, newY)) {
+            if (movementType == MovementType.MOVE) {
+                if (canMove(newX, newY)) {
+                    board.ChangePosition(this, newX, newY);
+                    this.setXCoordinate(newX);
+                    this.setYCoordinate(newY);
+                }
+            } else {
+                // TODO: MovementType.CAPTURE
+                throw new UnsupportedOperationException("Need to implement Move(CAPTURE)");
+            }
+        }
+    }
 
     /*
-     * Check if a movement is valid, according to the pawn movement rules.
-     *
-     * A Pawn can move forward (towards column 0 if black, or towards column 7 if white) by one square,
-     * with the single exception that a pawn that is still at its "start position" (the row with column
-     * index of 6 if black, or 1 if white) then it is allowed to move forward by two squares.
+     * Check if a movement is valid, according to the movement rules.
      */
     protected abstract boolean canMove(int newX, int newY);
 

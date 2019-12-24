@@ -63,8 +63,8 @@ public class ChessBoardTest {
 
     @Test
     public void testAvoids_Duplicate_Positioning() {
-        Pawn firstPawn = new Pawn(PieceColor.BLACK);
-        Pawn secondPawn = new Pawn(PieceColor.BLACK);
+        Piece firstPawn = new Pawn(PieceColor.BLACK);
+        Piece secondPawn = new Pawn(PieceColor.BLACK);
         testSubject.Add(firstPawn, 6, 3, PieceColor.BLACK);
         testSubject.Add(secondPawn, 6, 3, PieceColor.BLACK);
         assertEquals(6, firstPawn.getXCoordinate());
@@ -76,7 +76,7 @@ public class ChessBoardTest {
     @Test
     public void testLimits_The_Number_Of_Pawns() {
         for (int i = 0; i < 10; i++) {
-            Pawn pawn = new Pawn(PieceColor.BLACK);
+            Piece pawn = new Pawn(PieceColor.BLACK);
             int xIndex = i / ChessBoard.MAX_BOARD_WIDTH;
             testSubject.Add(pawn, 6 + xIndex, i % ChessBoard.MAX_BOARD_HEIGHT, PieceColor.BLACK);
             if (xIndex < 1) {
@@ -95,7 +95,7 @@ public class ChessBoardTest {
         for (PieceColor color: colors) {
             int yIndex = (color == PieceColor.BLACK ? 6 : 1);
             for (int xIndex = 0; xIndex < 8; xIndex++) {
-                Pawn pawn = new Pawn(color);
+                Piece pawn = new Pawn(color);
                 testSubject.Add(pawn, xIndex, yIndex, color);
                 assertEquals(xIndex, pawn.getXCoordinate());
                 assertEquals(yIndex, pawn.getYCoordinate());
@@ -110,7 +110,7 @@ public class ChessBoardTest {
             int xIndex = 6;
             int yIndex = (color == PieceColor.BLACK ? 6 : 1);
             int newYIndex = (color == PieceColor.BLACK ? 5 : 2);
-            Pawn pawn = new Pawn(color);
+            Piece pawn = new Pawn(color);
 
             testSubject.Add(pawn, xIndex, yIndex, color);
             assertEquals(xIndex, pawn.getXCoordinate());

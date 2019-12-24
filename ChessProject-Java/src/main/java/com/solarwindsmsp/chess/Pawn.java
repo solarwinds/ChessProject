@@ -13,26 +13,11 @@ public class Pawn extends Piece {
 
     /**
      * {@inheritDoc}
-     */
-    @Override
-    public void Move(MovementType movementType, int newX, int newY) {
-        ChessBoard board = this.getChessBoard();
-        if (board.IsLegalBoardPosition(newX, newY) && !board.isOccupied(newX, newY)) {
-            if (movementType == MovementType.MOVE) {
-                if (canMove(newX, newY)) {
-                    board.ChangePosition(this, newX, newY);
-                    this.setXCoordinate(newX);
-                    this.setYCoordinate(newY);
-                }
-            } else {
-                // TODO: MovementType.CAPTURE
-                throw new UnsupportedOperationException("Need to implement Pawn.Move(CAPTURE)");
-            }
-        }
-    }
-
-    /**
-     * {@inheritDoc}
+     *
+     * A Pawn can move forward (towards columnIndex 0 if black, or towards columnIndex 7 if white)
+     * by one square, with the single exception that a pawn that is still at its "start position"
+     * (the row with column index of 6 if black, or 1 if white) then it is allowed to move forward by
+     * two squares.
      */
     @Override
     protected boolean canMove(int newX, int newY) {
