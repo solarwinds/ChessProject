@@ -99,8 +99,8 @@ public class ChessBoard {
      */
     private int numberOfPawns(PieceColor pieceColor) {
         int nPawns = 0;
-        for (Pawn[] rows: pieces) {
-            for (Pawn pawn: rows) {
+        for (Pawn[] columns: pieces) {
+            for (Pawn pawn: columns) {
                 if (pawn != null && pawn.getPieceColor() == pieceColor) {
                     nPawns++;
                 }

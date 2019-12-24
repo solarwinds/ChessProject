@@ -116,19 +116,19 @@ I'm doing the Java version of the project.
     That would be a good thing to test too, but I think I'll add that later as an additional test,
     once I've got this initial set all passing.
 
-  - Now I get 3 errors from my 14 tests, all because of the unimplemented *Move() method  in the
+  - Now I get 3 errors from my 14 tests, all because of the unimplemented *Move()* method  in the
     *Pawn* class. According to the spec in thw README file, pawns can only move forward one space
     (in the same column). But the diagram shows that a pawn can also move forward two spaces (which,
     after a quick google to check, is allowed if the pawn is still in its "start position" column).
     I think I'll use the diagram to guide me (though in real life this would have sparked off a
-    conversation about the requirements).
+    conversation about the requirements), so I'll include that "start position" case in the logic.
 
   - I'll implement *Pawn.Move()* in the simplest way I can think of, where all it needs to do is:
 
       - do nothing (for now) if it's a CAPTURE move rather than a MOVE one.
       - check that the pawn is moving forward by exactly one square (or possibly two squares if
         its on its "starter" column), taking account of the colour to determine direction of movement.
-      - check (via a call to the *IsLegalBoardPosition method on the associated board object)
+      - check (via a call to the *IsLegalBoardPosition()* method on the associated board object)
         that the new coordinates are allowed (and leave the pawn unmoved if not).
       - Update the board object so that it knows the pawn is in the new position (and is no
         longer in the old position).
