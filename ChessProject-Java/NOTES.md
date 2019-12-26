@@ -33,6 +33,11 @@ I'm doing the Java version of the project.
     that's how it looks in the supporting "specification" (from http://www.chessvariants.org/d.chess/),
     though I guess it's open to being able to support different configurations in the future.
 
+  - I don't know what Java formatting conventions you use, so I'll just play that by ear. It's
+    looking like there isn't an 80-column width limit, so I won't worry too much about long
+    lines of code (though I'll try not to go beyond 120 characters, just to keep it readable).
+
+
 ## First Task - Getting the existing tests passing
 
   - I'm running the tests with **mvn test**, and they're starting off with 14 tests and
