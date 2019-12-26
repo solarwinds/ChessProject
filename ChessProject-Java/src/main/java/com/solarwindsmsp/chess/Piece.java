@@ -68,12 +68,12 @@ public abstract class Piece {
      */
     public void Move(MovementType movementType, int newX, int newY) {
         ChessBoard board = this.getChessBoard();
-        if (board.IsLegalBoardPosition(newX, newY) && !board.isOccupied(newX, newY)) {
+        if (board.IsLegalBoardPosition(newX, newY)) {
             if (movementType == MovementType.MOVE) {
-                if (canMove(newX, newY)) {
+                if (!board.isOccupied(newX, newY) && canMove(newX, newY)) {
                     board.ChangePosition(this, newX, newY);
-                    this.setXCoordinate(newX);
-                    this.setYCoordinate(newY);
+                    setXCoordinate(newX);
+                    setYCoordinate(newY);
                 }
             } else {
                 // TODO: MovementType.CAPTURE
