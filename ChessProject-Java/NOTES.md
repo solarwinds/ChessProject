@@ -121,7 +121,8 @@ I'm doing the Java version of the project.
     (in the same column). But the diagram shows that a pawn can also move forward two spaces (which,
     after a quick google to check, is allowed if the pawn is still in its "start position" column).
     I think I'll use the diagram to guide me (though in real life this would have sparked off a
-    conversation about the requirements), so I'll include that "start position" case in the logic.
+    conversation about the requirements), so I'll include that "start position" case in the logic,
+    even though that's arguably out-of-scope for this first sprint.
 
   - I'll implement *Pawn.Move()* in the simplest way I can think of, where all it needs to do is:
 
