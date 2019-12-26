@@ -71,7 +71,7 @@ I'm doing the Java version of the project.
     and the *Pawn.java* code, I see that it is expected to set colour and the X and Y coordinates,
     as properties of the pawn object itself too (and to set coordinates to -1 if not valid).
     I'm not sure I'm very happy with those semantics, but for now, I'll just do it that way. So
-    now it's implementation does the following:
+    now its implementation does the following:
 
       - check (using *IsLegalBoardPosition*) the coordinates are in range, and reset them to -1 if not.
       - set the chessBoard property on the pawn
@@ -264,8 +264,8 @@ I'm doing the Java version of the project.
 
 ## Additional thoughts
 
-  - The current semantics for invalid requests (like calling *ChessBoard.Add()* incorrectly,
-    or *Piece.Move()* incorrectly isn't very nice. The first just silently sets the coordinates
+  - The current semantics for invalid requests (like calling *ChessBoard.Add()* or *Piece.Move()*
+    incorrectly) isn't very nice. The first just silently sets the coordinates
     of the piece to "special magic values" of -1, and the second just silently does nothing.
 
     It'd be much better if these exceptional cases raised exceptions. There's nothing mentioned
@@ -277,4 +277,9 @@ I'm doing the Java version of the project.
     bigger change so I'm recording it as something to consider, but won't do it just now. Testing
     for exceptions being raised would be much easier if we could use JUnit 5 (and Java 8 or higher),
     so maybe need to discuss requirements on dependencies on those too.
+
+  - In terms of lifetime of objects, it feels like it would be cleaner if we had some kind of
+    factory class that had instances that were responsible for creating pieces and placing them
+    at their initial coordinates on a chessboard. That might make testing easier too. But I won't
+    implement this at this stage, I'll just record it as a possible thing to do next.
 
