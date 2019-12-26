@@ -104,7 +104,7 @@ public class ChessBoard {
         int nPawns = 0;
         for (Piece[] columns: pieces) {
             for (Piece piece: columns) {
-                if (piece != null && piece.getPieceColor() == pieceColor) {
+                if ((piece instanceof Pawn) && piece.getPieceColor() == pieceColor) {
                     nPawns++;
                 }
             }
