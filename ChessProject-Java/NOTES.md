@@ -239,6 +239,33 @@ I'm doing the Java version of the project.
 
     Now now that's 19 passing tests.
 
+  - I'm not so happy about the name format conventions we're using for names of methods. Maybe it's
+    "house style", so it's ok. But it's a bit of a mixture between standard "camelcase with initial
+    lowercase letter" and "camelcase with initial uppercase letter". The first is the usual standard
+    for Java, so I'll refactor the (small number of) methods that aren't following that, to make
+    them do so. That's basically just *ChessBoard.Add()* and *Piece.Move()*, I think.
+    Oh, and *Piece.CurrentPositionAsString()* (though I'm not really sure when that exists as
+    a separate method, rather than just being embedded directly inside *toString()*).
+
+  - We'll tighten up the protection on *Piece.currentPositionAsString()* too. It's currently
+    *protected*, but there doesn't seem any purpose to that. It's usually best for protections to be
+    as tight as possible, so I'll tighten that up as *private*. If it turns out to need to be
+    more open than that, we can always revert it later.
+
 
 ## Additional thoughts
+
+  - The current semantics for invalid requests (like calling *ChessBoard.Add()* incorrectly,
+    or *Piece.Move()* incorrectly isn't very nice. The first just silently sets the coordinates
+    of the piece to "special magic values" of -1, and the second just silently does nothing.
+
+    It'd be much better if these exceptional cases raised exceptions. There's nothing mentioned
+    in the README spec about these special magic values.
+
+    I've thought about adding two new custom exception classes: *InvalidPositionException* and
+    *InvalidMoveException*, making *ChessBoard.Add()* and *Piece.Move()* throw these exceptions
+    on errors, and adjusting the existing tests to take account of this. But that feels like a
+    bigger change so I'm recording it as something to consider, but won't do it just now. Testing
+    for exceptions being raised would be much easier if we could use JUnit 5 (and Java 8 or higher),
+    so maybe need to discuss requirements on dependencies on those too.
 

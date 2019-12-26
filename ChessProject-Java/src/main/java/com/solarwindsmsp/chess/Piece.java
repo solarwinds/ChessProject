@@ -62,7 +62,7 @@ public abstract class Piece {
      * @param newX              new X coordinate
      * @param newY              new Y coordinate
      */
-    public void Move(MovementType movementType, int newX, int newY) {
+    public void move(MovementType movementType, int newX, int newY) {
         ChessBoard board = this.getChessBoard();
         if (board.IsLegalBoardPosition(newX, newY)) {
             if (movementType == MovementType.MOVE) {
@@ -73,7 +73,7 @@ public abstract class Piece {
                 }
             } else {
                 // TODO: MovementType.CAPTURE
-                throw new UnsupportedOperationException("Need to implement Move(CAPTURE)");
+                throw new UnsupportedOperationException("Need to implement move(CAPTURE)");
             }
         }
     }
@@ -85,10 +85,10 @@ public abstract class Piece {
 
     @Override
     public String toString() {
-        return CurrentPositionAsString();
+        return currentPositionAsString();
     }
 
-    protected String CurrentPositionAsString() {
+    private String currentPositionAsString() {
         String eol = System.lineSeparator();
         return MessageFormat.format("Current X: {1}{0}Current Y: {2}{0}Piece Color: {3}", eol, xCoordinate, yCoordinate, pieceColor);
     }

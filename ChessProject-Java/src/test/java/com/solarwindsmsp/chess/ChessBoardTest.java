@@ -65,8 +65,8 @@ public class ChessBoardTest {
     public void testAvoids_Duplicate_Positioning() {
         Piece firstPawn = new Pawn();
         Piece secondPawn = new Pawn();
-        testSubject.Add(firstPawn, 6, 3, PieceColor.BLACK);
-        testSubject.Add(secondPawn, 6, 3, PieceColor.BLACK);
+        testSubject.add(firstPawn, 6, 3, PieceColor.BLACK);
+        testSubject.add(secondPawn, 6, 3, PieceColor.BLACK);
         assertEquals(6, firstPawn.getXCoordinate());
         assertEquals(3, firstPawn.getYCoordinate());
         assertEquals(-1, secondPawn.getXCoordinate());
@@ -78,7 +78,7 @@ public class ChessBoardTest {
         for (int i = 0; i < 10; i++) {
             Piece pawn = new Pawn();
             int xIndex = i / ChessBoard.MAX_BOARD_WIDTH;
-            testSubject.Add(pawn, 6 + xIndex, i % ChessBoard.MAX_BOARD_HEIGHT, PieceColor.BLACK);
+            testSubject.add(pawn, 6 + xIndex, i % ChessBoard.MAX_BOARD_HEIGHT, PieceColor.BLACK);
             if (xIndex < 1) {
                 assertEquals(6 + xIndex, pawn.getXCoordinate());
                 assertEquals(i % ChessBoard.MAX_BOARD_HEIGHT, pawn.getYCoordinate());
@@ -96,7 +96,7 @@ public class ChessBoardTest {
             int yIndex = (color == PieceColor.BLACK ? 6 : 1);
             for (int xIndex = 0; xIndex < 8; xIndex++) {
                 Piece pawn = new Pawn();
-                testSubject.Add(pawn, xIndex, yIndex, color);
+                testSubject.add(pawn, xIndex, yIndex, color);
                 assertEquals(xIndex, pawn.getXCoordinate());
                 assertEquals(yIndex, pawn.getYCoordinate());
             }
@@ -112,12 +112,12 @@ public class ChessBoardTest {
             int newYIndex = (color == PieceColor.BLACK ? 5 : 2);
             Piece pawn = new Pawn();
 
-            testSubject.Add(pawn, xIndex, yIndex, color);
+            testSubject.add(pawn, xIndex, yIndex, color);
             assertEquals(xIndex, pawn.getXCoordinate());
             assertEquals(yIndex, pawn.getYCoordinate());
             assertEquals(pawn, testSubject.pieceAt(xIndex, yIndex));
 
-            pawn.Move(MovementType.MOVE, xIndex, newYIndex);
+            pawn.move(MovementType.MOVE, xIndex, newYIndex);
             assertEquals(xIndex, pawn.getXCoordinate());
             assertEquals(newYIndex, pawn.getYCoordinate());
             assertNull(testSubject.pieceAt(xIndex, yIndex));
@@ -128,9 +128,9 @@ public class ChessBoardTest {
     @Test
     public void testPiece_Not_Allowed_On_Multiple_Boards() {
         Piece pawn = new Pawn();
-        testSubject.Add(pawn, 4, 2, PieceColor.WHITE);
+        testSubject.add(pawn, 4, 2, PieceColor.WHITE);
         ChessBoard secondBoard = new ChessBoard();
-        secondBoard.Add(pawn, 4, 2, PieceColor.WHITE);
+        secondBoard.add(pawn, 4, 2, PieceColor.WHITE);
         assertEquals(testSubject, pawn.getChessBoard());
     }
 }

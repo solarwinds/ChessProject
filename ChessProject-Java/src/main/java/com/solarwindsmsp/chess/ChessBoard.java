@@ -33,7 +33,7 @@ public class ChessBoard {
      * @param yCoordinate   Y coordinate
      * @param pieceColor    piece colour (overwriting whatever colour the piece already was)
      */
-    public void Add(Piece piece, int xCoordinate, int yCoordinate, PieceColor pieceColor) {
+    public void add(Piece piece, int xCoordinate, int yCoordinate, PieceColor pieceColor) {
         if (piece.getChessBoard() != null
                 || !IsLegalBoardPosition(xCoordinate, yCoordinate)
                 || isOccupied(xCoordinate, yCoordinate)
