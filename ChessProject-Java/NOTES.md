@@ -223,6 +223,22 @@ I'm doing the Java version of the project.
     details of how to do things that are specific to particular piece types, i.e. initially pawns).
     I won't change any of the API, so all of the existing tests should still all work unchanged.
 
+  - The design for the way the colour of a piece is managed seems a bit poor. You have to specify
+    the piece colour when you construct the piece object - but then you always have to respecify
+    that when you add the piece to a board. That seems wrong - and it is also the only thing that
+    is preventing all of the Piece classes from being "bean-like" (i.e. having a zero-args
+    constructor, and gettings/setters for all fields). If we're going to be persisting these things
+    anywhere, it'll make things a lot simpler if they're "bean-like". Also, it's just more
+    consistent and symmetric (given that none of the other property fields are set in the
+    constructor, even ones, like the board property, that feel like they're mandatory). So I'll
+    remove that parameter from the constructor. The colour is always being set explicitly afterwards
+    anyway so having it there adds no value.
+
+    I'll also add an additional check to make sure a piece on one board isn't accidentally added
+    to a different board (and add a test for this, which fails until I've made that change).
+
+    Now now that's 19 passing tests.
+
 
 ## Additional thoughts
 

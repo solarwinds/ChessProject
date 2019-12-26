@@ -18,10 +18,6 @@ public abstract class Piece {
     private int yCoordinate;
     private PieceColor pieceColor;
 
-    public Piece(PieceColor pieceColor) {
-        this.pieceColor = pieceColor;
-    }
-
     public ChessBoard getChessBoard() {
         return chessBoard;
     }
@@ -51,7 +47,7 @@ public abstract class Piece {
     }
 
     public void setPieceColor(PieceColor value) {
-        pieceColor = value;
+        this.pieceColor = value;
     }
 
     /**

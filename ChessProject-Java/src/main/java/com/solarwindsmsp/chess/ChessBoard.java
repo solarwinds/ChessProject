@@ -20,7 +20,9 @@ public class ChessBoard {
     }
 
     /**
-     * Add a piece to the board.
+     * Add a new piece to the board.
+     *
+     * The piece must be a new piece that is not currently on the board.
      *
      * If the coordinates are invalid, or if there is already another piece placed at that
      * position on the board, then the piece will bad added with special "invalid coordinate"
@@ -32,15 +34,16 @@ public class ChessBoard {
      * @param pieceColor    piece colour (overwriting whatever colour the piece already was)
      */
     public void Add(Piece piece, int xCoordinate, int yCoordinate, PieceColor pieceColor) {
-        if (!IsLegalBoardPosition(xCoordinate, yCoordinate)
+        if (piece.getChessBoard() != null
+                || !IsLegalBoardPosition(xCoordinate, yCoordinate)
                 || isOccupied(xCoordinate, yCoordinate)
                 || ((piece instanceof Pawn) && numberOfPawns(pieceColor) >= MAX_PAWNS_ALLOWED)) {
             xCoordinate = yCoordinate = -1;
         } else {
             pieces[xCoordinate][yCoordinate] = piece;
+            piece.setChessBoard(this);
+            piece.setPieceColor(pieceColor);
         }
-        piece.setChessBoard(this);
-        piece.setPieceColor(pieceColor);
         piece.setXCoordinate(xCoordinate);
         piece.setYCoordinate(yCoordinate);
     }
