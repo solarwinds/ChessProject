@@ -217,6 +217,14 @@ I'm doing the Java version of the project.
 
 ## Refactoring
 
+  - I don't think we strictly **need** to make any other changes, in terms of what's in scope for
+    this sprint. The main goal was to get all the tests working, and we've done that (and in fact
+    have gone furrther, in that we've added some additional tests too).
+
+    But part of the scope of this sprint is also to get into a good state for further development
+    in future sprints. So, assuming have we world enough and time, just now, I'll do some small
+    improvements to get us into as good a state as I can.
+
   - Anticipating that we're going to want to have more piece types than just pawns (though not
     for this sprint), it feels like it's a good idea to, as early as possible, start to prepare
     for that. I'll introduce an abstract base class called *Piece*, which will provide all of
@@ -224,7 +232,7 @@ I'm doing the Java version of the project.
     details of how to do things that are specific to particular piece types, i.e. initially pawns).
     I won't change any of the API, so all of the existing tests should still all work unchanged.
 
-  - The design for the way the colour of a piece is managed seems a bit poor. You have to specify
+  - The design for the way the colour of a piece is managed doesn't seem great. You have to specify
     the piece colour when you construct the piece object - but then you always have to respecify
     that when you add the piece to a board. That seems wrong - and it is also the only thing that
     is preventing all of the Piece classes from being "bean-like" (i.e. having a zero-args
