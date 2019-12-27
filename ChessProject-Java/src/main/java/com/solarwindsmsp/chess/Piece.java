@@ -62,7 +62,7 @@ public abstract class Piece {
      * @param newX              new X coordinate
      * @param newY              new Y coordinate
      */
-    public void move(MovementType movementType, int newX, int newY) {
+    public void move(MovementType movementType, int newX, int newY) throws InvalidMoveException {
         ChessBoard board = this.getChessBoard();
         if (board.IsLegalBoardPosition(newX, newY)) {
             if (movementType == MovementType.MOVE) {
@@ -70,6 +70,8 @@ public abstract class Piece {
                     board.ChangePosition(this, newX, newY);
                     setXCoordinate(newX);
                     setYCoordinate(newY);
+                } else {
+                    throw new InvalidMoveException(String.format("Invalid move to [%d, %d]", newX, newY));
                 }
             } else {
                 // TODO: MovementType.CAPTURE

@@ -62,11 +62,15 @@ public class ChessBoardTest {
     }
 
     @Test
-    public void testAvoids_Duplicate_Positioning() {
+    public void testAvoids_Duplicate_Positioning() throws InvalidPlacementException {
         Piece firstPawn = new Pawn();
         Piece secondPawn = new Pawn();
         testSubject.add(firstPawn, 6, 3, PieceColor.BLACK);
-        testSubject.add(secondPawn, 6, 3, PieceColor.BLACK);
+        try {
+            testSubject.add(secondPawn, 6, 3, PieceColor.BLACK);
+            fail("Expected to raise exception, but didn't");
+        } catch (InvalidPlacementException e) {
+        }
         assertEquals(6, firstPawn.getXCoordinate());
         assertEquals(3, firstPawn.getYCoordinate());
         assertEquals(-1, secondPawn.getXCoordinate());
@@ -74,15 +78,17 @@ public class ChessBoardTest {
     }
 
     @Test
-    public void testLimits_The_Number_Of_Pawns() {
+    public void testLimits_The_Number_Of_Pawns() throws InvalidPlacementException {
         for (int i = 0; i < 10; i++) {
             Piece pawn = new Pawn();
             int xIndex = i / ChessBoard.MAX_BOARD_WIDTH;
-            testSubject.add(pawn, 6 + xIndex, i % ChessBoard.MAX_BOARD_HEIGHT, PieceColor.BLACK);
-            if (xIndex < 1) {
+            try {
+                testSubject.add(pawn, 6 + xIndex, i % ChessBoard.MAX_BOARD_HEIGHT, PieceColor.BLACK);
+                assertEquals(0, xIndex);
                 assertEquals(6 + xIndex, pawn.getXCoordinate());
                 assertEquals(i % ChessBoard.MAX_BOARD_HEIGHT, pawn.getYCoordinate());
-            } else {
+            } catch (InvalidPlacementException e) {
+                assertEquals(1, xIndex);
                 assertEquals(-1, pawn.getXCoordinate());
                 Assert.assertEquals(-1, pawn.getYCoordinate());
             }
@@ -90,7 +96,7 @@ public class ChessBoardTest {
     }
 
     @Test
-    public void testEight_Pawns_Of_Each_Color_Are_Allowed() {
+    public void testEight_Pawns_Of_Each_Color_Are_Allowed() throws InvalidPlacementException {
         PieceColor[] colors = {PieceColor.BLACK, PieceColor.WHITE};
         for (PieceColor color: colors) {
             int yIndex = (color == PieceColor.BLACK ? 6 : 1);
@@ -104,7 +110,7 @@ public class ChessBoardTest {
     }
 
     @Test
-    public void testBoard_Coordinates_Match_Piece_Coordinates_After_Move() {
+    public void testBoard_Coordinates_Match_Piece_Coordinates_After_Move() throws InvalidPlacementException, InvalidMoveException {
         PieceColor[] colors = {PieceColor.BLACK, PieceColor.WHITE};
         for (PieceColor color: colors) {
             int xIndex = 6;
@@ -126,11 +132,15 @@ public class ChessBoardTest {
     }
 
     @Test
-    public void testPiece_Not_Allowed_On_Multiple_Boards() {
+    public void testPiece_Not_Allowed_On_Multiple_Boards() throws InvalidPlacementException {
         Piece pawn = new Pawn();
         testSubject.add(pawn, 4, 2, PieceColor.WHITE);
         ChessBoard secondBoard = new ChessBoard();
-        secondBoard.add(pawn, 4, 2, PieceColor.WHITE);
+        try {
+            secondBoard.add(pawn, 4, 2, PieceColor.WHITE);
+            fail("Expected to raise exception[, but didn't");
+        } catch (InvalidPlacementException e) {
+        }
         assertEquals(testSubject, pawn.getChessBoard());
     }
 }

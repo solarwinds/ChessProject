@@ -267,7 +267,11 @@ I'm doing the Java version of the project.
     more open than that, we can always revert it later.
 
 
-## Additional thoughts
+## Further refactoring
+
+  - The following are some additional refactorings that I initially thought might be too much
+    for this first sprint, but actually they're quite safe and simple, and will give us a much
+    better place to work from, so I'll do them anyway
 
   - The current semantics for invalid requests (like calling *ChessBoard.Add()* or *Piece.Move()*
     incorrectly) isn't very nice. The first just silently sets the coordinates
@@ -276,12 +280,18 @@ I'm doing the Java version of the project.
     It'd be much better if these exceptional cases raised exceptions. There's nothing mentioned
     in the README spec about these special magic values.
 
-    I've thought about adding two new custom exception classes: *InvalidPositionException* and
+    I've added two new custom exception classes: *InvalidPositionException* and
     *InvalidMoveException*, making *ChessBoard.Add()* and *Piece.Move()* throw these exceptions
-    on errors, and adjusting the existing tests to take account of this. But that feels like a
-    bigger change so I'm recording it as something to consider, but won't do it just now. Testing
-    for exceptions being raised would be much easier if we could use JUnit 5 (and Java 8 or higher),
-    so maybe need to discuss requirements on dependencies on those too.
+    on errors, and adjusting the existing tests to take account of this.
+
+    The tests would be simpler and nicer with JUnit 5, but the Maven *pom.xml* file is explicitly
+    specifying Junit 4, so I'll stick with that for now. Worth seeing if we can upgrade though.
+
+
+## Future thoughts
+
+  - It'd improve the readability of the tests if we could use the *assertThrows* assertion that
+    comes with JUnit 5. Perhaps we can change the version requirement for that?
 
   - In terms of lifetime of objects, it feels like it would be cleaner if we had some kind of
     factory class that had instances that were responsible for creating pieces and placing them

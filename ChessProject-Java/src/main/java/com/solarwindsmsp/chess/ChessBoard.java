@@ -33,17 +33,22 @@ public class ChessBoard {
      * @param yCoordinate   Y coordinate
      * @param pieceColor    piece colour (overwriting whatever colour the piece already was)
      */
-    public void add(Piece piece, int xCoordinate, int yCoordinate, PieceColor pieceColor) {
-        if (piece.getChessBoard() != null
-                || !IsLegalBoardPosition(xCoordinate, yCoordinate)
+    public void add(Piece piece, int xCoordinate, int yCoordinate, PieceColor pieceColor)
+            throws InvalidPlacementException {
+        if (piece.getChessBoard() != null) {
+            throw new InvalidPlacementException("Piece is already placed on a chessboard");
+        }
+        if (!IsLegalBoardPosition(xCoordinate, yCoordinate)
                 || isOccupied(xCoordinate, yCoordinate)
                 || ((piece instanceof Pawn) && numberOfPawns(pieceColor) >= MAX_PAWNS_ALLOWED)) {
-            xCoordinate = yCoordinate = -1;
-        } else {
-            pieces[xCoordinate][yCoordinate] = piece;
-            piece.setChessBoard(this);
-            piece.setPieceColor(pieceColor);
+            piece.setXCoordinate(-1);
+            piece.setYCoordinate(-1);
+            throw new InvalidPlacementException(String.format("Invalid position [%d, %d]",
+                                                              xCoordinate, yCoordinate));
         }
+        pieces[xCoordinate][yCoordinate] = piece;
+        piece.setChessBoard(this);
+        piece.setPieceColor(pieceColor);
         piece.setXCoordinate(xCoordinate);
         piece.setYCoordinate(yCoordinate);
     }
