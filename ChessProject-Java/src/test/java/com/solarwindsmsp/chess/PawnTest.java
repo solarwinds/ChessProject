@@ -1,12 +1,13 @@
 package com.solarwindsmsp.chess;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-
 import static org.junit.Assert.*;
 
+/*
+ * Tests for Pawn class
+ */
 public class PawnTest {
 
     private ChessBoard chessBoard;

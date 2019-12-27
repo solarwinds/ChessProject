@@ -1,11 +1,13 @@
 package com.solarwindsmsp.chess;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+/*
+ * Tests for ChessBoard class
+ */
 public class ChessBoardTest {
 
     private ChessBoard testSubject;
@@ -34,7 +36,7 @@ public class ChessBoardTest {
     @Test
     public void testIsLegalBoardPosition_True_X_equals_5_Y_equals_5() {
         boolean isValidPosition = testSubject.IsLegalBoardPosition(5, 5);
-        Assert.assertTrue(isValidPosition);
+        assertTrue(isValidPosition);
     }
 
     @Test
@@ -58,7 +60,7 @@ public class ChessBoardTest {
     @Test
     public void testIsLegalBoardPosition_False_For_Negative_Y_Values() {
         boolean isValidPosition = testSubject.IsLegalBoardPosition(5, -1);
-        Assert.assertFalse(isValidPosition);
+        assertFalse(isValidPosition);
     }
 
     @Test
@@ -90,7 +92,7 @@ public class ChessBoardTest {
             } catch (InvalidPlacementException e) {
                 assertEquals(1, xIndex);
                 assertEquals(-1, pawn.getXCoordinate());
-                Assert.assertEquals(-1, pawn.getYCoordinate());
+                assertEquals(-1, pawn.getYCoordinate());
             }
         }
     }
@@ -142,5 +144,19 @@ public class ChessBoardTest {
         } catch (InvalidPlacementException e) {
         }
         assertEquals(testSubject, pawn.getChessBoard());
+    }
+
+    @Test
+    public void testGet_All_Pieces() throws InvalidPlacementException {
+        assertTrue(testSubject.allPieces().isEmpty());
+        Piece firstPawn = new Pawn();
+        Piece secondPawn = new Pawn();
+        testSubject.add(firstPawn, 4, 2, PieceColor.WHITE);
+        assertTrue(testSubject.allPieces().contains(firstPawn));
+        assertFalse(testSubject.allPieces().contains(secondPawn));
+        testSubject.add(secondPawn, 5, 2, PieceColor.WHITE);
+        assertTrue(testSubject.allPieces().contains(firstPawn));
+        assertTrue(testSubject.allPieces().contains(secondPawn));
+        assertEquals(testSubject.allPieces().size(), 2);
     }
 }

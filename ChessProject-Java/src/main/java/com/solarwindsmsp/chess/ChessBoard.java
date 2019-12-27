@@ -1,5 +1,9 @@
 package com.solarwindsmsp.chess;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.ArrayList;
+
 /**
  * Class to represent a single chessboard.
  *
@@ -13,10 +17,25 @@ public class ChessBoard {
 
     private static int MAX_PAWNS_ALLOWED = MAX_BOARD_WIDTH;
 
-    private Piece[][] pieces;
+    private final Piece[][] pieces;
 
     public ChessBoard() {
         pieces = new Piece[MAX_BOARD_WIDTH][MAX_BOARD_HEIGHT];
+    }
+
+    /**
+     * Get list of all pieces currently placed on the board
+     */
+    public Collection<Piece> allPieces() {
+        List items = new ArrayList();
+        for (Piece[] columns: pieces) {
+            for (Piece piece: columns) {
+                if (piece != null) {
+                    items.add(piece);
+                }
+            }
+        }
+        return items;
     }
 
     /**
@@ -91,7 +110,6 @@ public class ChessBoard {
     public boolean isOccupied(int xCoordinate, int yCoordinate) {
         return pieceAt(xCoordinate, yCoordinate) != null;
     }
-
 
     /**
      * Change the position of an existing piece on the board.

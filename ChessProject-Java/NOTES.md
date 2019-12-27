@@ -227,8 +227,8 @@ I'm doing the Java version of the project.
     have gone furrther, in that we've added some additional tests too).
 
     But part of the scope of this sprint is also to get into a good state for further development
-    in future sprints. So, assuming have we world enough and time, just now, I'll do some small
-    improvements to get us into as good a state as I can.
+    in future sprints. So, assuming we have time just now, I'll do some small improvements to get us
+    into as good a state as I can.
 
   - Anticipating that we're going to want to have more piece types than just pawns (though not
     for this sprint), it feels like it's a good idea to, as early as possible, start to prepare
@@ -287,14 +287,31 @@ I'm doing the Java version of the project.
     The tests would be simpler and nicer with JUnit 5, but the Maven *pom.xml* file is explicitly
     specifying Junit 4, so I'll stick with that for now. Worth seeing if we can upgrade though.
 
+  - In terms of overall managment of objects, it feels like it would be cleaner if we had some kind of
+    overall class that had instances that were responsible for managing rhe relationship between
+    the board and its pieces.  That might make testing easier too. So I'll add a new *ChessGame*
+    class that does that (and a test for it). A *ChessGame* holds a *ChessBoard* object, and provides
+    an interface to let you access that board, and also add new pieces to that board.
+
+    I want to be able (in the future) to add arbitrary chess pieces, not just pawns. I could
+    represent that as an *enum*, but it feels simpler to just use the *class* of the item (any
+    subclass of *Piece*) to specify what kind of piece you want to add, and have the method
+    automatically create an instance of the appropriate class.
+
+    In doing this, I made a few other small improvements:
+
+      - I've marked some should-be-immutable properties in some classes as *final*.
+
+      - I've added a new method to the *ChessBoard* class to get a list of all of its pieces.
+
+      - I've just noticed that some of the tests are calling *Assert.assertEquals* explicity,
+        where others are calling *assertEquals* via its static import. Inconsistent to do it in
+        two different ways, so I've removed the direct import and am just using the static one
+        everywhere.
+
 
 ## Future thoughts
 
   - It'd improve the readability of the tests if we could use the *assertThrows* assertion that
     comes with JUnit 5. Perhaps we can change the version requirement for that?
-
-  - In terms of lifetime of objects, it feels like it would be cleaner if we had some kind of
-    factory class that had instances that were responsible for creating pieces and placing them
-    at their initial coordinates on a chessboard. That might make testing easier too. But I won't
-    implement this at this stage, I'll just record it as a possible thing to do next.
 
