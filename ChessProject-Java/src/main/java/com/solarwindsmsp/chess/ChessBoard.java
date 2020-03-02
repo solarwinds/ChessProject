@@ -2,24 +2,27 @@ package com.solarwindsmsp.chess;
 
 public class ChessBoard {
 
-    public static int MAX_BOARD_WIDTH = 8;
-    public static int MAX_BOARD_HEIGHT = 8;
+    public static int WIDTH = 8;
+    public static int HEIGHT = 8;
 
     private Pawn[][] pieces;
 
-    private int pieceCount = 0;
+    private int pawnCount = 0;
 
     public ChessBoard() {
-        pieces = new Pawn[MAX_BOARD_WIDTH][MAX_BOARD_HEIGHT];
-
+        pieces = new Pawn[WIDTH][HEIGHT];
     }
 
-    public void Add(Pawn pawn, int xCoordinate, int yCoordinate, PieceColor pieceColor) {
-        if (IsLegalBoardPosition(xCoordinate, yCoordinate) && pieces[xCoordinate][yCoordinate] == null && pieceCount < 8) {
+    public Pawn[][] getPieces() {
+        return pieces;
+    }
+
+    void Add(Pawn pawn, int xCoordinate, int yCoordinate, PieceColor pieceColor) {
+        if (IsLegalBoardPosition(xCoordinate, yCoordinate) && pieces[xCoordinate][yCoordinate] == null && pawnCount < 8) {
             pawn.setXCoordinate(xCoordinate);
             pawn.setYCoordinate(yCoordinate);
             pieces[xCoordinate][yCoordinate] = pawn;
-            pieceCount++;
+            pawnCount++;
         } else {
             pawn.setXCoordinate(-1);
             pawn.setYCoordinate(-1);

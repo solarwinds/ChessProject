@@ -48,10 +48,6 @@ public class Pawn {
             throw new UnsupportedOperationException("Need to implement Pawn.Move() for CAPTURE") ;
         }
 
-        if (!chessBoard.IsLegalBoardPosition(newX, newY)) {
-            return;
-        }
-
         if (newX == xCoordinate && newY == yCoordinate - 1) {
             xCoordinate = newX;
             yCoordinate = newY;
