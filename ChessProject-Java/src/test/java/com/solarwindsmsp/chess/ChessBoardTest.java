@@ -17,13 +17,13 @@ public class ChessBoardTest extends TestCase {
     }
 
     @Test
-    public void testHas_MaxBoardWidth_of_7() {
-        assertEquals(7, ChessBoard.MAX_BOARD_HEIGHT);
+    public void testHas_MaxBoardWidth_of_8() {
+        assertEquals(8, ChessBoard.MAX_BOARD_HEIGHT);
     }
 
     @Test
-    public void testHas_MaxBoardHeight_of_7() {
-        assertEquals(7, ChessBoard.MAX_BOARD_HEIGHT);
+    public void testHas_MaxBoardHeight_of_8() {
+        assertEquals(8, ChessBoard.MAX_BOARD_HEIGHT);
     }
 
     @Test
@@ -41,7 +41,7 @@ public class ChessBoardTest extends TestCase {
     @Test
     public void testIsLegalBoardPosition_False_X_equals_11_Y_equals_5() {
         boolean isValidPosition = testSubject.IsLegalBoardPosition(11, 5);
-        assertTrue(isValidPosition);
+        assertFalse(isValidPosition);
     }
 
     @Test
@@ -63,7 +63,7 @@ public class ChessBoardTest extends TestCase {
     }
 
     @Test
-    public void Avoids_Duplicate_Positioning() {
+    public void testAvoids_Duplicate_Positioning() {
         Pawn firstPawn = new Pawn(PieceColor.BLACK);
         Pawn secondPawn = new Pawn(PieceColor.BLACK);
         testSubject.Add(firstPawn, 6, 3, PieceColor.BLACK);
@@ -75,20 +75,15 @@ public class ChessBoardTest extends TestCase {
     }
 
     @Test
-    public void testLimits_The_Number_Of_Pawns()
-    {
-        for (int i = 0; i < 10; i++)
-        {
+    public void testLimits_The_Number_Of_Pawns() {
+        for (int i = 0; i < 10; i++) {
             Pawn pawn = new Pawn(PieceColor.BLACK);
             int row = i / ChessBoard.MAX_BOARD_WIDTH;
             testSubject.Add(pawn, 6 + row, i % ChessBoard.MAX_BOARD_WIDTH, PieceColor.BLACK);
-            if (row < 1)
-            {
+            if (row < 1) {
                 assertEquals(6 + row, pawn.getXCoordinate());
                 assertEquals(i % ChessBoard.MAX_BOARD_WIDTH, pawn.getYCoordinate());
-            }
-            else
-            {
+            } else {
                 assertEquals(-1, pawn.getXCoordinate());
                 Assert.assertEquals(-1, pawn.getYCoordinate());
             }

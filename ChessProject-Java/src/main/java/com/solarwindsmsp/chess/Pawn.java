@@ -11,7 +11,7 @@ public class Pawn {
         this.pieceColor = pieceColor;
     }
 
-    public ChessBoard getChesssBoard() {
+    public ChessBoard getChessBoard() {
         return chessBoard;
     }
 
@@ -44,7 +44,18 @@ public class Pawn {
     }
 
     public void Move(MovementType movementType, int newX, int newY) {
-        throw new UnsupportedOperationException("Need to implement Pawn.Move()") ;
+        if (movementType == MovementType.CAPTURE) {
+            throw new UnsupportedOperationException("Need to implement Pawn.Move() for CAPTURE") ;
+        }
+
+        if (!chessBoard.IsLegalBoardPosition(newX, newY)) {
+            return;
+        }
+
+        if (newX == xCoordinate && newY == yCoordinate - 1) {
+            xCoordinate = newX;
+            yCoordinate = newY;
+        }
     }
 
     @Override
@@ -53,7 +64,6 @@ public class Pawn {
     }
 
     protected String CurrentPositionAsString() {
-        String eol = System.lineSeparator();
-        return String.format("Current X: {1}{0}Current Y: {2}{0}Piece Color: {3}", eol, xCoordinate, yCoordinate, pieceColor);
+        return String.format("%d,%d:%s pawn", xCoordinate, yCoordinate, pieceColor);
     }
 }
