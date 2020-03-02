@@ -52,7 +52,11 @@ public class Pawn {
             return;
         }
 
-        if (newX == xCoordinate && newY == yCoordinate - 1) {
+        int directionOfTravel = pieceColor == PieceColor.BLACK ? -1 : +1;
+
+        if (newX == xCoordinate && newY == yCoordinate + directionOfTravel) {
+            chessBoard.getPieces()[newX][newY] = this;
+            chessBoard.getPieces()[xCoordinate][yCoordinate] = null;
             xCoordinate = newX;
             yCoordinate = newY;
         }
@@ -60,7 +64,7 @@ public class Pawn {
 
     @Override
     public String toString() {
-        return CurrentPositionAsString();
+        return pieceColor == PieceColor.BLACK ? "p" : "P";
     }
 
     protected String CurrentPositionAsString() {

@@ -1,5 +1,7 @@
 package com.solarwindsmsp.chess;
 
+import java.util.Arrays;
+
 public class ChessBoard {
 
     public static int WIDTH = 8;
@@ -31,5 +33,27 @@ public class ChessBoard {
 
     public boolean IsLegalBoardPosition(int xCoordinate, int yCoordinate) {
         return 0 <= xCoordinate && xCoordinate < 8 && 0 <= yCoordinate && yCoordinate < 8;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        for (int row = 0; row < 8; row++)
+        {
+            sb.append("\n");
+            sb.append("---------------------------------\n");
+
+            for (int column = 0; column < 8; column++)
+            {
+                String square = this.pieces[column][7-row] != null ? this.pieces[column][7-row].toString() : " ";
+                sb.append("| " + square + " ");
+            }
+            sb.append("|");
+        }
+        sb.append("\n");
+        sb.append("---------------------------------\n");
+
+        return sb.toString();
     }
 }
