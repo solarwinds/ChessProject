@@ -54,17 +54,42 @@ public class ChessBoardTest extends TestCase {
     }
 
     @Test
-    public void test_Limits_The_Number_Of_Similarly_Coloured_Pawns() {
+    public void test_Limits_The_Number_Of_Black_Coloured_Pawns() {
 
         AddFullRankOfPawns(PieceColor.BLACK, 6);
         addPawn(PieceColor.BLACK, 5, 0);
 
-        for (int file = 0; file < ChessBoard.WIDTH; file++) {
-            assertEquals(file, testSubject.getPieces()[6][file].getYCoordinate());
-            assertEquals(6, testSubject.getPieces()[6][file].getXCoordinate());
-        }
-
+        assertThatPiecesArePresentAtExpectedCoordinates(6, ChessBoard.WIDTH);
         assertNull(testSubject.getPieces()[5][0]);
+    }
+
+    @Test
+    public void test_Limits_The_Number_Of_White_Coloured_Pawns() {
+
+        AddFullRankOfPawns(PieceColor.WHITE, 1);
+        addPawn(PieceColor.WHITE, 2, 0);
+
+        assertThatPiecesArePresentAtExpectedCoordinates(1, ChessBoard.WIDTH);
+        assertNull(testSubject.getPieces()[2][0]);
+    }
+
+    @Test
+    public void test_Allows_Addition_Of_Maximum_Number_Of_Both_Coloured_Pawns() {
+
+        AddFullRankOfPawns(PieceColor.BLACK, 6);
+        AddFullRankOfPawns(PieceColor.WHITE, 1);
+
+        assertThatPiecesArePresentAtExpectedCoordinates(6, ChessBoard.WIDTH);
+        assertThatPiecesArePresentAtExpectedCoordinates(1, ChessBoard.WIDTH);
+    }
+
+    // helper methods
+
+    private void assertThatPiecesArePresentAtExpectedCoordinates(int rank, int upToFile) {
+        for (int file = 0; file < upToFile; file++) {
+            assertEquals(file, testSubject.getPieces()[rank][file].getYCoordinate());
+            assertEquals(rank, testSubject.getPieces()[rank][file].getXCoordinate());
+        }
     }
 
     private void AddFullRankOfPawns(PieceColor colour, int rank) {

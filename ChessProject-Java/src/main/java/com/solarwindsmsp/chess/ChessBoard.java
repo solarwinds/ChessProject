@@ -7,7 +7,7 @@ public class ChessBoard {
 
     private Pawn[][] pieces;
 
-    private int pawnCount = 0;
+    private int[] pawnCount = new int[2];
 
     public ChessBoard() {
         pieces = new Pawn[WIDTH][HEIGHT];
@@ -18,11 +18,11 @@ public class ChessBoard {
     }
 
     void Add(Pawn pawn, int xCoordinate, int yCoordinate, PieceColor pieceColor) {
-        if (IsLegalBoardPosition(xCoordinate, yCoordinate) && pieces[xCoordinate][yCoordinate] == null && pawnCount < 8) {
+        if (IsLegalBoardPosition(xCoordinate, yCoordinate) && pieces[xCoordinate][yCoordinate] == null && pawnCount[pieceColor.getCode()] < 8) {
             pawn.setXCoordinate(xCoordinate);
             pawn.setYCoordinate(yCoordinate);
             pieces[xCoordinate][yCoordinate] = pawn;
-            pawnCount++;
+            pawnCount[pieceColor.getCode()]++;
         } else {
             pawn.setXCoordinate(-1);
             pawn.setYCoordinate(-1);
