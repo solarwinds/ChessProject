@@ -43,12 +43,12 @@ public class Pawn {
         pieceColor = value;
     }
 
-    public void Move(MovementType movementType, int newX, int newY) {
+    public void move(MovementType movementType, int newX, int newY) {
         if (movementType == MovementType.CAPTURE) {
-            throw new UnsupportedOperationException("Need to implement Pawn.Move() for CAPTURE") ;
+            throw new UnsupportedOperationException("Need to implement Pawn.Move() for CAPTURE");
         }
 
-        if (!chessBoard.IsLegalBoardPosition(newX, newY)) {
+        if (!chessBoard.isLegalBoardPosition(newX, newY)) {
             return;
         }
 

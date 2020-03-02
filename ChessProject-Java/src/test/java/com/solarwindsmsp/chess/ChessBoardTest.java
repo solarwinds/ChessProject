@@ -27,26 +27,26 @@ public class ChessBoardTest extends TestCase {
     public void test_All_Legal_Board_Positions() {
         for (int rank = 0; rank < ChessBoard.HEIGHT; rank++) {
             for (int file = 0; file < ChessBoard.WIDTH; file++) {
-                assertTrue(testSubject.IsLegalBoardPosition(rank, file));
+                assertTrue(testSubject.isLegalBoardPosition(rank, file));
             }
         }
     }
 
     @Test
     public void test_Assorted_Illegal_Board_Positions() {
-        assertFalse(testSubject.IsLegalBoardPosition(11, 5));
-        assertFalse(testSubject.IsLegalBoardPosition(0, 9));
-        assertFalse(testSubject.IsLegalBoardPosition(11, 0));
-        assertFalse(testSubject.IsLegalBoardPosition(5, -1));
-        assertFalse(testSubject.IsLegalBoardPosition(-1, 5));
+        assertFalse(testSubject.isLegalBoardPosition(11, 5));
+        assertFalse(testSubject.isLegalBoardPosition(0, 9));
+        assertFalse(testSubject.isLegalBoardPosition(11, 0));
+        assertFalse(testSubject.isLegalBoardPosition(5, -1));
+        assertFalse(testSubject.isLegalBoardPosition(-1, 5));
     }
 
     @Test
     public void test_Avoids_Duplicate_Positioning() {
         Pawn firstPawn = new Pawn(PieceColor.BLACK);
         Pawn secondPawn = new Pawn(PieceColor.BLACK);
-        testSubject.Add(firstPawn, 6, 3, PieceColor.BLACK);
-        testSubject.Add(secondPawn, 6, 3, PieceColor.BLACK);
+        testSubject.add(firstPawn, 6, 3, PieceColor.BLACK);
+        testSubject.add(secondPawn, 6, 3, PieceColor.BLACK);
         assertEquals(6, firstPawn.getXCoordinate());
         assertEquals(3, firstPawn.getYCoordinate());
         assertEquals(-1, secondPawn.getXCoordinate());
@@ -99,7 +99,7 @@ public class ChessBoardTest extends TestCase {
     }
 
     private void addPawn(PieceColor colour, int rank, int file) {
-        testSubject.Add(new Pawn(colour), rank, file, colour);
+        testSubject.add(new Pawn(colour), rank, file, colour);
     }
 
 }
