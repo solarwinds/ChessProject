@@ -33,7 +33,7 @@ public class KingTest {
     }
 
     @Test
-    public void test_Move_IllegalCoordinates_Right_Has_No_Effect() {
+    public void test_Move_Illegal_Right_Has_No_Effect() {
         chessBoard.add(testSubject, 5, 3, PieceColor.BLACK);
         testSubject.move(MovementType.MOVE, 7, 3);
 
@@ -41,7 +41,7 @@ public class KingTest {
     }
 
     @Test
-    public void test_Move_IllegalCoordinates_Left_Has_No_Effect() {
+    public void test_Move_Illegal_Left_Has_No_Effect() {
         chessBoard.add(testSubject, 6, 3, PieceColor.BLACK);
         testSubject.move(MovementType.MOVE, 4, 3);
 
@@ -49,7 +49,7 @@ public class KingTest {
     }
 
     @Test
-    public void test_Move_LegalCoordinates_Forward_Updates_Coordinates_And_Moves() {
+    public void test_Move_Legal_Forward_Updates_Coordinates_And_Moves() {
         chessBoard.add(testSubject, 6, 6, PieceColor.BLACK);
         testSubject.move(MovementType.MOVE, 6, 5);
 
@@ -60,7 +60,7 @@ public class KingTest {
     }
 
     @Test
-    public void test_Move_LegalCoordinates_Backward_Updates_Coordinates_And_Moves() {
+    public void test_Move_Legal_Backward_Updates_Coordinates_And_Moves() {
         chessBoard.add(testSubject, 6, 5, PieceColor.BLACK);
         testSubject.move(MovementType.MOVE, 6, 6);
 
@@ -71,7 +71,7 @@ public class KingTest {
     }
 
     @Test
-    public void test_Move_LegalCoordinates_Diagonal_Updates_Coordinates_And_Moves() {
+    public void test_Move_Legal_Diagonal_Updates_Coordinates_And_Moves() {
         chessBoard.add(testSubject, 6, 5, PieceColor.BLACK);
         testSubject.move(MovementType.MOVE, 7, 6);
 
@@ -82,13 +82,12 @@ public class KingTest {
     }
 
     @Test
-    public void test_Move_IllegalTargetCoordinates_Forward_Has_No_Effect() {
+    public void test_Move_Illegal_Coordinates_Forward_Has_No_Effect() {
         chessBoard.add(testSubject, 6, 0, PieceColor.BLACK);
         testSubject.move(MovementType.MOVE, 6, -1);
 
         TestHelper.assertCoordinates(testSubject, 6, 0);
     }
 
-    //todo improve test naming (illegal move vs illegal coordinates)
     //todo write tests for move to occupied square (K+P)
 }

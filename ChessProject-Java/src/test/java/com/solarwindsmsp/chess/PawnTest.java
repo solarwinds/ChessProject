@@ -33,7 +33,7 @@ public class PawnTest {
     }
 
     @Test
-    public void test_Pawn_Move_IllegalCoordinates_Right_Has_No_Effect() {
+    public void test_Pawn_Move_Illegal_Right_Has_No_Effect() {
         chessBoard.add(testSubject, 6, 3, PieceColor.BLACK);
         testSubject.move(MovementType.MOVE, 7, 3);
 
@@ -41,7 +41,7 @@ public class PawnTest {
     }
 
     @Test
-    public void test_Pawn_Move_IllegalCoordinates_Left_Has_No_Effect() {
+    public void test_Pawn_Move_Illegal_Left_Has_No_Effect() {
         chessBoard.add(testSubject, 6, 3, PieceColor.BLACK);
         testSubject.move(MovementType.MOVE, 4, 3);
 
@@ -49,7 +49,7 @@ public class PawnTest {
     }
 
     @Test
-    public void test_Black_Pawn_Move_LegalCoordinates_Forward_Updates_Coordinates_And_Moves() {
+    public void test_Black_Pawn_Move_Legal_Forward_Updates_Coordinates_And_Moves() {
         chessBoard.add(testSubject, 6, 6, PieceColor.BLACK);
         testSubject.move(MovementType.MOVE, 6, 5);
 
@@ -60,7 +60,7 @@ public class PawnTest {
     }
 
     @Test
-    public void test_White_Pawn_Move_LegalCoordinates_Forward_Updates_Coordinates_And_Moves() {
+    public void test_White_Pawn_Move_Legal_Forward_Updates_Coordinates_And_Moves() {
         Piece whitePawn = new Pawn(PieceColor.WHITE);
         whitePawn.setChessBoard(chessBoard);
         chessBoard.add(whitePawn, 6, 1, PieceColor.WHITE);
@@ -78,7 +78,7 @@ public class PawnTest {
     }
 
     @Test
-    public void test_Black_Pawn_Move_IllegalTargetCoordinates_Forward_Has_No_Effect() {
+    public void test_Black_Pawn_Move_Illegal_Coordinates_Forward_Has_No_Effect() {
         chessBoard.add(testSubject, 6, 0, PieceColor.BLACK);
         testSubject.move(MovementType.MOVE, 6, -1);
 
@@ -86,7 +86,7 @@ public class PawnTest {
     }
 
     @Test
-    public void test_White_Pawn_Move_IllegalTargetCoordinates_Forward_Has_No_Effect() {
+    public void test_White_Pawn_Move_Illegal_Coordinates_Forward_Has_No_Effect() {
         Piece whitePawn = new Pawn(PieceColor.WHITE);
         whitePawn.setChessBoard(chessBoard);
         chessBoard.add(whitePawn, 6, 7, PieceColor.WHITE);
