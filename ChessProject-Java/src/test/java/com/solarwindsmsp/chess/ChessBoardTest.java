@@ -43,14 +43,14 @@ public class ChessBoardTest extends TestCase {
 
     @Test
     public void test_Avoids_Duplicate_Positioning() {
-        Pawn firstPawn = new Pawn(PieceColor.BLACK);
-        Pawn secondPawn = new Pawn(PieceColor.BLACK);
-        testSubject.add(firstPawn, 6, 3, PieceColor.BLACK);
-        testSubject.add(secondPawn, 6, 3, PieceColor.BLACK);
-        assertEquals(6, firstPawn.getXCoordinate());
-        assertEquals(3, firstPawn.getYCoordinate());
-        assertEquals(-1, secondPawn.getXCoordinate());
-        assertEquals(-1, secondPawn.getYCoordinate());
+        Pawn p1 = new Pawn(PieceColor.BLACK);
+        Pawn p2 = new Pawn(PieceColor.BLACK);
+
+        testSubject.add(p1, 6, 3, PieceColor.BLACK);
+        testSubject.add(p2, 6, 3, PieceColor.BLACK);
+
+        assertCoordinates(p1, 6, 3);
+        assertCoordinates(p2, -1, -1);
     }
 
     @Test
@@ -65,7 +65,6 @@ public class ChessBoardTest extends TestCase {
 
     @Test
     public void test_Limits_The_Number_Of_White_Coloured_Pawns() {
-
         AddFullRankOfPawns(PieceColor.WHITE, 1);
         addPawn(PieceColor.WHITE, 2, 0);
 
@@ -75,7 +74,6 @@ public class ChessBoardTest extends TestCase {
 
     @Test
     public void test_Allows_Addition_Of_Maximum_Number_Of_Both_Coloured_Pawns() {
-
         AddFullRankOfPawns(PieceColor.BLACK, 6);
         AddFullRankOfPawns(PieceColor.WHITE, 1);
 
@@ -100,6 +98,11 @@ public class ChessBoardTest extends TestCase {
 
     private void addPawn(PieceColor colour, int rank, int file) {
         testSubject.add(new Pawn(colour), rank, file, colour);
+    }
+
+    private void assertCoordinates(Pawn p, int x, int y) {
+        assertEquals(x, p.getXCoordinate());
+        assertEquals(y, p.getYCoordinate());
     }
 
 }
