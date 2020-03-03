@@ -10,7 +10,7 @@ public class ChessBoard {
     private int[] pawnCount = new int[2];
 
     public ChessBoard() {
-        pieces = new Pawn[WIDTH][HEIGHT];
+        pieces = new Piece[WIDTH][HEIGHT];
     }
 
     public Piece[][] getPieces() {
