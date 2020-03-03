@@ -4,6 +4,8 @@ import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
 
+import static com.solarwindsmsp.chess.TestHelper.assertCoordinates;
+
 public class ChessBoardTest extends TestCase {
 
     private ChessBoard testSubject;
@@ -98,11 +100,6 @@ public class ChessBoardTest extends TestCase {
 
     private void addPiece(Piece p, int rank, int file) {
         testSubject.add(p, rank, file, p.getPieceColor());
-    }
-
-    private void assertCoordinates(Piece p, int x, int y) {
-        assertEquals(x, p.getXCoordinate());
-        assertEquals(y, p.getYCoordinate());
     }
 
 }

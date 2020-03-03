@@ -37,8 +37,7 @@ public class PawnTest {
         chessBoard.add(testSubject, 6, 3, PieceColor.BLACK);
         testSubject.move(MovementType.MOVE, 7, 3);
 
-        assertEquals(6, testSubject.getXCoordinate());
-        assertEquals(3, testSubject.getYCoordinate());
+        TestHelper.assertCoordinates(testSubject, 6, 3);
     }
 
     @Test
@@ -46,8 +45,7 @@ public class PawnTest {
         chessBoard.add(testSubject, 6, 3, PieceColor.BLACK);
         testSubject.move(MovementType.MOVE, 4, 3);
 
-        assertEquals(6, testSubject.getXCoordinate());
-        assertEquals(3, testSubject.getYCoordinate());
+        TestHelper.assertCoordinates(testSubject, 6, 3);
     }
 
     @Test
@@ -55,8 +53,7 @@ public class PawnTest {
         chessBoard.add(testSubject, 6, 6, PieceColor.BLACK);
         testSubject.move(MovementType.MOVE, 6, 5);
 
-        assertEquals(6, testSubject.getXCoordinate());
-        assertEquals(5, testSubject.getYCoordinate());
+        TestHelper.assertCoordinates(testSubject, 6, 5);
 
         assertNull(chessBoard.getPieces()[6][6]);
         assertEquals("p", chessBoard.getPieces()[6][5].toString());
@@ -72,8 +69,7 @@ public class PawnTest {
 
         whitePawn.move(MovementType.MOVE, 6, 2);
 
-        assertEquals(6, whitePawn.getXCoordinate());
-        assertEquals(2, whitePawn.getYCoordinate());
+        TestHelper.assertCoordinates(whitePawn, 6, 2);
 
         assertNull(chessBoard.getPieces()[6][1]);
         assertEquals("P", chessBoard.getPieces()[6][2].toString());
@@ -86,8 +82,7 @@ public class PawnTest {
         chessBoard.add(testSubject, 6, 0, PieceColor.BLACK);
         testSubject.move(MovementType.MOVE, 6, -1);
 
-        assertEquals(6, testSubject.getXCoordinate());
-        assertEquals(0, testSubject.getYCoordinate());
+        TestHelper.assertCoordinates(testSubject, 6, 0);
     }
 
     @Test
@@ -97,8 +92,7 @@ public class PawnTest {
         chessBoard.add(whitePawn, 6, 7, PieceColor.WHITE);
         whitePawn.move(MovementType.MOVE, 6, 8);
 
-        assertEquals(6, whitePawn.getXCoordinate());
-        assertEquals(7, whitePawn.getYCoordinate());
+        TestHelper.assertCoordinates(whitePawn, 6, 7);
     }
 
 }
