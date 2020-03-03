@@ -4,6 +4,7 @@ import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
 
+import static com.solarwindsmsp.chess.TestHelper.*;
 import static com.solarwindsmsp.chess.TestHelper.assertCoordinates;
 
 public class ChessBoardTest extends TestCase {
@@ -58,48 +59,29 @@ public class ChessBoardTest extends TestCase {
     @Test
     public void test_Limits_The_Number_Of_Black_Coloured_Pawns() {
 
-        AddFullRankOfPawns(PieceColor.BLACK, 6);
-        addPiece(new Pawn(PieceColor.BLACK), 5, 0);
+        AddFullRankOfPawns(testSubject, PieceColor.BLACK, 6);
+        addPiece(testSubject, new Pawn(PieceColor.BLACK), 5, 0);
 
-        assertThatPiecesArePresentAtExpectedCoordinates(6, ChessBoard.WIDTH);
+        assertThatPiecesArePresentAtExpectedCoordinates(testSubject,6, ChessBoard.WIDTH);
         assertNull(testSubject.getPieces()[5][0]);
     }
 
     @Test
     public void test_Limits_The_Number_Of_White_Coloured_Pawns() {
-        AddFullRankOfPawns(PieceColor.WHITE, 1);
-        addPiece(new Pawn(PieceColor.WHITE), 2, 0);
+        AddFullRankOfPawns(testSubject, PieceColor.WHITE, 1);
+        addPiece(testSubject, new Pawn(PieceColor.WHITE), 2, 0);
 
-        assertThatPiecesArePresentAtExpectedCoordinates(1, ChessBoard.WIDTH);
+        assertThatPiecesArePresentAtExpectedCoordinates(testSubject,1, ChessBoard.WIDTH);
         assertNull(testSubject.getPieces()[2][0]);
     }
 
     @Test
     public void test_Allows_Addition_Of_Maximum_Number_Of_Both_Coloured_Pawns() {
-        AddFullRankOfPawns(PieceColor.BLACK, 6);
-        AddFullRankOfPawns(PieceColor.WHITE, 1);
+        AddFullRankOfPawns(testSubject, PieceColor.BLACK, 6);
+        AddFullRankOfPawns(testSubject, PieceColor.WHITE, 1);
 
-        assertThatPiecesArePresentAtExpectedCoordinates(6, ChessBoard.WIDTH);
-        assertThatPiecesArePresentAtExpectedCoordinates(1, ChessBoard.WIDTH);
-    }
-
-    // helper methods
-
-    private void assertThatPiecesArePresentAtExpectedCoordinates(int rank, int upToFile) {
-        for (int file = 0; file < upToFile; file++) {
-            assertEquals(file, testSubject.getPieces()[rank][file].getYCoordinate());
-            assertEquals(rank, testSubject.getPieces()[rank][file].getXCoordinate());
-        }
-    }
-
-    private void AddFullRankOfPawns(PieceColor colour, int rank) {
-        for (int file = 0; file < ChessBoard.WIDTH; file++) {
-            addPiece(new Pawn(colour), rank, file);
-        }
-    }
-
-    private void addPiece(Piece p, int rank, int file) {
-        testSubject.add(p, rank, file, p.getPieceColor());
+        assertThatPiecesArePresentAtExpectedCoordinates(testSubject,6, ChessBoard.WIDTH);
+        assertThatPiecesArePresentAtExpectedCoordinates(testSubject,1, ChessBoard.WIDTH);
     }
 
 }
