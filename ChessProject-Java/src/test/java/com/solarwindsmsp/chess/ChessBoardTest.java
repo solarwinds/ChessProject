@@ -43,8 +43,8 @@ public class ChessBoardTest extends TestCase {
 
     @Test
     public void test_Avoids_Duplicate_Positioning() {
-        Pawn p1 = new Pawn(PieceColor.BLACK);
-        Pawn p2 = new Pawn(PieceColor.BLACK);
+        Piece p1 = new Pawn(PieceColor.BLACK);
+        Piece p2 = new Pawn(PieceColor.BLACK);
 
         testSubject.add(p1, 6, 3, PieceColor.BLACK);
         testSubject.add(p2, 6, 3, PieceColor.BLACK);
@@ -57,7 +57,7 @@ public class ChessBoardTest extends TestCase {
     public void test_Limits_The_Number_Of_Black_Coloured_Pawns() {
 
         AddFullRankOfPawns(PieceColor.BLACK, 6);
-        addPawn(PieceColor.BLACK, 5, 0);
+        addPiece(new Pawn(PieceColor.BLACK), 5, 0);
 
         assertThatPiecesArePresentAtExpectedCoordinates(6, ChessBoard.WIDTH);
         assertNull(testSubject.getPieces()[5][0]);
@@ -66,7 +66,7 @@ public class ChessBoardTest extends TestCase {
     @Test
     public void test_Limits_The_Number_Of_White_Coloured_Pawns() {
         AddFullRankOfPawns(PieceColor.WHITE, 1);
-        addPawn(PieceColor.WHITE, 2, 0);
+        addPiece(new Pawn(PieceColor.WHITE), 2, 0);
 
         assertThatPiecesArePresentAtExpectedCoordinates(1, ChessBoard.WIDTH);
         assertNull(testSubject.getPieces()[2][0]);
@@ -92,15 +92,15 @@ public class ChessBoardTest extends TestCase {
 
     private void AddFullRankOfPawns(PieceColor colour, int rank) {
         for (int file = 0; file < ChessBoard.WIDTH; file++) {
-            addPawn(colour, rank, file);
+            addPiece(new Pawn(colour), rank, file);
         }
     }
 
-    private void addPawn(PieceColor colour, int rank, int file) {
-        testSubject.add(new Pawn(colour), rank, file, colour);
+    private void addPiece(Piece p, int rank, int file) {
+        testSubject.add(p, rank, file, p.getPieceColor());
     }
 
-    private void assertCoordinates(Pawn p, int x, int y) {
+    private void assertCoordinates(Piece p, int x, int y) {
         assertEquals(x, p.getXCoordinate());
         assertEquals(y, p.getYCoordinate());
     }

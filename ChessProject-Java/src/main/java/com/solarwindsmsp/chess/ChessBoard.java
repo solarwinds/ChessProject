@@ -5,7 +5,7 @@ public class ChessBoard {
     public static int WIDTH = 8;
     public static int HEIGHT = 8;
 
-    private Pawn[][] pieces;
+    private Piece[][] pieces;
 
     private int[] pawnCount = new int[2];
 
@@ -13,19 +13,19 @@ public class ChessBoard {
         pieces = new Pawn[WIDTH][HEIGHT];
     }
 
-    public Pawn[][] getPieces() {
+    public Piece[][] getPieces() {
         return pieces;
     }
 
-    void add(Pawn pawn, int xCoordinate, int yCoordinate, PieceColor pieceColor) {
+    void add(Piece p, int xCoordinate, int yCoordinate, PieceColor pieceColor) {
         if (isLegalBoardPosition(xCoordinate, yCoordinate) && pieces[xCoordinate][yCoordinate] == null && pawnCount[pieceColor.getCode()] < 8) {
-            pawn.setXCoordinate(xCoordinate);
-            pawn.setYCoordinate(yCoordinate);
-            pieces[xCoordinate][yCoordinate] = pawn;
+            p.setXCoordinate(xCoordinate);
+            p.setYCoordinate(yCoordinate);
+            pieces[xCoordinate][yCoordinate] = p;
             pawnCount[pieceColor.getCode()]++;
         } else {
-            pawn.setXCoordinate(-1);
-            pawn.setYCoordinate(-1);
+            p.setXCoordinate(-1);
+            p.setYCoordinate(-1);
         }
     }
 

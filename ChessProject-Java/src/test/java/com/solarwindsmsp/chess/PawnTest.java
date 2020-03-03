@@ -9,7 +9,7 @@ import static org.junit.Assert.assertNull;
 public class PawnTest {
 
     private ChessBoard chessBoard;
-    private Pawn testSubject;
+    private Piece testSubject;
 
     @Before
     public void setUp() {
@@ -64,7 +64,7 @@ public class PawnTest {
 
     @Test
     public void test_White_Pawn_Move_LegalCoordinates_Forward_Updates_Coordinates_And_Moves() {
-        Pawn whitePawn = new Pawn(PieceColor.WHITE);
+        Piece whitePawn = new Pawn(PieceColor.WHITE);
         whitePawn.setChessBoard(chessBoard);
         chessBoard.add(whitePawn, 6, 1, PieceColor.WHITE);
 
@@ -92,7 +92,7 @@ public class PawnTest {
 
     @Test
     public void test_White_Pawn_Move_IllegalTargetCoordinates_Forward_Has_No_Effect() {
-        Pawn whitePawn = new Pawn(PieceColor.WHITE);
+        Piece whitePawn = new Pawn(PieceColor.WHITE);
         whitePawn.setChessBoard(chessBoard);
         chessBoard.add(whitePawn, 6, 7, PieceColor.WHITE);
         whitePawn.move(MovementType.MOVE, 6, 8);
