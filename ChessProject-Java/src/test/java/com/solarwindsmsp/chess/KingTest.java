@@ -89,5 +89,17 @@ public class KingTest {
         TestHelper.assertCoordinates(testSubject, 6, 0);
     }
 
-    //todo write tests for move to occupied square (K+P)
+    @Test
+    public void test_Move_Legal_Forward_To_Occupied_Square_Has_No_Effect() {
+        chessBoard.add(testSubject, 6, 6, PieceColor.BLACK);
+        chessBoard.add(new Pawn(PieceColor.WHITE), 6, 5, PieceColor.WHITE);
+
+        testSubject.move(MovementType.MOVE, 6, 5);
+
+        TestHelper.assertCoordinates(testSubject, 6, 6);
+
+        assertEquals("k", chessBoard.getPieces()[6][6].toString());
+        assertEquals("P", chessBoard.getPieces()[6][5].toString());
+    }
+
 }

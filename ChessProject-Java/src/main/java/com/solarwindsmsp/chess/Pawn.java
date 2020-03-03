@@ -12,6 +12,7 @@ public class Pawn extends Piece {
             throw new UnsupportedOperationException("Need to implement Pawn.Move() for CAPTURE");
         }
 
+        //todo refactor (canMove()?)
         if (!chessBoard.isLegalBoardPosition(newX, newY) || chessBoard.getPieces()[newX][newY] != null) {
             return;
         }

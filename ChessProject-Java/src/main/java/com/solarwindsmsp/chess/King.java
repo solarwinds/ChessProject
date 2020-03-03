@@ -11,7 +11,8 @@ public class King extends Piece {
             throw new UnsupportedOperationException("Need to implement King.Move() for CAPTURE");
         }
 
-        if (!chessBoard.isLegalBoardPosition(newX, newY)) {
+        //todo refactor (canMove()?)
+        if (!chessBoard.isLegalBoardPosition(newX, newY)  || chessBoard.getPieces()[newX][newY] != null) {
             return;
         }
 
@@ -34,5 +35,3 @@ public class King extends Piece {
     }
 
 }
-//todo test for move to occupied square
-//todo abstract canMove() method
