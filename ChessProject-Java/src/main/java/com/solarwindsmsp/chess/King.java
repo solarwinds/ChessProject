@@ -15,9 +15,7 @@ public class King extends Piece {
             return;
         }
 
-        int directionOfTravel = -1; // can only move like a BLACK PAWN for the moment
-
-        if (newX == xCoordinate && newY == yCoordinate + directionOfTravel) {
+        if (isLegalMove(newX, newY)) {
             chessBoard.getPieces()[newX][newY] = this;
             chessBoard.getPieces()[xCoordinate][yCoordinate] = null;
             xCoordinate = newX;
@@ -25,4 +23,16 @@ public class King extends Piece {
         }
     }
 
+    private boolean isLegalMove(double x, double y) {
+        int d = (int) (Math.pow((x - xCoordinate), 2) + Math.pow((y - yCoordinate), 2));
+        return (d == 1 || d == 2);
+    }
+
+    @Override
+    public String toString() {
+        return pieceColor == PieceColor.BLACK ? "k" : "K";
+    }
+
 }
+//todo test for move to occupied square
+//todo abstract canMove() method

@@ -84,4 +84,5 @@ public class ChessBoardTest extends TestCase {
         assertThatPiecesArePresentAtExpectedCoordinates(testSubject,1, ChessBoard.WIDTH);
     }
 
+    //todo improve test naming
 }
