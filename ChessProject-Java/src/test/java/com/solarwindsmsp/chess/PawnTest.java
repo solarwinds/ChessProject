@@ -95,4 +95,17 @@ public class PawnTest {
         TestHelper.assertCoordinates(whitePawn, 6, 7);
     }
 
+    @Test
+    public void test_Black_Pawn_Move_Legal_Forward_To_Occupied_Square_Has_No_Effect() {
+        chessBoard.add(testSubject, 6, 6, PieceColor.BLACK);
+        chessBoard.add(new Pawn(PieceColor.WHITE), 6, 5, PieceColor.WHITE);
+
+        testSubject.move(MovementType.MOVE, 6, 5);
+
+        TestHelper.assertCoordinates(testSubject, 6, 6);
+
+        assertEquals("p", chessBoard.getPieces()[6][6].toString());
+        assertEquals("P", chessBoard.getPieces()[6][5].toString());
+    }
+
 }
