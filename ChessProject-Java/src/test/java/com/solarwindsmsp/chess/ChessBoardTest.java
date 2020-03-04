@@ -57,7 +57,7 @@ public class ChessBoardTest extends TestCase {
     }
 
     @Test
-    public void test_Limits_The_Number_Of_Black_Coloured_Pawns() {
+    public void test_Limits_The_Number_Of_Black_Pawns() {
 
         AddFullRankOfPawns(testSubject, PieceColor.BLACK, 6);
         addPiece(testSubject, new Pawn(PieceColor.BLACK), 5, 0);
@@ -67,7 +67,7 @@ public class ChessBoardTest extends TestCase {
     }
 
     @Test
-    public void test_Limits_The_Number_Of_White_Coloured_Pawns() {
+    public void test_Limits_The_Number_Of_White_Pawns() {
         AddFullRankOfPawns(testSubject, PieceColor.WHITE, 1);
         addPiece(testSubject, new Pawn(PieceColor.WHITE), 2, 0);
 
@@ -111,5 +111,4 @@ public class ChessBoardTest extends TestCase {
         assertThatPiecesArePresentAtExpectedCoordinates(testSubject,6, 1);
     }
 
-    //todo improve test naming
 }
