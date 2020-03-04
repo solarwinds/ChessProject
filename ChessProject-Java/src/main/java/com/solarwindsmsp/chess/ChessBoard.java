@@ -1,5 +1,8 @@
 package com.solarwindsmsp.chess;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ChessBoard {
 
     public static int WIDTH = 8;
@@ -7,7 +10,12 @@ public class ChessBoard {
 
     private Piece[][] pieces;
 
-    private int[] pawnCount = new int[2];
+    private Map<String, PieceCounter> pieceCounterMap = new HashMap<String, PieceCounter>() {{
+        put("p", new PieceCounter(8));
+        put("k", new PieceCounter(1));
+        put("P", new PieceCounter(8));
+        put("K", new PieceCounter(1));
+    }};
 
     public ChessBoard() {
         pieces = new Piece[WIDTH][HEIGHT];
@@ -18,11 +26,14 @@ public class ChessBoard {
     }
 
     void add(Piece p, int xCoordinate, int yCoordinate, PieceColor pieceColor) {
-        if (isLegalBoardPosition(xCoordinate, yCoordinate) && pieces[xCoordinate][yCoordinate] == null && pawnCount[pieceColor.getCode()] < 8) {
+        PieceCounter pieceCounter = pieceCounterMap.get(p.toString());
+        boolean countIsBelowMax = (pieceCounter.getCount() < pieceCounter.getMax());
+
+        if (isLegalBoardPosition(xCoordinate, yCoordinate) && (pieces[xCoordinate][yCoordinate] == null) && countIsBelowMax) {
             p.setXCoordinate(xCoordinate);
             p.setYCoordinate(yCoordinate);
             pieces[xCoordinate][yCoordinate] = p;
-            pawnCount[pieceColor.getCode()]++;
+            pieceCounter.inc();
         } else {
             p.setXCoordinate(-1);
             p.setYCoordinate(-1);

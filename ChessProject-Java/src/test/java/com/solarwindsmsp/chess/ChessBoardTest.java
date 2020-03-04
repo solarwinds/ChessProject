@@ -84,5 +84,32 @@ public class ChessBoardTest extends TestCase {
         assertThatPiecesArePresentAtExpectedCoordinates(testSubject,1, ChessBoard.WIDTH);
     }
 
+    @Test
+    public void test_Limits_The_Number_Of_Black_Kings() {
+        addPiece(testSubject, new King(PieceColor.BLACK), 7, 0);
+        addPiece(testSubject, new King(PieceColor.BLACK), 6, 0);
+
+        assertThatPiecesArePresentAtExpectedCoordinates(testSubject,7, 1);
+        assertNull(testSubject.getPieces()[6][0]);
+    }
+
+    @Test
+    public void test_Limits_The_Number_Of_White_Kings() {
+        addPiece(testSubject, new King(PieceColor.WHITE), 7, 0);
+        addPiece(testSubject, new King(PieceColor.WHITE), 6, 0);
+
+        assertThatPiecesArePresentAtExpectedCoordinates(testSubject,7, 1);
+        assertNull(testSubject.getPieces()[6][0]);
+    }
+
+    @Test
+    public void test_Allows_Addition_Of_Maximum_Number_Of_Both_Coloured_Kings() {
+        addPiece(testSubject, new King(PieceColor.BLACK), 7, 0);
+        addPiece(testSubject, new King(PieceColor.WHITE), 6, 0);
+
+        assertThatPiecesArePresentAtExpectedCoordinates(testSubject,7, 1);
+        assertThatPiecesArePresentAtExpectedCoordinates(testSubject,6, 1);
+    }
+
     //todo improve test naming
 }
