@@ -46,6 +46,7 @@
     <Compile Include="ChessBoard.cs" />
     <Compile Include="MovementType.cs" />
     <Compile Include="Pawn.cs" />
+    <Compile Include="Piece.cs" />
     <Compile Include="PieceColor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

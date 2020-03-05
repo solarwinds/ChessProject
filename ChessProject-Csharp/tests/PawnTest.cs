@@ -59,6 +59,5 @@ namespace SolarWinds.MSP.Chess
 			Assert.AreEqual(pawn.XCoordinate, 6);
             Assert.AreEqual(pawn.YCoordinate, 2);
 		}
-
-	}
+    }
 }
