@@ -1,6 +1,6 @@
 <?php
 
-namespace SolarWinds\Chess;
+namespace SolarWinds\Chess\Pieces;
 
 class PieceColorEnum
 {
@@ -9,6 +9,9 @@ class PieceColorEnum
     private static $_black;
 
     private $_id;
+
+    const WHITE = 1;
+    const BLACK = 2;
 
     private function __construct($_id)
     {
@@ -37,8 +40,8 @@ class PieceColorEnum
             return;
         }
 
-        self::$_white = new PieceColorEnum(1);
-        self::$_black = new PieceColorEnum(2);
+        self::$_white = new PieceColorEnum(self::WHITE);
+        self::$_black = new PieceColorEnum(self::BLACK);
     }
 
 }

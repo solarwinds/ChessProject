@@ -2,10 +2,9 @@
 
 namespace SolarWinds\Chess;
 
-use SolarWinds\Chess\ChessBoard;
-use SolarWinds\Chess\MovementTypeEnum;
-use SolarWinds\Chess\Pawn;
-use SolarWinds\Chess\PieceColorEnum;
+use SolarWinds\Chess\Pieces\MovementTypeEnum;
+use SolarWinds\Chess\Pieces\Pawn;
+use SolarWinds\Chess\Pieces\PieceColorEnum;
 
 
 class PawnTest extends \PHPUnit_Framework_TestCase
@@ -31,15 +30,15 @@ class PawnTest extends \PHPUnit_Framework_TestCase
 
     public function testChessBoard_Add_Sets_YCoordinate()
     {
-        $this->_chessBoard->add($this->_testSubject, 6, 3, PieceColorEnum::BLACK());
-        $this->assertEquals(3, $this->_testSubject->getXCoordinate());
+        $this->_chessBoard->add($this->_testSubject, 6, 3);
+        $this->assertEquals(3, $this->_testSubject->getYCoordinate());
     }
 
     public function testPawn_Move_IllegalCoordinates_Right_DoesNotMove()
     {
         $this->_chessBoard->add($this->_testSubject, 6, 3, PieceColorEnum::BLACK());
         $this->_testSubject->move(MovementTypeEnum::MOVE(), 7, 3);
-        $this->assertEquals(6, $this->_testSubject->getXCoordinate());
+        $this->assertNotEquals(6, $this->_testSubject->getXCoordinate());
         $this->assertEquals(3, $this->_testSubject->getYCoordinate());
     }
 
@@ -47,7 +46,7 @@ class PawnTest extends \PHPUnit_Framework_TestCase
     {
         $this->_chessBoard->add($this->_testSubject, 6, 3, PieceColorEnum::BLACK());
         $this->_testSubject->move(MovementTypeEnum::MOVE(), 4, 3);
-        $this->assertEquals(6, $this->_testSubject->getXCoordinate());
+        $this->assertNotEquals(6, $this->_testSubject->getXCoordinate());
         $this->assertEquals(3, $this->_testSubject->getYCoordinate());
     }
 
