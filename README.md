@@ -1,3 +1,5 @@
+**IMPORTANT:** This repository has been deprecated and archived. Please use the one hosted [here](https://github.com/solarwinds/ChessProject).
+
 # Solarwinds MSP Technical Exercise - ChessProject
 
 Welcome to the technical exercise used to assess candidates for Developer roles at Solarwinds MSP.
