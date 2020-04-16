@@ -2,7 +2,7 @@
 
 namespace SolarWinds.MSP.Chess
 {
-    public class Pawn
+    public class Pawn // DONE pass all SolarWinds unit tests
     {
         private ChessBoard chessBoard;
         private int xCoordinate;
@@ -33,6 +33,7 @@ namespace SolarWinds.MSP.Chess
             private set { pieceColor = value; }
         }
 
+        // ctor
         public Pawn(PieceColor pieceColor)
         {
             this.pieceColor = pieceColor;
@@ -40,7 +41,22 @@ namespace SolarWinds.MSP.Chess
 
         public void Move(MovementType movementType, int newX, int newY)
         {
-            throw new NotImplementedException("Need to implement Pawn.Move()");
+            // if moveType is capture, calculate points for capture
+            switch(movementType)
+            {
+                case MovementType.Capture:
+                    // TODO future implementation
+                    break;
+                case MovementType.Move:
+                    if(yCoordinate == newY) // only allow Pawn movement on same file
+                    {
+                        chessBoard.Add(this, newX, newY, this.pieceColor);
+                    }
+                    break;
+                default:
+                    Console.WriteLine("Illegal move!");
+                    break;
+            }
         }
 
         public override string ToString()
@@ -51,6 +67,19 @@ namespace SolarWinds.MSP.Chess
         protected string CurrentPositionAsString()
         {
             return string.Format("Current X: {1}{0}Current Y: {2}{0}Piece Color: {3}", Environment.NewLine, XCoordinate, YCoordinate, PieceColor);
+        }
+
+        public string PrintPiece()
+        {
+            if(pieceColor == PieceColor.White)
+            {
+                // unicode flag
+                return "\u2659";
+            }
+            else // if black
+            {
+                return "\u265F";
+            }
         }
 
     }

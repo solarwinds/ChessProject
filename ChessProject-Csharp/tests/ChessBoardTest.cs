@@ -25,52 +25,22 @@ namespace SolarWinds.MSP.Chess
 			Assert.AreEqual(ChessBoard.MaxBoardHeight, 7);
 		}
 
-        [Test]
-		public void IsLegalBoardPosition_True_X_equals_0_Y_equals_0()
+        [TestCase(0, 0)]
+		[TestCase(5, 5)]
+		public void IsLegalBoardPosition_True(int x, int y)
 		{
-			var isValidPosition = chessBoard.IsLegalBoardPosition(0, 0);
+			var isValidPosition = chessBoard.IsLegalBoardPosition(x, y);
 			Assert.IsTrue(isValidPosition);
 		}
 
-        [Test]
-		public void IsLegalBoardPosition_True_X_equals_5_Y_equals_5()
+		[TestCase(11, 5)]
+		[TestCase(0, 9)]
+		[TestCase(11, 0)]
+		[TestCase(-1, 5)]
+		[TestCase(5, -1)]
+		public void IsLegalBoardPosition_False(int x, int y)
 		{
-			var isValidPosition = chessBoard.IsLegalBoardPosition(5, 5);
-            Assert.IsTrue(isValidPosition);
-		}
-
-        [Test]
-		public void IsLegalBoardPosition_False_X_equals_11_Y_equals_5()
-		{
-			var isValidPosition = chessBoard.IsLegalBoardPosition(11, 5);
-            Assert.IsFalse(isValidPosition);
-		}
-
-        [Test]
-		public void IsLegalBoardPosition_False_X_equals_0_Y_equals_9()
-		{
-			var isValidPosition = chessBoard.IsLegalBoardPosition(0, 9);
-            Assert.IsFalse(isValidPosition);
-		}
-
-        [Test]
-		public void IsLegalBoardPosition_False_X_equals_11_Y_equals_0()
-		{
-			var isValidPosition = chessBoard.IsLegalBoardPosition(11, 0);
-            Assert.IsFalse(isValidPosition);
-		}
-
-        [Test]
-		public void IsLegalBoardPosition_False_For_Negative_X_Values()
-		{
-			var isValidPosition = chessBoard.IsLegalBoardPosition(-1, 5);
-            Assert.IsFalse(isValidPosition);
-		}
-
-        [Test]
-		public void IsLegalBoardPosition_False_For_Negative_Y_Values()
-		{
-			var isValidPosition = chessBoard.IsLegalBoardPosition(5, -1);
+			var isValidPosition = chessBoard.IsLegalBoardPosition(x, y);
             Assert.IsFalse(isValidPosition);
 		}
 
@@ -85,6 +55,7 @@ namespace SolarWinds.MSP.Chess
             Assert.AreEqual(firstPawn.YCoordinate, 3);
             Assert.AreEqual(secondPawn.XCoordinate, -1);
             Assert.AreEqual(secondPawn.YCoordinate, -1);
+            // DONE set dup Pawn to (-1,-1)
 		}
 
         [Test]
@@ -93,14 +64,14 @@ namespace SolarWinds.MSP.Chess
 			for (int i = 0; i < 10; i++)
 			{
 				Pawn pawn = new Pawn(PieceColor.Black);
-				int row = i / ChessBoard.MaxBoardWidth;
-				chessBoard.Add(pawn, 6 + row, i % ChessBoard.MaxBoardWidth, PieceColor.Black);
-				if (row < 1)
+				int row = i / (ChessBoard.MaxBoardWidth + 1);
+				chessBoard.Add(pawn, 6 + row, i % (ChessBoard.MaxBoardWidth + 1), PieceColor.Black);
+				if (row < 1) // i = 0..7
 				{
 					Assert.AreEqual(pawn.XCoordinate, (6 + row));
-					Assert.AreEqual(pawn.YCoordinate, (i % ChessBoard.MaxBoardWidth));
+					Assert.AreEqual(pawn.YCoordinate, (i % (ChessBoard.MaxBoardWidth + 1)));
 				}
-				else
+				else // i = 8..9
 				{
 					Assert.AreEqual(pawn.XCoordinate, -1);
                     Assert.AreEqual(pawn.YCoordinate, -1);
