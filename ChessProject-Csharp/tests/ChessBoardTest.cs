@@ -66,13 +66,13 @@ namespace SolarWinds.MSP.Chess
 			{
 				Pawn pawn = new Pawn(PieceColor.Black);
 				int row = i / ChessBoard.MaxBoardWidth; // (i / 8)
-				chessBoard.Add(pawn, 1 + row, i % ChessBoard.MaxBoardWidth, PieceColor.Black); // start at black pawn line, 1 not 6
-				if (row < 1) // 0..7
+				chessBoard.Add(pawn, 6 - row, i % ChessBoard.MaxBoardWidth, PieceColor.Black); // black pawns start on row 6, build down to accomodate
+				if (row < 2) // 0..15
 				{
-					Assert.AreEqual(pawn.XCoordinate, (1 + row)); // black pawn line, 1 not 6
+					Assert.AreEqual(pawn.XCoordinate, (6 - row));
 					Assert.AreEqual(pawn.YCoordinate, (i % ChessBoard.MaxBoardWidth));
 				}
-				else // 8..9
+				else // 16..17
 				{
 					Assert.AreEqual(pawn.XCoordinate, -1);
 					Assert.AreEqual(pawn.YCoordinate, -1);

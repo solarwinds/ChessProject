@@ -7,7 +7,7 @@ namespace SolarWinds.MSP.Chess
     {
         public static void Main(string[] args)
         {
-            ChessBoard board = new ChessBoard();
+            ChessBoard board = new ChessBoard(ChessBoard.defaultFEN);
             Console.WriteLine();
             board.PrintBoard();
             bool moves = true;

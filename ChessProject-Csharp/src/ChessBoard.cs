@@ -36,15 +36,22 @@ namespace SolarWinds.MSP.Chess
         {
             pieces = new Pawn[MaxBoardWidth, MaxBoardHeight];
             pawnCount = 0;
-            BoardHelper(defaultFEN);
+        }
+
+        // ctor 2
+        public ChessBoard(string fen)
+        {
+            pieces = new Pawn[MaxBoardWidth, MaxBoardHeight];
+            pawnCount = 0;
+            BoardHelper(fen);
         }
 
         // TODO add support for other chess configurations/"famous" games
         // TODO test
         // sets up the initial configuration of the board
-        protected void BoardHelper(string fes)
+        protected void BoardHelper(string fen)
         {
-            if(fes.Equals(defaultFEN)) // default is for standard game
+            if(fen.Equals(defaultFEN)) // default is for standard game
             {
                 int whiteRank = 1;
                 int blackOffset = 5;
@@ -59,30 +66,42 @@ namespace SolarWinds.MSP.Chess
 
         public void Add(Pawn pawn, int xCoordinate, int yCoordinate, PieceColor pieceColor)
         {
-            if(pawnCount > 0) // if any pawns on the board
+            if (IsLegalBoardPosition(xCoordinate, yCoordinate))
             {
-                // remove the current pawn from the array in order to place
-                pieces[pawn.XCoordinate, pawn.YCoordinate] = null;
-                pawnCount--;
-            }
-            if (pawnCount < MaxPawnCount && IsLegalBoardPosition(xCoordinate, yCoordinate))
-            {
-                if (pawn.XCoordinate == 0 && pawn.YCoordinate == 0) // when pawn is generated at new game
+                if(pawn.XCoordinate == 0 && pawn.YCoordinate == 0) // new pawn placement
                 {
-                    pawn.ChessBoard = this;
+                    if (pawnCount < MaxPawnCount)
+                    {
+                        pawn.ChessBoard = this; // associate new pawn
+                        // update its coordinates
+                        pawn.XCoordinate = xCoordinate;
+                        pawn.YCoordinate = yCoordinate;
+                        pieces[xCoordinate, yCoordinate] = pawn; // place the new pawn
+                        pawnCount++;
+                    }
+                    else if (pawnCount == MaxPawnCount && pawn.XCoordinate == 0 && pawn.YCoordinate == 0)
+                    {
+                        // don't place and set to out-of-bounds
+                        pawn.XCoordinate = -1;
+                        pawn.YCoordinate = -1;
+                    }
                 }
-                // place the new pawn
-                pieces[xCoordinate, yCoordinate] = pawn;
-                // update it's coordinates
-                pawn.XCoordinate = xCoordinate;
-                pawn.YCoordinate = yCoordinate;
-                pawnCount++;
+                else // a moved pawn
+                {
+                    pieces[pawn.XCoordinate, pawn.YCoordinate] = null; // remove the current pawn from the array first in order to place
+                    pawnCount--; // allow more pawn placement
+                    // update its coordinates
+                    pawn.XCoordinate = xCoordinate;
+                    pawn.YCoordinate = yCoordinate;
+                    pieces[xCoordinate, yCoordinate] = pawn; // place the new pawn
+                    pawnCount++;
+                }
             }
-            else
+            else // moving pawn failed
             {
                 // restore old pawn
                 pieces[pawn.XCoordinate, pawn.YCoordinate] = pawn;
-                // remove dummy pawn from board
+                // don't place new pawn and set to out-of-bounds
                 pawn.XCoordinate = -1;
                 pawn.YCoordinate = -1;
             }
