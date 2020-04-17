@@ -53,12 +53,12 @@ namespace SolarWinds.MSP.Chess
         {
             if(fen.Equals(defaultFEN)) // default is for standard game
             {
-                int whiteRank = 1;
-                int blackOffset = 5;
+                int blackRank = 6;
+                int whiteOffset = 5;
                 for(int file = 0; file < MaxPawnCount / 2; file++)
                 {
-                    Add(new Pawn(PieceColor.White), whiteRank, file, PieceColor.White);
-                    Add(new Pawn(PieceColor.Black), whiteRank + blackOffset, file, PieceColor.Black);
+                    Add(new Pawn(PieceColor.Black), file, blackRank, PieceColor.Black);
+                    Add(new Pawn(PieceColor.White), file, blackRank - whiteOffset, PieceColor.White);
                 }
                 WhitesMove = true;
             }
@@ -76,10 +76,10 @@ namespace SolarWinds.MSP.Chess
                         // update its coordinates
                         pawn.XCoordinate = xCoordinate;
                         pawn.YCoordinate = yCoordinate;
-                        pieces[xCoordinate, yCoordinate] = pawn; // place the new pawn
+                        pieces[yCoordinate, xCoordinate] = pawn; // place the new pawn
                         pawnCount++;
                     }
-                    else if (pawnCount == MaxPawnCount && pawn.XCoordinate == 0 && pawn.YCoordinate == 0)
+                    else if (pawnCount == MaxPawnCount)
                     {
                         // don't place and set to out-of-bounds
                         pawn.XCoordinate = -1;
@@ -88,12 +88,12 @@ namespace SolarWinds.MSP.Chess
                 }
                 else // a moved pawn
                 {
-                    pieces[pawn.XCoordinate, pawn.YCoordinate] = null; // remove the current pawn from the array first in order to place
+                    pieces[pawn.YCoordinate, pawn.XCoordinate] = null; // remove the current pawn from the array first in order to place
                     pawnCount--; // allow more pawn placement
                     // update its coordinates
                     pawn.XCoordinate = xCoordinate;
                     pawn.YCoordinate = yCoordinate;
-                    pieces[xCoordinate, yCoordinate] = pawn; // place the new pawn
+                    pieces[yCoordinate, xCoordinate] = pawn; // place the new pawn
                     pawnCount++;
                 }
             }
@@ -114,8 +114,8 @@ namespace SolarWinds.MSP.Chess
             int[] coords = NotationHelper(san);
             Pawn p;
             // TODO validate retrieval
-            p = pieces[MaxBoardHeight - coords[1] + 1, coords[0]];
-            return new Tuple<Pawn, int[]>(p, new int[] {MaxBoardHeight - coords[3] + 1, coords[2]});
+            p = pieces[MaxBoardHeight - coords[1] - 1, coords[0]];
+            return new Tuple<Pawn, int[]>(p, new int[] {MaxBoardHeight - coords[3] - 1, coords[2]});
         }
 
         // TODO validate string with full notation regex
@@ -137,7 +137,7 @@ namespace SolarWinds.MSP.Chess
             if (xCoordinate >= 0 && xCoordinate < MaxBoardWidth
                 && yCoordinate >= 0 && yCoordinate < MaxBoardHeight) // within board limits
             {
-                if (pieces[xCoordinate, yCoordinate] == null) // space must be empty
+                if (pieces[yCoordinate, xCoordinate] == null) // space must be empty
                 {
                     return true;
                 }

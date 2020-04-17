@@ -5,8 +5,8 @@ namespace SolarWinds.MSP.Chess
     public class Pawn
     {
         private ChessBoard chessBoard;
-        private int xCoordinate;
-        private int yCoordinate;
+        private int xCoordinate; // file
+        private int yCoordinate; // rank
         private PieceColor pieceColor;
         public bool firstMove { get; private set; }
         
@@ -51,15 +51,15 @@ namespace SolarWinds.MSP.Chess
                     break;
                 case MovementType.Move:
                     // only allow Pawn movement on same file and advance one rank at a time or two ranks on Pawn's first move
-                    if (yCoordinate == newY)
+                    if (xCoordinate == newX) // validate same file
                     {
                         if (this.pieceColor.Equals(PieceColor.Black)
-                            && (newX == xCoordinate + 1 || (newX == xCoordinate + 2 && firstMove)))
+                            && (newY == yCoordinate - 1 || (newY == yCoordinate - 2 && firstMove))) // validate increment rank only by one or two (if first move)
                         {
-                            chessBoard.Add(this, newX, newY, this.pieceColor);
+                            chessBoard.Add(this, newX, newY, this.pieceColor); // pass file, rank
                         }
                         if (this.pieceColor.Equals(PieceColor.White)
-                            && (newX == xCoordinate - 1 || (newX == xCoordinate - 2 && firstMove)))
+                            && (newY == yCoordinate + 1 || (newY == yCoordinate + 2 && firstMove)))
                         {
                             chessBoard.Add(this, newX, newY, this.pieceColor);
                         }
