@@ -31,11 +31,15 @@ namespace SolarWinds.MSP.Chess
         // counter for whose move
         public bool WhitesMove { get; set; }
 
+        // half-move counter
+        public int halfMoves;
+
         // ctor
         public ChessBoard ()
         {
             pieces = new Pawn[MaxBoardWidth, MaxBoardHeight];
             pawnCount = 0;
+            halfMoves = 0;
         }
 
         // ctor 2
@@ -43,22 +47,23 @@ namespace SolarWinds.MSP.Chess
         {
             pieces = new Pawn[MaxBoardWidth, MaxBoardHeight];
             pawnCount = 0;
+            halfMoves = 0;
             BoardHelper(fen);
         }
 
         // TODO add support for other chess configurations/"famous" games
-        // TODO test
+        // TODO add unit test
         // sets up the initial configuration of the board
         protected void BoardHelper(string fen)
         {
             if(fen.Equals(defaultFEN)) // default is for standard game
             {
-                int blackRank = 6;
-                int whiteOffset = 5;
+                int rank = 1;
+                int offset = 5;
                 for(int file = 0; file < MaxPawnCount / 2; file++)
                 {
-                    Add(new Pawn(PieceColor.Black), file, blackRank, PieceColor.Black);
-                    Add(new Pawn(PieceColor.White), file, blackRank - whiteOffset, PieceColor.White);
+                    Add(new Pawn(PieceColor.White), file, rank, PieceColor.White);
+                    Add(new Pawn(PieceColor.Black), file, rank + offset, PieceColor.Black);
                 }
                 WhitesMove = true;
             }
@@ -95,30 +100,33 @@ namespace SolarWinds.MSP.Chess
                     pawn.YCoordinate = yCoordinate;
                     pieces[yCoordinate, xCoordinate] = pawn; // place the new pawn
                     pawnCount++;
+                    halfMoves++;
                 }
             }
             else // moving pawn failed
             {
                 // restore old pawn
-                pieces[pawn.XCoordinate, pawn.YCoordinate] = pawn;
+                pieces[pawn.YCoordinate, pawn.XCoordinate] = pawn;
                 // don't place new pawn and set to out-of-bounds
                 pawn.XCoordinate = -1;
                 pawn.YCoordinate = -1;
+                Console.WriteLine("Illegal! Try again.");
             }
         }
 
-        // TODO test
-        // necessary for retrieving Pawn
+        // TODO add unit test
+        // retrieves a Pawn
         public Tuple<Pawn, int[]> GetPawn(string san)
         {
             int[] coords = NotationHelper(san);
             Pawn p;
             // TODO validate retrieval
-            p = pieces[MaxBoardHeight - coords[1] - 1, coords[0]];
-            return new Tuple<Pawn, int[]>(p, new int[] {MaxBoardHeight - coords[3] - 1, coords[2]});
+            p = pieces[coords[1], coords[0]];
+            return new Tuple<Pawn, int[]>(p, new int[] {coords[3], coords[2]});
         }
 
         // TODO validate string with full notation regex
+        // TODO add a unit test
         private int[] NotationHelper(string san)
         {
             Regex mvt = new Regex(@"[a-h][1-8]");
@@ -157,6 +165,7 @@ namespace SolarWinds.MSP.Chess
         }
 
         // trivial no test
+        // prints the board to the console
         public void PrintBoard()
         {
             for(int i = MaxBoardHeight; i >= 0; i--)

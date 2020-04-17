@@ -25,7 +25,7 @@ namespace SolarWinds.MSP.Chess
                     Tuple<Pawn, int[]> tuple = board.GetPawn(turn);
                     Pawn p = tuple.Item1;
                     int[] coord = tuple.Item2;
-                    p.Move(MovementType.Move, coord[0], coord[1]);
+                    p.Move(MovementType.Move, coord[1], coord[0]);
                     board.PrintBoard();
                 }
             }

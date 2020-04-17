@@ -9,7 +9,7 @@ namespace SolarWinds.MSP.Chess
         private int yCoordinate; // rank
         private PieceColor pieceColor;
         public bool firstMove { get; private set; }
-        
+
         public ChessBoard ChessBoard
         {
             get { return chessBoard; }
@@ -54,11 +54,13 @@ namespace SolarWinds.MSP.Chess
                     if (xCoordinate == newX) // validate same file
                     {
                         if (this.pieceColor.Equals(PieceColor.Black)
+                            && !chessBoard.WhitesMove
                             && (newY == yCoordinate - 1 || (newY == yCoordinate - 2 && firstMove))) // validate increment rank only by one or two (if first move)
                         {
                             chessBoard.Add(this, newX, newY, this.pieceColor); // pass file, rank
                         }
                         if (this.pieceColor.Equals(PieceColor.White)
+                            && chessBoard.WhitesMove
                             && (newY == yCoordinate + 1 || (newY == yCoordinate + 2 && firstMove)))
                         {
                             chessBoard.Add(this, newX, newY, this.pieceColor);
@@ -66,18 +68,8 @@ namespace SolarWinds.MSP.Chess
                     }
                     break;
             }
-            if(firstMove)
-            {
-                firstMove = false;
-            }
-            if(chessBoard.WhitesMove)
-            {
-                chessBoard.WhitesMove = false;
-            }
-            else
-            {
-                chessBoard.WhitesMove = true;
-            }
+            firstMove = (firstMove) ? false : true;
+            chessBoard.WhitesMove = (chessBoard.WhitesMove && chessBoard.halfMoves % 2 == 1) ? false : true;
         }
 
         public override string ToString()
