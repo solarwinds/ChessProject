@@ -8,17 +8,27 @@ namespace SolarWinds.MSP.Chess
         public static void Main(string[] args)
         {
             ChessBoard board = new ChessBoard();
-            int x = 6, y = 1, r = 1, c = 6;
-            board.Add(new Pawn(PieceColor.White), x, y, PieceColor.White); // row, col from top
-            board.Add(new Pawn(PieceColor.Black), r, c, PieceColor.Black); // row, col from top
-            board.printBoard();
             Console.WriteLine();
-            Thread.Sleep(500);
-            Pawn wp = board.getPawn(x, y);
-            wp.Move(MovementType.Move, --x, y);
-            Pawn bp = board.getPawn(r, c);
-            bp.Move(MovementType.Move, ++r, c);
-            board.printBoard();
+            board.PrintBoard();
+            bool moves = true;
+            while (moves)
+            {
+                Console.Write((board.WhitesMove) ? "White's move. " : "Black's move. ");
+                Console.Write("Type move and press enter or 'bye' to exit: ");
+                string turn = Console.ReadLine();
+                if (turn.Equals("bye"))
+                {
+                    moves = false;
+                }
+                else
+                {
+                    Tuple<Pawn, int[]> tuple = board.GetPawn(turn);
+                    Pawn p = tuple.Item1;
+                    int[] coord = tuple.Item2;
+                    p.Move(MovementType.Move, coord[0], coord[1]);
+                    board.PrintBoard();
+                }
+            }
         }
     }
 }

@@ -2,12 +2,13 @@
 
 namespace SolarWinds.MSP.Chess
 {
-    public class Pawn // DONE pass all SolarWinds unit tests
+    public class Pawn
     {
         private ChessBoard chessBoard;
         private int xCoordinate;
         private int yCoordinate;
         private PieceColor pieceColor;
+        public bool firstMove { get; private set; }
         
         public ChessBoard ChessBoard
         {
@@ -37,25 +38,45 @@ namespace SolarWinds.MSP.Chess
         public Pawn(PieceColor pieceColor)
         {
             this.pieceColor = pieceColor;
+            firstMove = true;
         }
 
-        public void Move(MovementType movementType, int newX, int newY)
-        {
-            // if moveType is capture, calculate points for capture
+        public void Move(MovementType movementType, int newX, int newY) // x = file, y = rank
+        { 
             switch(movementType)
             {
                 case MovementType.Capture:
                     // TODO future implementation
+                    // if moveType is capture, calculate points for capture
                     break;
                 case MovementType.Move:
-                    if(yCoordinate == newY) // only allow Pawn movement on same file
+                    // only allow Pawn movement on same file and advance one rank at a time or two ranks on Pawn's first move
+                    if (yCoordinate == newY)
                     {
-                        chessBoard.Add(this, newX, newY, this.pieceColor);
+                        if (this.pieceColor.Equals(PieceColor.Black)
+                            && (newX == xCoordinate + 1 || (newX == xCoordinate + 2 && firstMove)))
+                        {
+                            chessBoard.Add(this, newX, newY, this.pieceColor);
+                        }
+                        if (this.pieceColor.Equals(PieceColor.White)
+                            && (newX == xCoordinate - 1 || (newX == xCoordinate - 2 && firstMove)))
+                        {
+                            chessBoard.Add(this, newX, newY, this.pieceColor);
+                        }
                     }
                     break;
-                default:
-                    Console.WriteLine("Illegal move!");
-                    break;
+            }
+            if(firstMove)
+            {
+                firstMove = false;
+            }
+            if(chessBoard.WhitesMove)
+            {
+                chessBoard.WhitesMove = false;
+            }
+            else
+            {
+                chessBoard.WhitesMove = true;
             }
         }
 

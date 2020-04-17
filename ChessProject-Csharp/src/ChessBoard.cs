@@ -1,91 +1,135 @@
 ﻿using System;
+using System.Text.RegularExpressions;
+using System.Collections;
 
 namespace SolarWinds.MSP.Chess
 {
-    public class ChessBoard // DONE pass all SolarWinds unit tests
+    public class ChessBoard
     {
-        public static readonly int MaxBoardWidth = 7;
-        public static readonly int MaxBoardHeight = 7;
-        public static readonly int MaxPawnCount = 16; //replace with Pawn Singleton
+        // NOTE incremented by 1 instead of incrementing in methods and tests 
+        public static readonly int MaxBoardWidth = 8;
+        public static readonly int MaxBoardHeight = 8;
+
+        public static readonly int MaxPawnCount = 16; //replace with Pawn modified Singleton
+
+        // TODO true implementation for playable game
+        // fen notation for standard game starting positions in six columns
+        // 1. board-piece positions (ranks seperated by "/", numbers indicating horizontal spans of empty squares
+        // 2. whose move (white moves first in a standard game)
+        // 3. valid castle sides for white and black
+        // 4. en passant square
+        // 5. 50-move counter (half moves since last capture)
+        // 6. full moves (white and black move) counter
+        public static readonly string defaultFEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 
         private int pawnCount;
 
-        // board array containing piece coords
+        // board array containing Pawn coords
+        // TODO implement superclass Piece
         private Pawn[,] pieces;
 
+        // counter for whose move
+        public bool WhitesMove { get; set; }
+
+        // ctor
         public ChessBoard ()
         {
-            pieces = new Pawn[MaxBoardWidth + 1, MaxBoardHeight + 1];
+            pieces = new Pawn[MaxBoardWidth, MaxBoardHeight];
             pawnCount = 0;
+            BoardHelper(defaultFEN);
         }
 
+        // TODO add support for other chess configurations/"famous" games
         // TODO test
         // sets up the initial configuration of the board
         protected void BoardHelper(string fes)
         {
-            
+            if(fes.Equals(defaultFEN)) // default is for standard game
+            {
+                int whiteRank = 1;
+                int blackOffset = 5;
+                for(int file = 0; file < MaxPawnCount / 2; file++)
+                {
+                    Add(new Pawn(PieceColor.White), whiteRank, file, PieceColor.White);
+                    Add(new Pawn(PieceColor.Black), whiteRank + blackOffset, file, PieceColor.Black);
+                }
+                WhitesMove = true;
+            }
         }
-
-        // TODO add support for other chess configurations/"famous" games
 
         public void Add(Pawn pawn, int xCoordinate, int yCoordinate, PieceColor pieceColor)
         {
+            if(pawnCount > 0) // if any pawns on the board
+            {
+                // remove the current pawn from the array in order to place
+                pieces[pawn.XCoordinate, pawn.YCoordinate] = null;
+                pawnCount--;
+            }
             if (pawnCount < MaxPawnCount && IsLegalBoardPosition(xCoordinate, yCoordinate))
             {
-                if (pawn.XCoordinate == 0 && pawn.YCoordinate == 0)
+                if (pawn.XCoordinate == 0 && pawn.YCoordinate == 0) // when pawn is generated at new game
                 {
                     pawn.ChessBoard = this;
                 }
-                //else if (pieces[pawn.XCoordinate, pawn.YCoordinate] != null)
-                //{
-                //    pieces[pawn.XCoordinate, pawn.YCoordinate] = null;
-                //    pawnCount--;
-                //    pieces[xCoordinate, yCoordinate] = pawn;
-                //}
+                // place the new pawn
                 pieces[xCoordinate, yCoordinate] = pawn;
+                // update it's coordinates
                 pawn.XCoordinate = xCoordinate;
                 pawn.YCoordinate = yCoordinate;
                 pawnCount++;
             }
             else
             {
+                // restore old pawn
+                pieces[pawn.XCoordinate, pawn.YCoordinate] = pawn;
+                // remove dummy pawn from board
                 pawn.XCoordinate = -1;
                 pawn.YCoordinate = -1;
-                try
-                {
-                    throw new Exception("Too many pawns!");
-                }
-                catch(Exception e)
-                {
-                    e.ToString();
-                }
             }
         }
 
         // TODO test
         // necessary for retrieving Pawn
-        public Pawn getPawn(int x, int y)
+        public Tuple<Pawn, int[]> GetPawn(string san)
         {
-            Pawn p = pieces[x, y];
-            pieces[x, y] = null;
-            pawnCount--;
-            return p;
+            int[] coords = NotationHelper(san);
+            Pawn p;
+            // TODO validate retrieval
+            p = pieces[MaxBoardHeight - coords[1] + 1, coords[0]];
+            return new Tuple<Pawn, int[]>(p, new int[] {MaxBoardHeight - coords[3] + 1, coords[2]});
+        }
+
+        // TODO validate string with full notation regex
+        private int[] NotationHelper(string san)
+        {
+            Regex mvt = new Regex(@"[a-h][1-8]");
+            ArrayList list = new ArrayList();
+            foreach(Match match in mvt.Matches(san))
+            {
+                // subtract ascii int val for 0-base
+                list.Add(match.Value[0] - 97); // file
+                list.Add(match.Value[1] - 49); // rank
+            }
+            return (int[])list.ToArray(typeof(int));
         }
 
         public bool IsLegalBoardPosition(int xCoordinate, int yCoordinate)
         {
-            if (xCoordinate >= 0 && xCoordinate <= MaxBoardWidth
-                && yCoordinate >= 0 && yCoordinate <= MaxBoardHeight
-                && pieces[xCoordinate, yCoordinate] == null)
+            if (xCoordinate >= 0 && xCoordinate < MaxBoardWidth
+                && yCoordinate >= 0 && yCoordinate < MaxBoardHeight) // within board limits
             {
-                return true;
-            }
-            else if(xCoordinate >= 0 && xCoordinate <= MaxBoardWidth
-                    && yCoordinate >= 0 && yCoordinate <= MaxBoardHeight
-                    && pieces[xCoordinate, yCoordinate] != null
-                    && MovementType.Capture.Equals(true))
-            {
-                return true;
+                if (pieces[xCoordinate, yCoordinate] == null) // space must be empty
+                {
+                    return true;
+                }
+                else if (MovementType.Capture.Equals(true)) // or else is capturing
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             else
             {
@@ -93,15 +137,27 @@ namespace SolarWinds.MSP.Chess
             }
         }
 
-        // TODO test
-        // necessary for visual aid
-        public void printBoard()
+        // trivial no test
+        public void PrintBoard()
         {
-            for(int i = 0; i <= MaxBoardWidth; i++)
+            for(int i = MaxBoardHeight; i >= 0; i--)
             {
-                for(int j = 0; j <= MaxBoardHeight; j++)
+                if (i != 0)
                 {
-                    Console.Write((pieces[i, j] != null) ? pieces[i, j].PrintPiece() + " " : ". ");
+                    Console.Write("{0} ", (char)(48 + i)); // prints the ascii chars 8-1
+                }
+                else
+                {
+                    Console.Write("  ");
+                }
+                for(int j = 0; j < MaxBoardWidth; j++)
+                {
+                    if (i == 0)
+                    {
+                        Console.Write("{0} ", (char)(j + 97)); // prints the ascii chars a-h below the board
+                        continue;
+                    }
+                    Console.Write((pieces[i - 1, j] != null) ? $"{pieces[i - 1, j].PrintPiece()} " : ". "); // prints a piece or an "empty" space
                 }
                 Console.WriteLine();
             }
