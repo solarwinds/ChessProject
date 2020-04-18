@@ -9,7 +9,7 @@ namespace SolarWinds.MSP.Chess
 		private Pawn pawn;
 
 		[SetUp]
-		public void SetUp()	
+		public void SetUp()
 		{
 			chessBoard = new ChessBoard();
 			pawn = new Pawn(PieceColor.Black);
@@ -34,8 +34,8 @@ namespace SolarWinds.MSP.Chess
 		{
 			chessBoard.Add(pawn, 6, 3, PieceColor.Black);
 			pawn.Move(MovementType.Move, 7, 3);
-            Assert.AreEqual(pawn.XCoordinate, 6);
-            Assert.AreEqual(pawn.YCoordinate, 3);
+			Assert.AreEqual(pawn.XCoordinate, 6);
+			Assert.AreEqual(pawn.YCoordinate, 3);
 		}
 
 		[Test]
@@ -43,8 +43,8 @@ namespace SolarWinds.MSP.Chess
 		{
 			chessBoard.Add(pawn, 6, 3, PieceColor.Black);
 			pawn.Move(MovementType.Move, 4, 3);
-            Assert.AreEqual(pawn.XCoordinate, 6);
-            Assert.AreEqual(pawn.YCoordinate, 3);
+			Assert.AreEqual(pawn.XCoordinate, 6);
+			Assert.AreEqual(pawn.YCoordinate, 3);
 		}
 
 		[Test]
@@ -53,7 +53,7 @@ namespace SolarWinds.MSP.Chess
 			chessBoard.Add(pawn, 6, 3, PieceColor.Black);
 			pawn.Move(MovementType.Move, 6, 2);
 			Assert.AreEqual(pawn.XCoordinate, 6);
-            Assert.AreEqual(pawn.YCoordinate, 2);
+			Assert.AreEqual(pawn.YCoordinate, 2);
 		}
 	}
 }
