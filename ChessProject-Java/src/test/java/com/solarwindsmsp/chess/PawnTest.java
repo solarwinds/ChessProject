@@ -1,5 +1,9 @@
 package com.solarwindsmsp.chess;
 
+import com.solarwindsmsp.chess.board.ChessBoard;
+import com.solarwindsmsp.chess.movement.MovementType;
+import com.solarwindsmsp.chess.piece.Pawn;
+import com.solarwindsmsp.chess.piece.PieceColor;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,7 +17,7 @@ public class PawnTest {
     @Before
     public void setUp() {
         this.chessBoard = new ChessBoard();
-        this.testSubject = new Pawn(PieceColor.BLACK);
+        this.testSubject = new Pawn(chessBoard, PieceColor.BLACK);
     }
 
     @Test
