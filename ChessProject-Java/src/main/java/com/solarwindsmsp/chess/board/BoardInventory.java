@@ -2,8 +2,10 @@ package com.solarwindsmsp.chess.board;
 
 
 import com.solarwindsmsp.chess.Constants;
+import com.solarwindsmsp.chess.exception.MaxNumberOfPiecesReachedException;
 import com.solarwindsmsp.chess.piece.Pawn;
 import com.solarwindsmsp.chess.piece.Piece;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
@@ -12,9 +14,10 @@ import java.util.List;
 import java.util.Map;
 
 @NoArgsConstructor
+@Getter
 public class BoardInventory {
 
-    private static Map<Class, Integer> maxAllowed;
+    public static Map<Class, Integer> maxAllowed;
 
     static {
         maxAllowed = new HashMap<>();
@@ -37,7 +40,7 @@ public class BoardInventory {
         if(canAdd(piece)) {
             onBoard.add(piece);
         } else {
-            throw new RuntimeException("Max number of pieces allowed reached");
+            throw new MaxNumberOfPiecesReachedException(piece);
         }
     }
 }

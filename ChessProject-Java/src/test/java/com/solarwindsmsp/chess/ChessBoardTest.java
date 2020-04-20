@@ -1,6 +1,7 @@
 package com.solarwindsmsp.chess;
 
 import com.solarwindsmsp.chess.board.ChessBoard;
+import com.solarwindsmsp.chess.movement.MovementType;
 import com.solarwindsmsp.chess.piece.Pawn;
 import com.solarwindsmsp.chess.piece.PieceColor;
 import junit.framework.TestCase;
@@ -8,8 +9,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import static com.solarwindsmsp.chess.Constants.MAX_BOARD_HEIGHT;
-import static com.solarwindsmsp.chess.Constants.MAX_BOARD_WIDTH;
+import static com.solarwindsmsp.chess.Constants.MAX_BOARD_HEIGHT_INDEX;
+import static com.solarwindsmsp.chess.Constants.MAX_BOARD_WIDTH_INDEX;
 
 public class ChessBoardTest extends TestCase {
 
@@ -22,12 +23,12 @@ public class ChessBoardTest extends TestCase {
 
     @Test
     public void testHas_MaxBoardWidth_of_7() {
-        assertEquals(7, MAX_BOARD_HEIGHT);
+        assertEquals(7, MAX_BOARD_HEIGHT_INDEX);
     }
 
     @Test
     public void testHas_MaxBoardHeight_of_7() {
-        assertEquals(7, MAX_BOARD_HEIGHT);
+        assertEquals(7, MAX_BOARD_HEIGHT_INDEX);
     }
 
     @Test
@@ -71,8 +72,8 @@ public class ChessBoardTest extends TestCase {
     public void testAvoids_Duplicate_Positioning() {
         Pawn firstPawn = new Pawn(testSubject, PieceColor.BLACK);
         Pawn secondPawn = new Pawn(testSubject, PieceColor.BLACK);
-        testSubject.addPiece(firstPawn, 6, 3, PieceColor.BLACK);
-        testSubject.addPiece(secondPawn, 6, 3, PieceColor.BLACK);
+        testSubject.addPiece(firstPawn, 6, 3);
+        testSubject.addPiece(secondPawn, 6, 3);
         assertEquals(6, firstPawn.getXCoordinate());
         assertEquals(3, firstPawn.getYCoordinate());
         assertEquals(-1, secondPawn.getXCoordinate());
@@ -85,12 +86,12 @@ public class ChessBoardTest extends TestCase {
         for (int i = 0; i < 10; i++)
         {
             Pawn pawn = new Pawn(testSubject, PieceColor.BLACK);
-            int row = i / (MAX_BOARD_WIDTH+1);
-            testSubject.addPiece(pawn, 6 + row, i % (MAX_BOARD_WIDTH + 1), PieceColor.BLACK);
+            int row = i / (MAX_BOARD_WIDTH_INDEX +1);
+            testSubject.addPiece(pawn, 6 + row, i % (MAX_BOARD_WIDTH_INDEX + 1));
             if (row < 1)
             {
                 assertEquals(6 + row, pawn.getXCoordinate());
-                assertEquals(i % (MAX_BOARD_WIDTH+1), pawn.getYCoordinate());
+                assertEquals(i % (MAX_BOARD_WIDTH_INDEX +1), pawn.getYCoordinate());
             }
             else
             {

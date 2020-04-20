@@ -2,6 +2,7 @@ package com.solarwindsmsp.chess.piece;
 
 import com.solarwindsmsp.chess.board.ChessBoard;
 import com.solarwindsmsp.chess.Position;
+import com.solarwindsmsp.chess.exception.IllegalMoveException;
 import com.solarwindsmsp.chess.movement.Move;
 import com.solarwindsmsp.chess.movement.MovementType;
 import lombok.Getter;
@@ -33,14 +34,14 @@ public abstract class Piece {
     public void move(MovementType movementType, int newX, int newY) {
         Optional<Move> optionalMove = getPossibleMoves().stream()
                 .filter(move -> move.getEndPosition().getX() == newX &&  move.getEndPosition().getY() == newY)
-                .filter(move -> move.getMovementType().equals(movementType))
+                .filter(move -> move.getType().equals(movementType))
                 .findFirst();
 
         if(optionalMove.isPresent()) {
-            Position newPosition = optionalMove.get().getEndPosition();
-            this.position.setPiece(null);
-            newPosition.setPiece(this);
-            this.setPosition(newPosition);
+            Move move = optionalMove.get();
+            move.perform();
+        } else {
+            throw new IllegalMoveException(this, movementType, newX, newY);
         }
     }
 

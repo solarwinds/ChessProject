@@ -2,8 +2,10 @@ package com.solarwindsmsp.chess.piece;
 
 import com.solarwindsmsp.chess.board.ChessBoard;
 import com.solarwindsmsp.chess.Position;
+import com.solarwindsmsp.chess.movement.CaptureMove;
 import com.solarwindsmsp.chess.movement.Move;
 import com.solarwindsmsp.chess.movement.MovementType;
+import com.solarwindsmsp.chess.movement.SimpleMove;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,31 +26,31 @@ public class Pawn extends Piece {
 
         if(pieceColor == PieceColor.WHITE) {
             if(position.top() != null && position.top().getPiece() == null ) {
-                moves.add(new Move(MovementType.MOVE, position, position.top()));
+                moves.add(new SimpleMove(chessBoard, this, position, position.top()));
             }
 
             Position topRight = position.topRight();
             if(topRight != null && topRight.getPiece() != null && topRight.getPiece().getPieceColor() != pieceColor) {
-                moves.add(new Move(MovementType.CAPTURE, position, position.topRight()));
+                moves.add(new CaptureMove(chessBoard, this, position, position.topRight()));
             }
 
             Position topLeft = position.topLeft();
             if(topLeft != null && topLeft.getPiece() != null && topLeft.getPiece().getPieceColor() != pieceColor) {
-                moves.add(new Move(MovementType.CAPTURE, position, position.topLeft()));
+                moves.add(new CaptureMove(chessBoard, this, position, position.topLeft()));
             }
         } else {
             if(position.bottom() != null && position.bottom().getPiece() == null ) {
-                moves.add(new Move(MovementType.MOVE, position, position.bottom()));
+                moves.add(new SimpleMove(chessBoard, this, position, position.bottom()));
             }
 
             Position bottomLeft = position.bottomLeft();
             if(bottomLeft != null && bottomLeft.getPiece() != null && bottomLeft.getPiece().getPieceColor() != pieceColor) {
-                moves.add(new Move(MovementType.CAPTURE, position, position.bottomLeft()));
+                moves.add(new CaptureMove(chessBoard, this,position, position.bottomLeft()));
             }
 
             Position bottomRight = position.bottomRight();
             if(bottomRight != null && bottomRight.getPiece() != null && bottomRight.getPiece().getPieceColor() != pieceColor) {
-                moves.add(new Move(MovementType.CAPTURE, position, position.bottomRight()));
+                moves.add(new CaptureMove(chessBoard, this, position, position.bottomRight()));
             }
         }
 
@@ -61,7 +63,6 @@ public class Pawn extends Piece {
     }
 
     protected String getCurrentPositionAsString() {
-        String eol = System.lineSeparator();
-        return String.format("Current X: {1}{0}Current Y: {2}{0}Piece Color: {3}", eol, position.getX(), position.getY(), pieceColor);
+        return String.format("Current X: %s%n Current Y: %s%n Piece Color: %s%n", position.getX(), position.getY(), pieceColor);
     }
 }
