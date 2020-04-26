@@ -1,4 +1,4 @@
-package com.solarwindsmsp.chess;
+package com.solarwindsmsp.chess.model.enums;
 
 public enum PieceColor {
 
