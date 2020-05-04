@@ -31,7 +31,7 @@ public class PawnMovementValidator implements MovementValidator {
         return isMoveValid;
     }
 
-    private boolean isWhitePieceMoveValid(final ChessPiece chessPiece, final Cell newCell) {
+    private boolean isWhitePieceMoveValid(ChessPiece chessPiece, Cell newCell) {
         boolean isMoveValid = false;
         // Initial state
         Cell oldCell = chessPiece.getCell();
@@ -49,7 +49,7 @@ public class PawnMovementValidator implements MovementValidator {
         return isMoveValid;
     }
 
-    private boolean isBlackPieceMoveValid(final ChessPiece chessPiece, final Cell newCell) {
+    private boolean isBlackPieceMoveValid(ChessPiece chessPiece, Cell newCell) {
         boolean isMoveValid = false;
 
         // Initial state

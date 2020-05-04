@@ -19,7 +19,7 @@ public class ChessPiece {
     private ChessBoard chessBoard;
     private Cell cell;
 
-    public ChessPiece(final PieceType pieceType, final PieceColor pieceColor) {
+    public ChessPiece(PieceType pieceType, PieceColor pieceColor) {
         this.pieceType = pieceType;
         this.pieceColor = pieceColor;
         this.movementValidator = getValidator(pieceType);

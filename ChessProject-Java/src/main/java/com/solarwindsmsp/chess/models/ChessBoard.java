@@ -48,7 +48,7 @@ public class ChessBoard {
         return piece == null;
     }
 
-    private long getPieceNoByTypeAndColor(final PieceType pieceType, final PieceColor pieceColor) {
+    private long getPieceNoByTypeAndColor(PieceType pieceType, PieceColor pieceColor) {
         Map<PieceType, Long> chessPiecesByTypeAndColor =
                 pieceMap.values().stream()
                         .filter(piece -> Objects.nonNull(piece) && pieceColor == piece.getPieceColor())
