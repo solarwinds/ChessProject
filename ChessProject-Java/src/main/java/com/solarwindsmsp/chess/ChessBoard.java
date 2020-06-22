@@ -9,7 +9,6 @@ public class ChessBoard {
 
     public ChessBoard() {
         pieces = new Pawn[MAX_BOARD_WIDTH][MAX_BOARD_HEIGHT];
-
     }
 
     public void Add(Pawn pawn, int xCoordinate, int yCoordinate, PieceColor pieceColor) {
