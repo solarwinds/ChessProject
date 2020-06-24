@@ -1,95 +1,138 @@
 package com.solarwindsmsp.chess;
 
-import junit.framework.TestCase;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
-public class ChessBoardTest extends TestCase {
+import com.solarwindsmsp.chess.board.Cell;
+import com.solarwindsmsp.chess.board.ChessBoard;
+import com.solarwindsmsp.chess.exception.DuplicatePieceOnSameCellException;
+import com.solarwindsmsp.chess.piece.Pawn;
+import com.solarwindsmsp.chess.piece.Piece;
+import com.solarwindsmsp.chess.piece.PieceColor;
+import com.solarwindsmsp.chess.strategy.BoardInitializationStrategy;
+import java.util.stream.Stream;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+@ExtendWith(MockitoExtension.class)
+public class ChessBoardTest {
+
+    @Mock
+    private BoardInitializationStrategy initializationStrategy;
+
+    @InjectMocks
     private ChessBoard testSubject;
 
-    @Before
-    public void setUp() throws Exception {
-        testSubject = new ChessBoard();
+    @BeforeEach
+    public void setUp(){
+        Mockito.lenient().when(initializationStrategy.getBoardHeight()).thenReturn(8);
+        Mockito.lenient().when(initializationStrategy.getBoardWidth()).thenReturn(8);
+    }
+
+
+    //Merged testIsLegalBoardPosition_True_X_equals_5_Y_equals_5 and
+    // testIsLegalBoardPosition_True_X_equals_0_Y_equals_0 tests.
+    @ParameterizedTest
+    @MethodSource("legalCoordinatesProvider")
+    public void givenLegalBoardPositions_whenLegalBoardPositionCalled_ThenTrueReturned(int xCoordinate, int yCoordinate){
+        // Arrange & Act
+        boolean isValidPosition = testSubject.isLegalBoardPosition(xCoordinate, yCoordinate);
+
+        // Assert
+        assertTrue(isValidPosition,
+            String.format("For x coordinate = %s and y coordinate = %s "
+                + "isLegalBoardPosition should return true", xCoordinate, yCoordinate));
+    }
+
+    //Merged testIsLegalBoardPosition_False_X_equals_11_Y_equals_5,
+    // testIsLegalBoardPosition_False_X_equals_0_Y_equals_9,
+    // testIsLegalBoardPosition_False_X_equals_11_Y_equals_0 and
+    // testIsLegalBoardPosition_False_For_Negative_Y_Values tests
+    @ParameterizedTest
+    @MethodSource("illegalCoordinatesProvider")
+    public void givenIllegalBoardPositions_whenLegalBoardPositionCalled_ThenFalseReturned(int xCoordinate, int yCoordinate){
+        // Arrange & Act
+        boolean isValidPosition = testSubject.isLegalBoardPosition(xCoordinate, yCoordinate);
+
+        // Assert
+        assertFalse(isValidPosition,
+            String.format("For x coordinate = %s and y coordinate = %s "
+                + "isLegalBoardPosition should return false", xCoordinate, yCoordinate));
     }
 
     @Test
-    public void testHas_MaxBoardWidth_of_7() {
-        assertEquals(7, ChessBoard.MAX_BOARD_HEIGHT);
+    public void givenTwoPiecesWithSameCoordinates_WhenTryingToAddSecondPiece_DuplicateCellExceptionThrown() {
+        // Arrange
+        int xCoordinate = 6;
+        int yCoordinate = 3;
+        Piece firstPawn = new Pawn(PieceColor.BLACK);
+        Piece secondPawn = new Pawn(PieceColor.BLACK);
+        Cell[][] mockedBoard = getMockBoard();
+        mockedBoard[xCoordinate][yCoordinate].setPiece(firstPawn);
+        Mockito.when(initializationStrategy.initializeBoard()).thenReturn(mockedBoard);
+        testSubject = new ChessBoard(initializationStrategy);
+
+        // Act && Assert
+        assertThrows(DuplicatePieceOnSameCellException.class,
+            () -> testSubject.addPiece(secondPawn, xCoordinate, yCoordinate));
     }
 
-    @Test
-    public void testHas_MaxBoardHeight_of_7() {
-        assertEquals(7, ChessBoard.MAX_BOARD_HEIGHT);
+    private Cell[][] getMockBoard(){
+        Cell[][] board = new Cell[8][8];
+
+        for(int i = 0; i < board.length; i++){
+            for(int j = 0; j < board[0].length; j++){
+                board[i][j] = new Cell(i, j, null);
+            }
+        }
+        return board;
     }
 
-    @Test
-    public void testIsLegalBoardPosition_True_X_equals_0_Y_equals_0() {
-        boolean isValidPosition = testSubject.isLegalBoardPosition(0, 0);
-        assertTrue(isValidPosition);
+    static Stream<Arguments> legalCoordinatesProvider() {
+        return Stream.of(
+            arguments(0, 0),
+            arguments(5, 5)
+        );
     }
 
-    @Test
-    public void testIsLegalBoardPosition_True_X_equals_5_Y_equals_5() {
-        boolean isValidPosition = testSubject.isLegalBoardPosition(5, 5);
-        Assert.assertTrue(isValidPosition);
+    static Stream<Arguments> illegalCoordinatesProvider() {
+        return Stream.of(
+            arguments(11, 5),
+            arguments(0, 9),
+            arguments(11, 0),
+            arguments(5, -1)
+        );
     }
 
-    @Test
-    public void testIsLegalBoardPosition_False_X_equals_11_Y_equals_5() {
-        boolean isValidPosition = testSubject.isLegalBoardPosition(11, 5);
-        assertTrue(isValidPosition);
-    }
-
-    @Test
-    public void testIsLegalBoardPosition_False_X_equals_0_Y_equals_9() {
-        boolean isValidPosition = testSubject.isLegalBoardPosition(0, 9);
-        assertFalse(isValidPosition);
-    }
-
-    @Test
-    public void testIsLegalBoardPosition_False_X_equals_11_Y_equals_0() {
-        boolean isValidPosition = testSubject.isLegalBoardPosition(11, 0);
-        assertFalse(isValidPosition);
-    }
-
-    @Test
-    public void testIsLegalBoardPosition_False_For_Negative_Y_Values() {
-        boolean isValidPosition = testSubject.isLegalBoardPosition(5, -1);
-        Assert.assertFalse(isValidPosition);
-    }
-
-    @Test
-    public void testAvoids_Duplicate_Positioning() {
-        Pawn firstPawn = new Pawn(PieceColor.BLACK);
-        Pawn secondPawn = new Pawn(PieceColor.BLACK);
-        testSubject.addPiece(firstPawn, 6, 3, PieceColor.BLACK);
-        testSubject.addPiece(secondPawn, 6, 3, PieceColor.BLACK);
-        assertEquals(6, firstPawn.getXCoordinate());
-        assertEquals(3, firstPawn.getYCoordinate());
-        assertEquals(-1, secondPawn.getXCoordinate());
-        assertEquals(-1, secondPawn.getYCoordinate());
-    }
-
-    @Test
+    // Useless test in case board has an initialization strategy.
+    /*@Test
     public void testLimits_The_Number_Of_Pawns()
     {
         for (int i = 0; i < 10; i++)
         {
             Pawn pawn = new Pawn(PieceColor.BLACK);
-            int row = i / ChessBoard.MAX_BOARD_WIDTH;
-            testSubject.addPiece(pawn, 6 + row, i % ChessBoard.MAX_BOARD_WIDTH, PieceColor.BLACK);
+            int row = i / 7;
+            testSubject.addPiece(pawn, 6 + row, i % 7, PieceColor.BLACK);
             if (row < 1)
             {
                 assertEquals(6 + row, pawn.getXCoordinate());
-                assertEquals(i % ChessBoard.MAX_BOARD_WIDTH, pawn.getYCoordinate());
+                assertEquals(i % 7, pawn.getYCoordinate());
             }
             else
             {
                 assertEquals(-1, pawn.getXCoordinate());
-                Assert.assertEquals(-1, pawn.getYCoordinate());
+                assertEquals(-1, pawn.getYCoordinate());
             }
         }
-    }
+    }*/
 }
