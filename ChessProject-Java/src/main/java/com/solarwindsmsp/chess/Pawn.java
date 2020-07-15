@@ -44,7 +44,31 @@ public class Pawn {
     }
 
     public void move(MovementType movementType, int newX, int newY) {
-        throw new UnsupportedOperationException("Need to implement Pawn.Move()") ;
+        if (movementType.equals(MovementType.MOVE) && legalMove(newX, newY)) {
+            this.setXCoordinate(newX);
+            this.setYCoordinate(newY);
+        }
+    }
+
+    private boolean legalMove(int newX, int newY) {
+        return this.getXCoordinate() == newX && checkYByColor(newY);
+    }
+
+    private boolean checkYByColor(int newY) {
+        if(this.getPieceColor().equals(PieceColor.BLACK))
+            return this.getYCoordinate() == newY + 1;
+        else
+            return this.getYCoordinate() == newY - 1;
+    }
+
+    private void refreshBoard(int oldX, int oldY, int newX, int newY) {
+//        this.chessBoard.pieces[oldX,oldY] = null;
+//        this.chessBoard.pieces[newX,newY] = this;
+    }
+
+    private boolean legalCapture(int newX, int newY) {
+        //needs to be implemented
+        return true;
     }
 
     @Override
