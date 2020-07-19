@@ -5,7 +5,7 @@ import com.solarwindsmsp.chess.enums.MovementType;
 import com.solarwindsmsp.chess.enums.PieceColor;
 import com.solarwindsmsp.chess.enums.PieceType;
 
-public class Piece {
+public abstract class Piece {
     private ChessBoard chessBoard;
     private int xCoordinate;
     private int yCoordinate;
@@ -57,8 +57,15 @@ public class Piece {
         this.pieceType = pieceType;
     }
 
-    public void move(MovementType move, int i, int i1) {
-
-
+    protected String getCurrentPositionAsString() {
+        String eol = System.lineSeparator();
+        return String.format("Current X: {1}{0}Current Y: {2}{0}Piece Color: {3}", eol, getXCoordinate(), getYCoordinate(), getPieceColor());
     }
+
+    @Override
+    public String toString() {
+        return getCurrentPositionAsString();
+    }
+
+    abstract void move(MovementType move, int newX, int newY);
 }
