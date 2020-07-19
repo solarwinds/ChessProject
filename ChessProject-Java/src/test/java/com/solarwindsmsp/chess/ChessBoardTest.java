@@ -1,11 +1,15 @@
 package com.solarwindsmsp.chess;
 
-import junit.framework.TestCase;
-import org.junit.Assert;
+import com.solarwindsmsp.chess.enums.PieceColor;
+import com.solarwindsmsp.chess.enums.PieceType;
+import com.solarwindsmsp.chess.model.Pawn;
+import com.solarwindsmsp.chess.util.Const;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ChessBoardTest extends TestCase {
+import static org.junit.Assert.*;
+
+public class ChessBoardTest {
 
     private ChessBoard testSubject;
 
@@ -16,12 +20,12 @@ public class ChessBoardTest extends TestCase {
 
     @Test
     public void testHas_MaxBoardWidth_of_7() {
-        assertEquals(7, ChessBoard.MAX_BOARD_HEIGHT);
+        assertEquals(7, Const.MAX_BOARD_HEIGHT);
     }
 
     @Test
     public void testHas_MaxBoardHeight_of_7() {
-        assertEquals(7, ChessBoard.MAX_BOARD_HEIGHT);
+        assertEquals(7, Const.MAX_BOARD_HEIGHT);
     }
 
     @Test
@@ -33,13 +37,13 @@ public class ChessBoardTest extends TestCase {
     @Test
     public void testIsLegalBoardPosition_True_X_equals_5_Y_equals_5() {
         boolean isValidPosition = testSubject.isLegalBoardPosition(5, 5);
-        Assert.assertTrue(isValidPosition);
+        assertTrue(isValidPosition);
     }
 
     @Test
     public void testIsLegalBoardPosition_False_X_equals_11_Y_equals_5() {
         boolean isValidPosition = testSubject.isLegalBoardPosition(11, 5);
-        assertTrue(isValidPosition);
+        assertFalse(isValidPosition);
     }
 
     @Test
@@ -57,7 +61,7 @@ public class ChessBoardTest extends TestCase {
     @Test
     public void testIsLegalBoardPosition_False_For_Negative_Y_Values() {
         boolean isValidPosition = testSubject.isLegalBoardPosition(5, -1);
-        Assert.assertFalse(isValidPosition);
+        assertFalse(isValidPosition);
     }
 
     @Test
@@ -73,22 +77,19 @@ public class ChessBoardTest extends TestCase {
     }
 
     @Test
-    public void testLimits_The_Number_Of_Pawns()
-    {
-        for (int i = 0; i < 10; i++)
-        {
+    public void testLimits_The_Number_Of_Pawns() {
+        for (int i = 0; i < 10; i++) {
             Pawn pawn = new Pawn(PieceColor.BLACK);
-            int row = i / ChessBoard.MAX_BOARD_WIDTH;
-            testSubject.addPiece(pawn, 6 + row, i % ChessBoard.MAX_BOARD_WIDTH, PieceColor.BLACK);
-            if (row < 1)
-            {
+            int row = i / Const.MAX_BOARD_WIDTH;
+
+            testSubject.addPiece(pawn, 6 + row, i % Const.MAX_BOARD_WIDTH, PieceColor.BLACK);
+
+            if (row < 1) {
                 assertEquals(6 + row, pawn.getXCoordinate());
-                assertEquals(i % ChessBoard.MAX_BOARD_WIDTH, pawn.getYCoordinate());
-            }
-            else
-            {
+                assertEquals(i % Const.MAX_BOARD_WIDTH, pawn.getYCoordinate());
+            } else {
                 assertEquals(-1, pawn.getXCoordinate());
-                Assert.assertEquals(-1, pawn.getYCoordinate());
+                assertEquals(-1, pawn.getYCoordinate());
             }
         }
     }
