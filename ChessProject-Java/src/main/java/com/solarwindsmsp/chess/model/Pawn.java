@@ -6,8 +6,8 @@ import com.solarwindsmsp.chess.enums.PieceType;
 
 public class Pawn extends Piece {
 
-    public Pawn(PieceColor pieceColor, PieceType pieceType) {
-        super(pieceColor, pieceType);
+    public Pawn(PieceColor pieceColor) {
+        super(pieceColor, PieceType.PAWN);
     }
 
     @Override
