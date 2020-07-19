@@ -18,7 +18,7 @@ public class ChessBoard {
     }
 
     public ChessBoard() {
-        pieces = new Piece[Const.MAX_PAWN_NUMBER][Const.MAX_PAWN_NUMBER];
+        pieces = new Piece[Const.DEFAULT_BOARD_SIDE][Const.DEFAULT_BOARD_SIDE];
     }
 
     public void addPiece(Piece piece, int xCoordinate, int yCoordinate, PieceColor pieceColor) {
