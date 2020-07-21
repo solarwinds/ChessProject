@@ -15,13 +15,13 @@ public class ChessBoardTest extends TestCase {
     }
 
     @Test
-    public void testHas_MaxBoardWidth_of_7() {
-        assertEquals(7, ChessBoard.MAX_BOARD_HEIGHT);
+    public void testHas_MaxBoardWidth_of_8() {
+        assertEquals(8, ChessBoard.MAX_BOARD_HEIGHT);
     }
 
     @Test
-    public void testHas_MaxBoardHeight_of_7() {
-        assertEquals(7, ChessBoard.MAX_BOARD_HEIGHT);
+    public void testHas_MaxBoardHeight_of_8() {
+        assertEquals(8, ChessBoard.MAX_BOARD_HEIGHT);
     }
 
     @Test
@@ -39,7 +39,7 @@ public class ChessBoardTest extends TestCase {
     @Test
     public void testIsLegalBoardPosition_False_X_equals_11_Y_equals_5() {
         boolean isValidPosition = testSubject.isLegalBoardPosition(11, 5);
-        assertTrue(isValidPosition);
+        assertFalse(isValidPosition);
     }
 
     @Test
@@ -66,10 +66,10 @@ public class ChessBoardTest extends TestCase {
         Pawn secondPawn = new Pawn(PieceColor.BLACK);
         testSubject.addPiece(firstPawn, 6, 3, PieceColor.BLACK);
         testSubject.addPiece(secondPawn, 6, 3, PieceColor.BLACK);
-        assertEquals(6, firstPawn.getXCoordinate());
-        assertEquals(3, firstPawn.getYCoordinate());
-        assertEquals(-1, secondPawn.getXCoordinate());
-        assertEquals(-1, secondPawn.getYCoordinate());
+        assertEquals(6, firstPawn.getxCoordinate());
+        assertEquals(3, firstPawn.getyCoordinate());
+        assertEquals(-1, secondPawn.getxCoordinate());
+        assertEquals(-1, secondPawn.getyCoordinate());
     }
 
     @Test
@@ -82,13 +82,13 @@ public class ChessBoardTest extends TestCase {
             testSubject.addPiece(pawn, 6 + row, i % ChessBoard.MAX_BOARD_WIDTH, PieceColor.BLACK);
             if (row < 1)
             {
-                assertEquals(6 + row, pawn.getXCoordinate());
-                assertEquals(i % ChessBoard.MAX_BOARD_WIDTH, pawn.getYCoordinate());
+                assertEquals(6 + row, pawn.getxCoordinate());
+                assertEquals(i % ChessBoard.MAX_BOARD_WIDTH, pawn.getyCoordinate());
             }
             else
             {
-                assertEquals(-1, pawn.getXCoordinate());
-                Assert.assertEquals(-1, pawn.getYCoordinate());
+                assertEquals(-1, pawn.getxCoordinate());
+                Assert.assertEquals(-1, pawn.getyCoordinate());
             }
         }
     }
