@@ -1,12 +1,20 @@
 package com.solarwindsmsp.chess;
 
+/**
+ * Class to define a Pawn chess piece
+ */
 public class Pawn {
 
+    private final PieceColor pieceColor;
     private ChessBoard chessBoard;
     private int xCoordinate;
     private int yCoordinate;
-    private PieceColor pieceColor;
 
+    /**
+     * Constructor used to set the color of the pawn
+     *
+     * @param pieceColor color of the pawn
+     */
     public Pawn(PieceColor pieceColor) {
         this.pieceColor = pieceColor;
     }
@@ -39,12 +47,28 @@ public class Pawn {
         return this.pieceColor;
     }
 
-    private void setPieceColor(PieceColor value) {
-        pieceColor = value;
-    }
-
+    /**
+     * Moves the pawn in the right direction, based on the color
+     *
+     * @param movementType the movement of the pawn
+     * @param newX         new x coordinate of the pawn
+     * @param newY         new y coordinate of the pawn
+     */
     public void move(MovementType movementType, int newX, int newY) {
-        throw new UnsupportedOperationException("Need to implement Pawn.Move()") ;
+        if (MovementType.MOVE.equals(movementType)) {
+            if (PieceColor.BLACK.equals(this.pieceColor)) {
+                if (yCoordinate == newY && newX == this.xCoordinate - 1) {
+                    this.xCoordinate = newX;
+                }
+            } else {
+                if (yCoordinate == newY && newX == this.xCoordinate + 1) {
+                    this.xCoordinate = newX;
+                }
+            }
+
+        } else if (MovementType.CAPTURE.equals(movementType)) {
+            throw new UnsupportedOperationException("Need to implement CAPTURE move");
+        }
     }
 
     @Override
@@ -52,8 +76,9 @@ public class Pawn {
         return getCurrentPositionAsString();
     }
 
-    protected String getCurrentPositionAsString() {
+    private String getCurrentPositionAsString() {
         String eol = System.lineSeparator();
-        return String.format("Current X: {1}{0}Current Y: {2}{0}Piece Color: {3}", eol, xCoordinate, yCoordinate, pieceColor);
+
+        return String.format("Current X: %d%sCurrent Y: %d%sPiece Color: %s", xCoordinate, eol, yCoordinate, eol, pieceColor);
     }
 }
