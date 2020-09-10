@@ -2,8 +2,8 @@ package com.solarwindsmsp.chess;
 
 import java.util.Deque;
 
-import com.solarwindsmsp.chess.pieces.IPiece;
-import com.solarwindsmsp.chess.pieces.attributes.PieceColor;
+import com.solarwindsmsp.chess.piece.IPiece;
+import com.solarwindsmsp.chess.piece.attribute.PieceColor;
 
 /**
  * Interface for managing the chessBoard.
@@ -43,5 +43,8 @@ public interface IChessBoard {
 	 * @return true if it's inside.Otherwise, false.
 	 */
 	boolean isLegalBoardPosition(final int xCoordinate, final int yCoordinate);
+
+	/** Reset the chessBoard to start again. */
+	void reset();
 
 }

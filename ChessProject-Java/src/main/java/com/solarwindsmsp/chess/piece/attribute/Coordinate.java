@@ -1,4 +1,4 @@
-package com.solarwindsmsp.chess.pieces.attributes;
+package com.solarwindsmsp.chess.piece.attribute;
 
 /**
  * Class to represent a coordinate (X,Y).

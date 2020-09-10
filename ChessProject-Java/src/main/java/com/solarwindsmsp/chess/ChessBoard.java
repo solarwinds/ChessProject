@@ -5,8 +5,8 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.logging.Logger;
 
-import com.solarwindsmsp.chess.pieces.IPiece;
-import com.solarwindsmsp.chess.pieces.attributes.PieceColor;
+import com.solarwindsmsp.chess.piece.IPiece;
+import com.solarwindsmsp.chess.piece.attribute.PieceColor;
 import com.solarwindsmsp.chess.utils.ChessUtils;
 
 /**
@@ -96,6 +96,20 @@ public class ChessBoard implements IChessBoard {
 	public boolean isLegalBoardPosition(final int xCoordinate, final int yCoordinate) {
 		return ChessUtils.between(xCoordinate, 0, MAX_BOARD_HEIGHT)
 				&& ChessUtils.between(yCoordinate, 0, MAX_BOARD_WIDTH);
+	}
+
+	@Override
+	public void reset() {
+		// I could have just replaced the board with a new object. But this will be more
+		// efficient in term of memory, if we are having multiple instances of the
+		// cheassBoard in the future.
+		for (int row = 0; row < MAX_BOARD_HEIGHT; row++) {
+			for (int col = 0; col < MAX_BOARD_WIDTH; col++) {
+				board[row][col] = null;
+			}
+		}
+		turnToMove = PieceColor.WHITE;
+		movementHistory.clear();
 	}
 
 }

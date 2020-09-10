@@ -1,6 +1,6 @@
 package com.solarwindsmsp.chess;
 
-import com.solarwindsmsp.chess.pieces.IPiece;
+import com.solarwindsmsp.chess.piece.IPiece;
 
 /**
  * Class to represent a square in the chessBoard.

@@ -1,4 +1,4 @@
-package com.solarwindsmsp.chess.pieces.attributes;
+package com.solarwindsmsp.chess.piece.attribute;
 
 /**
  * Color of the pieces.

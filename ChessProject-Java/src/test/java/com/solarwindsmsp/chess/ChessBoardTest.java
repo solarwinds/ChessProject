@@ -4,24 +4,40 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Before;
+import org.junit.After;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
-import com.solarwindsmsp.chess.pieces.IPiece;
-import com.solarwindsmsp.chess.pieces.Pawn;
-import com.solarwindsmsp.chess.pieces.attributes.PieceColor;
-import com.solarwindsmsp.chess.pieces.attributes.PieceType;
-import com.solarwindsmsp.chess.utils.TestUtils;
+import com.solarwindsmsp.chess.piece.IPiece;
+import com.solarwindsmsp.chess.piece.Pawn;
+import com.solarwindsmsp.chess.piece.PieceFactory;
+import com.solarwindsmsp.chess.piece.attribute.PieceColor;
+import com.solarwindsmsp.chess.piece.attribute.PieceType;
+import com.solarwindsmsp.chess.suite.category.JUnitTest;
 
 /**
  * Test class for {@link ChessBoard}.
  *
  */
-public class ChessBoardTest extends TestUtils {
+@Category(JUnitTest.class)
+public class ChessBoardTest {
 
-	@Before
-	public void setUp() throws Exception {
-		testChessBoard = new ChessBoard();
+	/** CheckBoard for testing. */
+	protected IChessBoard testChessBoard = new ChessBoard();
+
+	/** Factory of piece to get a piece. */
+	protected PieceFactory pieceFactory = new PieceFactory();
+
+	/**
+	 * To reuse the same instance instead of creating multiple instances during the
+	 * (Before - setUp). That could end up, having memory issues. If the test is
+	 * huge and the GC is not good enough.
+	 *
+	 * @throws Exception if something wrong happens.
+	 */
+	@After
+	public void tearDown() throws Exception {
+		testChessBoard.reset();
 	}
 
 	@Test

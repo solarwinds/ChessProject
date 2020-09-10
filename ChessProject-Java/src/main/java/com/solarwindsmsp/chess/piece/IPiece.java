@@ -1,10 +1,10 @@
-package com.solarwindsmsp.chess.pieces;
+package com.solarwindsmsp.chess.piece;
 
 import com.solarwindsmsp.chess.ChessBoard;
 import com.solarwindsmsp.chess.IChessBoard;
-import com.solarwindsmsp.chess.pieces.attributes.MovementType;
-import com.solarwindsmsp.chess.pieces.attributes.PieceColor;
-import com.solarwindsmsp.chess.pieces.attributes.PieceType;
+import com.solarwindsmsp.chess.piece.attribute.MovementType;
+import com.solarwindsmsp.chess.piece.attribute.PieceColor;
+import com.solarwindsmsp.chess.piece.attribute.PieceType;
 
 /**
  * Interface for managing the pieces.

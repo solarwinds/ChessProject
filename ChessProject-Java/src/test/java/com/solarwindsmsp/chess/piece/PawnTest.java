@@ -1,21 +1,25 @@
-package com.solarwindsmsp.chess.pieces;
+package com.solarwindsmsp.chess.piece;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import com.solarwindsmsp.chess.ChessBoard;
-import com.solarwindsmsp.chess.pieces.attributes.MovementType;
-import com.solarwindsmsp.chess.pieces.attributes.PieceColor;
-import com.solarwindsmsp.chess.pieces.attributes.PieceType;
-import com.solarwindsmsp.chess.utils.TestUtils;
+import com.solarwindsmsp.chess.IChessBoard;
+import com.solarwindsmsp.chess.piece.attribute.MovementType;
+import com.solarwindsmsp.chess.piece.attribute.PieceColor;
+import com.solarwindsmsp.chess.piece.attribute.PieceType;
+import com.solarwindsmsp.chess.suite.category.JUnitTest;
 
 /**
  * Test class for {@link Pawn}.
  *
  */
-public class PawnTest extends TestUtils {
+@Category(JUnitTest.class)
+public class PawnTest {
 
 	/** Initial X coordinate for a Black Pawn. */
 	private static final int INITIAL_BLACK_X_COORDINATE = Pawn.INITIAL_BLACK_X_COORDINATE;
@@ -29,6 +33,12 @@ public class PawnTest extends TestUtils {
 	/** Initial Y coordinate for a white Pawn for testing. */
 	private static final int INITIAL_WHITE_Y_COORDINATE = 4;
 
+	/** CheckBoard for testing. */
+	protected IChessBoard testChessBoard = new ChessBoard();
+
+	/** Factory of piece to get a piece. */
+	protected final PieceFactory pieceFactory = new PieceFactory();
+
 	/** White Pawn to be tested. */
 	private IPiece testWhitePawn;
 
@@ -37,11 +47,23 @@ public class PawnTest extends TestUtils {
 
 	@Before
 	public void setUp() {
-		testChessBoard = new ChessBoard();
+		// New pieces are required to be used in each test
 		testWhitePawn = pieceFactory.getPiece(PieceType.PAWN, PieceColor.WHITE);
 		testBlackPawn = pieceFactory.getPiece(PieceType.PAWN, PieceColor.BLACK);
 		testChessBoard.addPiece(testBlackPawn, INITIAL_BLACK_X_COORDINATE, INITIAL_BLACK_Y_COORDINATE);
 		testChessBoard.addPiece(testWhitePawn, INITIAL_WHITE_X_COORDINATE, INITIAL_WHITE_Y_COORDINATE);
+	}
+
+	/**
+	 * To reuse the same instance instead of creating multiple instances during the
+	 * (Before - setUp). That could end up, having memory issues. If the test is
+	 * huge and the GC is not good enough.
+	 *
+	 * @throws Exception if something wrong happens.
+	 */
+	@After
+	public void tearDown() throws Exception {
+		testChessBoard.reset();
 	}
 
 	@Test

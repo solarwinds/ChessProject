@@ -1,12 +1,12 @@
-package com.solarwindsmsp.chess.pieces;
+package com.solarwindsmsp.chess.piece;
 
 import java.text.MessageFormat;
 import java.util.logging.Logger;
 
 import com.solarwindsmsp.chess.ChessBoard;
-import com.solarwindsmsp.chess.pieces.attributes.MovementType;
-import com.solarwindsmsp.chess.pieces.attributes.PieceColor;
-import com.solarwindsmsp.chess.pieces.attributes.PieceType;
+import com.solarwindsmsp.chess.piece.attribute.MovementType;
+import com.solarwindsmsp.chess.piece.attribute.PieceColor;
+import com.solarwindsmsp.chess.piece.attribute.PieceType;
 import com.solarwindsmsp.chess.utils.ChessUtils;
 
 /**

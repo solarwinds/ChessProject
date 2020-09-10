@@ -1,11 +1,11 @@
-package com.solarwindsmsp.chess.pieces;
+package com.solarwindsmsp.chess.piece;
 
 import java.text.MessageFormat;
 
 import com.solarwindsmsp.chess.IChessBoard;
-import com.solarwindsmsp.chess.pieces.attributes.Coordinate;
-import com.solarwindsmsp.chess.pieces.attributes.PieceColor;
-import com.solarwindsmsp.chess.pieces.attributes.PieceType;
+import com.solarwindsmsp.chess.piece.attribute.Coordinate;
+import com.solarwindsmsp.chess.piece.attribute.PieceColor;
+import com.solarwindsmsp.chess.piece.attribute.PieceType;
 
 /**
  * Abstract class to provide common implementation as well as delegating the
