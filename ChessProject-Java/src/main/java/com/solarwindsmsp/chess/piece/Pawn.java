@@ -39,7 +39,7 @@ public class Pawn extends AbstractPiece {
 
 	@Override
 	public boolean isInitialPositionValid(final int xCoordinate, final int yCoordinate) {
-		if (COLOR_BLACK.equals(getPieceColor().name())) {
+		if (ChessUtils.COLOR_BLACK.equals(getPieceColor().name())) {
 			return (xCoordinate == INITIAL_BLACK_X_COORDINATE)
 					&& (yCoordinate >= 0 && yCoordinate <= ChessBoard.MAX_BOARD_WIDTH);
 		} else {
@@ -64,7 +64,7 @@ public class Pawn extends AbstractPiece {
 			return false;
 		}
 
-		if (COLOR_BLACK.equals(getPieceColor().name())) {
+		if (ChessUtils.COLOR_BLACK.equals(getPieceColor().name())) {
 			// Only allow to move backward (BLACK).
 			if (getxCoordinate() > newX) {
 				// Check if it's the first movement
@@ -97,13 +97,13 @@ public class Pawn extends AbstractPiece {
 		// Check if it's right color is moving the piece.
 		final String turnToMove = getChessBoard().getTurnToMove().name();
 		if (!getPieceColor().name().equals(turnToMove)) {
-			final String message = MessageFormat.format(MESSAGE_WRONG_PLAYER, getPieceColor().name(),
+			final String message = MessageFormat.format(ChessUtils.MESSAGE_WRONG_PLAYER, getPieceColor().name(),
 					getPieceType().name(), turnToMove);
 			logger.info(message);
 			return;
 
 		}
-		if (MOVEMENT_TYPE_MOVE.equals(movementType.name())) {
+		if (ChessUtils.MOVEMENT_TYPE_MOVE.equals(movementType.name())) {
 			if (isValidMove(newX, newY)) {
 				setxCoordinate(newX);
 				setyCoordinate(newY);
@@ -112,15 +112,15 @@ public class Pawn extends AbstractPiece {
 				} else {
 					getChessBoard().setTurnToMove(PieceColor.BLACK);
 				}
-				getChessBoard().getMovementHistory().push(this);
+				getChessBoard().getMoveHistory().push(this);
 			} else {
-				final String message = MessageFormat.format(MESSAGE_INVALID_MOVE, getPieceColor().name(),
+				final String message = MessageFormat.format(ChessUtils.MESSAGE_INVALID_MOVE, getPieceColor().name(),
 						getPieceType().name(), newX, newY, getxCoordinate(), getyCoordinate());
 				logger.info(message);
 			}
 
 		} else {
-			throw new UnsupportedOperationException(MESSAGE_INVALID_TYPE_OF_MOVE);
+			throw new UnsupportedOperationException(ChessUtils.MESSAGE_INVALID_TYPE_OF_MOVE);
 		}
 
 	}

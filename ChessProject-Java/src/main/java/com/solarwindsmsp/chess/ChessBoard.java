@@ -34,7 +34,7 @@ public class ChessBoard implements IChessBoard {
 	private final Square[][] board;
 
 	/** The History of the movement */
-	private final Deque<IPiece> movementHistory = new ArrayDeque<IPiece>();
+	private final Deque<IPiece> moveHistory = new ArrayDeque<IPiece>();
 
 	/** The turn, who needs to move. */
 	private PieceColor turnToMove = PieceColor.WHITE;
@@ -47,8 +47,8 @@ public class ChessBoard implements IChessBoard {
 	}
 
 	@Override
-	public Deque<IPiece> getMovementHistory() {
-		return movementHistory;
+	public Deque<IPiece> getMoveHistory() {
+		return moveHistory;
 	}
 
 	@Override
@@ -109,7 +109,16 @@ public class ChessBoard implements IChessBoard {
 			}
 		}
 		turnToMove = PieceColor.WHITE;
-		movementHistory.clear();
+		moveHistory.clear();
+	}
+
+	@Override
+	public void revertLastMove() {
+		final IPiece piece = moveHistory.poll();
+		if (piece != null) {
+			board[piece.getxCoordinate()][piece.getyCoordinate()] = null;
+			turnToMove = piece.getPieceColor();
+		}
 	}
 
 }

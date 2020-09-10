@@ -11,9 +11,11 @@ import org.junit.experimental.categories.Category;
 import com.solarwindsmsp.chess.piece.IPiece;
 import com.solarwindsmsp.chess.piece.Pawn;
 import com.solarwindsmsp.chess.piece.PieceFactory;
+import com.solarwindsmsp.chess.piece.attribute.MovementType;
 import com.solarwindsmsp.chess.piece.attribute.PieceColor;
 import com.solarwindsmsp.chess.piece.attribute.PieceType;
 import com.solarwindsmsp.chess.suite.category.JUnitTest;
+import com.solarwindsmsp.chess.utils.TestUtils;
 
 /**
  * Test class for {@link ChessBoard}.
@@ -44,14 +46,14 @@ public class ChessBoardTest {
 	public void addPieceAvoidDuplicatePositioning() {
 		final IPiece firstPawn = pieceFactory.getPiece(PieceType.PAWN, PieceColor.BLACK);
 		final IPiece secondPawn = pieceFactory.getPiece(PieceType.PAWN, PieceColor.BLACK);
-		testChessBoard.addPiece(firstPawn, Pawn.INITIAL_BLACK_X_COORDINATE, 3);
-		testChessBoard.addPiece(secondPawn, Pawn.INITIAL_BLACK_X_COORDINATE, 3);
+		testChessBoard.addPiece(firstPawn, TestUtils.TEST_INITIAL_BLACK_X_COORDINATE, 3);
+		testChessBoard.addPiece(secondPawn, TestUtils.TEST_INITIAL_BLACK_X_COORDINATE, 3);
 		assertEquals(Pawn.INITIAL_BLACK_X_COORDINATE, firstPawn.getxCoordinate());
 		assertEquals(3, firstPawn.getyCoordinate());
 		assertEquals(-1, secondPawn.getxCoordinate());
 		assertEquals(-1, secondPawn.getyCoordinate());
 		// Verify the history
-		assertEquals(0, testChessBoard.getMovementHistory().size());
+		assertEquals(0, testChessBoard.getMoveHistory().size());
 	}
 
 	@Test
@@ -69,7 +71,7 @@ public class ChessBoardTest {
 			}
 		}
 		// Verify the history
-		assertEquals(0, testChessBoard.getMovementHistory().size());
+		assertEquals(0, testChessBoard.getMoveHistory().size());
 	}
 
 	@Test
@@ -88,7 +90,7 @@ public class ChessBoardTest {
 			}
 		}
 		// Verify the history
-		assertEquals(0, testChessBoard.getMovementHistory().size());
+		assertEquals(0, testChessBoard.getMoveHistory().size());
 	}
 
 	@Test
@@ -112,7 +114,7 @@ public class ChessBoardTest {
 		assertEquals(-1, whitePawn.getxCoordinate());
 		assertEquals(-1, whitePawn.getyCoordinate());
 		// Verify the history
-		assertEquals(0, testChessBoard.getMovementHistory().size());
+		assertEquals(0, testChessBoard.getMoveHistory().size());
 	}
 
 	@Test
@@ -134,7 +136,7 @@ public class ChessBoardTest {
 			}
 		}
 		// Verify the history
-		assertEquals(0, testChessBoard.getMovementHistory().size());
+		assertEquals(0, testChessBoard.getMoveHistory().size());
 	}
 
 	@Test
@@ -144,7 +146,7 @@ public class ChessBoardTest {
 		isValidPosition = testChessBoard.isLegalBoardPosition(8, 7);
 		assertFalse(isValidPosition);
 		// Verify the history
-		assertEquals(0, testChessBoard.getMovementHistory().size());
+		assertEquals(0, testChessBoard.getMoveHistory().size());
 	}
 
 	@Test
@@ -154,7 +156,58 @@ public class ChessBoardTest {
 		isValidPosition = testChessBoard.isLegalBoardPosition(-1, 3);
 		assertFalse(isValidPosition);
 		// Verify the history
-		assertEquals(0, testChessBoard.getMovementHistory().size());
+		assertEquals(0, testChessBoard.getMoveHistory().size());
+	}
+
+	@Test
+	public void revertLastMoveFromInitialCoordinates() {
+		final IPiece whitePawn = pieceFactory.getPiece(PieceType.PAWN, PieceColor.WHITE);
+		final IPiece blackPawn = pieceFactory.getPiece(PieceType.PAWN, PieceColor.BLACK);
+		testChessBoard.addPiece(whitePawn, TestUtils.TEST_INITIAL_WHITE_X_COORDINATE, 3);
+		testChessBoard.addPiece(blackPawn, TestUtils.TEST_INITIAL_BLACK_X_COORDINATE, 4);
+		// Verify the history
+		assertEquals(0, testChessBoard.getMoveHistory().size());
+		testChessBoard.revertLastMove();
+		// Verify the current status after reverting the last move.
+		assertEquals(PieceColor.WHITE, testChessBoard.getTurnToMove());
+		assertEquals(0, testChessBoard.getMoveHistory().size());
+		assertEquals(TestUtils.TEST_INITIAL_WHITE_X_COORDINATE, whitePawn.getxCoordinate());
+		assertEquals(3, whitePawn.getyCoordinate());
+		assertEquals(TestUtils.TEST_INITIAL_BLACK_X_COORDINATE, blackPawn.getxCoordinate());
+		assertEquals(4, blackPawn.getyCoordinate());
+	}
+
+	@Test
+	public void revertLastMoveFromCoordinates() {
+		final IPiece whitePawn = pieceFactory.getPiece(PieceType.PAWN, PieceColor.WHITE);
+		final IPiece blackPawn = pieceFactory.getPiece(PieceType.PAWN, PieceColor.BLACK);
+		testChessBoard.addPiece(whitePawn, TestUtils.TEST_INITIAL_WHITE_X_COORDINATE, 3);
+		testChessBoard.addPiece(blackPawn, TestUtils.TEST_INITIAL_BLACK_X_COORDINATE, 3);
+		whitePawn.move(MovementType.MOVE, 3, TestUtils.TEST_INITIAL_WHITE_Y_COORDINATE);
+		blackPawn.move(MovementType.MOVE, 5, TestUtils.TEST_INITIAL_BLACK_Y_COORDINATE);
+		whitePawn.move(MovementType.MOVE, 4, TestUtils.TEST_INITIAL_WHITE_Y_COORDINATE);
+		// Verify the history
+		assertEquals(3, testChessBoard.getMoveHistory().size());
+		testChessBoard.revertLastMove();
+		// Verify the current status after reverting the last move.
+		assertEquals(PieceColor.WHITE, testChessBoard.getTurnToMove());
+		assertEquals(2, testChessBoard.getMoveHistory().size());
+
+		testChessBoard.revertLastMove();
+		// Verify the current status after reverting the last move.
+		assertEquals(PieceColor.BLACK, testChessBoard.getTurnToMove());
+		assertEquals(1, testChessBoard.getMoveHistory().size());
+
+		testChessBoard.revertLastMove();
+		// Verify the current status after reverting the last move.
+		assertEquals(PieceColor.WHITE, testChessBoard.getTurnToMove());
+		assertEquals(0, testChessBoard.getMoveHistory().size());
+
+		testChessBoard.revertLastMove();
+		// Verify the current status after reverting the last move.
+		assertEquals(PieceColor.WHITE, testChessBoard.getTurnToMove());
+		assertEquals(0, testChessBoard.getMoveHistory().size());
+
 	}
 
 }

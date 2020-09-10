@@ -14,7 +14,7 @@ import com.solarwindsmsp.chess.piece.attribute.PieceColor;
 public interface IChessBoard {
 
 	/** Get the history of the movement. */
-	Deque<IPiece> getMovementHistory();
+	Deque<IPiece> getMoveHistory();
 
 	/** Get the turn, who needs to move. */
 	PieceColor getTurnToMove();
@@ -46,5 +46,8 @@ public interface IChessBoard {
 
 	/** Reset the chessBoard to start again. */
 	void reset();
+
+	/** Revert the last move. */
+	void revertLastMove();
 
 }
