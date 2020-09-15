@@ -1,7 +1,6 @@
 package com.solarwindsmsp.chess.util;
 
 import com.solarwindsmsp.chess.board.ChessBoard;
-import com.solarwindsmsp.chess.exception.InvalidCoordinateException;
 
 /**
  * Contains utility functions for the game of chess.
@@ -10,16 +9,16 @@ public class ChessUtils {
 
     /**
      * Transform the coordinates into algebraic notation. e.g. [0,0] is A1
-     * @param row the row to be transformed into a letter (A...H)
-     * @param column the column to be transformed into a number (1...9)
+     * @param row the row to be transformed into a number (1...9)
+     * @param column the column to be transformed into a letter (A...H)
      * @return the algebraic notation for the square (e.g. A1)
      */
     public static String coordinateToAlgebraic(int row, int column) {
         if (isValidCoordinate(row, column)) {
-            return String.format("%s%d", (row > -1 && row < 9 ? String.valueOf((char) (row + 65)) : ""), (column + 1));
+            return String.format("%s%d", (column > -1 && column < 9 ? String.valueOf((char) (column + 65)) : ""), (row + 1));
         }
 
-        throw new InvalidCoordinateException(row, column);
+        return "";
     }
 
     /**

@@ -68,8 +68,8 @@ public class ChessBoardTest {
     public void testAdd_Avoids_Duplicate_Positioning() {
         Pawn firstPawn = new Pawn(PieceColor.BLACK);
         Pawn secondPawn = new Pawn(PieceColor.BLACK);
-        testSubject.addPiece(firstPawn, 6, 3, PieceColor.BLACK);
-        testSubject.addPiece(secondPawn, 6, 3, PieceColor.BLACK);
+        testSubject.addPiece(firstPawn, 6, 3);
+        testSubject.addPiece(secondPawn, 6, 3);
         Assert.assertEquals(6, firstPawn.getRowCoordinate());
         Assert.assertEquals(3, firstPawn.getColCoordinate());
         Assert.assertEquals(-1, secondPawn.getRowCoordinate());
@@ -84,7 +84,7 @@ public class ChessBoardTest {
             Pawn pawn = new Pawn(PieceColor.BLACK);
             int maxIndex = (ChessBoard.MAX_BOARD_WIDTH + 1);
             int column = i / maxIndex;
-            testSubject.addPiece(pawn, i % maxIndex, 6 + column, PieceColor.BLACK);
+            testSubject.addPiece(pawn, i % maxIndex, 6 + column);
             if (column < 1)
             {
                 Assert.assertEquals(6 + column, pawn.getColCoordinate());

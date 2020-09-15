@@ -35,13 +35,17 @@ public class ChessBoard {
      * A2, B2, C2, D2, E2, F2, G2, H2
      * A1, B1, C1, D1, E1, F1, G1, H1
      */
-    private ChessPiece[][] squares;
+    private final ChessPiece[][] squares;
 
+    /*
+     * TODO: Sensible extension could be to render SQUARES that contain PIECES, as opposed to having pieces directly
+     *  on the board.
+     */
     public ChessBoard() {
         squares = new ChessPiece[MAX_BOARD_WIDTH + 1][MAX_BOARD_HEIGHT + 1];
     }
 
-    public void addPiece(ChessPiece piece, int rowCoordinate, int colCoordinate, PieceColor pieceColor)
+    public void addPiece(ChessPiece piece, int rowCoordinate, int colCoordinate)
     {
         logger.info(MessageFormat.format("Attempting to add a {0} to {1} [{2},{3}] coordinates", piece.getPieceType(),
                 ChessUtils.coordinateToAlgebraic(rowCoordinate, colCoordinate), rowCoordinate, colCoordinate));
