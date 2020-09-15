@@ -57,18 +57,28 @@ public abstract class ChessPiece {
         this.setColCoordinate(-1);
     }
 
+    /**
+     * Function to either MOVE or CAPTURE a piece in a particular location
+     * @param movementType
+     * @param newRow
+     * @param newCol
+     */
     public void move(MovementType movementType, int newRow, int newCol) {
         logger.info(MessageFormat.format("Attempting to move from {0} to {1}",
                 ChessUtils.coordinateToAlgebraic(this.getRowCoordinate(), this.getColCoordinate()),
                 ChessUtils.coordinateToAlgebraic(newRow, newCol)));
 
-        if (isValidMove(newRow, newCol)) {
-            logger.info("Valid move requested!");
-            this.setRowCoordinate(newRow);
-            this.setColCoordinate(newCol);
-        } else {
-            logger.severe("Invalid movement requested.");
+        if (MovementType.MOVE == movementType) {
+            if (isValidMove(newRow, newCol)) {
+                logger.info("Valid move requested!");
+                this.setRowCoordinate(newRow);
+                this.setColCoordinate(newCol);
+
+                //TODO: We've updated the coordinates within the piece, but not moved within the board...
+            }
         }
+
+        //TODO: Instrument the CAPTURE MovementType
     }
 
     public abstract boolean isValidMove(int newRow, int newCol);

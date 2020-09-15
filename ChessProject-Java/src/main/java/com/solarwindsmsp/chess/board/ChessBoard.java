@@ -1,7 +1,6 @@
 package com.solarwindsmsp.chess.board;
 
 import com.solarwindsmsp.chess.piece.ChessPiece;
-import com.solarwindsmsp.chess.piece.attribute.PieceColor;
 import com.solarwindsmsp.chess.util.ChessUtils;
 
 import java.text.MessageFormat;
@@ -37,14 +36,23 @@ public class ChessBoard {
      */
     private final ChessPiece[][] squares;
 
-    /*
-     * TODO: Sensible extension could be to render SQUARES that contain PIECES, as opposed to having pieces directly
-     *  on the board.
+    /**
+     * No-args default constructor for the chess board.
      */
     public ChessBoard() {
+        /*
+         * TODO: Sensible extension could be to render SQUARES that contain PIECES, as opposed to having pieces directly
+         *  on the board.
+         */
         squares = new ChessPiece[MAX_BOARD_WIDTH + 1][MAX_BOARD_HEIGHT + 1];
     }
 
+    /**
+     * Attempt to add a particular {@link ChessPiece} to the board at a particular set of coordinates
+     * @param piece the piece to be added to the board
+     * @param rowCoordinate the row where the piece should be added
+     * @param colCoordinate the column where the piece should be added
+     */
     public void addPiece(ChessPiece piece, int rowCoordinate, int colCoordinate)
     {
         logger.info(MessageFormat.format("Attempting to add a {0} to {1} [{2},{3}] coordinates", piece.getPieceType(),
