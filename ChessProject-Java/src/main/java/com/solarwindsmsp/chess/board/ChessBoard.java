@@ -48,12 +48,13 @@ public class ChessBoard {
 
         if (!isLegalBoardPosition(rowCoordinate, colCoordinate)) {
             logger.warning(MessageFormat.format("Cannot add piece to invalid location [{0},{1}]", rowCoordinate, colCoordinate));
+            piece.removeFromBoard();
             return;
         }
 
         if (isSpaceOccupied(rowCoordinate, colCoordinate)) {
-            //throw new SquareAlreadyPopulatedException(rowCoordinate, colCoordinate);
             logger.warning(MessageFormat.format("Cannot populate a square that already has a piece at location [{0},{1}]", rowCoordinate, colCoordinate));
+            piece.removeFromBoard();
             return;
         }
 

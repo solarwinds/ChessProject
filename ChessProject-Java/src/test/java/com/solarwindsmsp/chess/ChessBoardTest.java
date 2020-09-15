@@ -82,12 +82,13 @@ public class ChessBoardTest {
         for (int i = 0; i < 10; i++)
         {
             Pawn pawn = new Pawn(PieceColor.BLACK);
-            int row = i / ChessBoard.MAX_BOARD_WIDTH;
-            testSubject.addPiece(pawn, 6 + row, i % ChessBoard.MAX_BOARD_WIDTH, PieceColor.BLACK);
-            if (row < 1)
+            int maxIndex = (ChessBoard.MAX_BOARD_WIDTH + 1);
+            int column = i / maxIndex;
+            testSubject.addPiece(pawn, i % maxIndex, 6 + column, PieceColor.BLACK);
+            if (column < 1)
             {
-                Assert.assertEquals(6 + row, pawn.getRowCoordinate());
-                Assert.assertEquals(i % ChessBoard.MAX_BOARD_WIDTH, pawn.getColCoordinate());
+                Assert.assertEquals(6 + column, pawn.getColCoordinate());
+                Assert.assertEquals(i % maxIndex, pawn.getRowCoordinate());
             }
             else
             {

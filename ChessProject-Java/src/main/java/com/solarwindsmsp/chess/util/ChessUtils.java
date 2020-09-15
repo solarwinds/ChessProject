@@ -16,7 +16,7 @@ public class ChessUtils {
      */
     public static String coordinateToAlgebraic(int row, int column) {
         if (isValidCoordinate(row, column)) {
-            return String.format("%s%d", (row > -1 && row < 9 ? String.valueOf((char) (row + 65)) : ""), column + 1);
+            return String.format("%s%d", (row > -1 && row < 9 ? String.valueOf((char) (row + 65)) : ""), (column + 1));
         }
 
         throw new InvalidCoordinateException(row, column);

@@ -13,26 +13,16 @@ import java.util.logging.Logger;
  */
 public abstract class ChessPiece {
 
-    //private ChessBoard chessBoard;
     public static final Logger logger = Logger.getLogger(ChessPiece.class.getName());
-
 
     private int rowCoordinate;
     private int colCoordinate;
-    private PieceColor pieceColor;
+    private final PieceColor pieceColor;
     private PieceType pieceType;
 
     public ChessPiece(PieceColor pieceColor) {
         this.pieceColor = pieceColor;
     }
-
-//    public ChessBoard getChessBoard() {
-//        return chessBoard;
-//    }
-//
-//    public void setChessBoard(ChessBoard chessBoard) {
-//        this.chessBoard = chessBoard;
-//    }
 
     public int getRowCoordinate() {
         return rowCoordinate;
@@ -60,6 +50,11 @@ public abstract class ChessPiece {
 
     protected void setPieceType(PieceType type) {
         this.pieceType = type;
+    }
+
+    public void removeFromBoard() {
+        this.setRowCoordinate(-1);
+        this.setColCoordinate(-1);
     }
 
     public void move(MovementType movementType, int newRow, int newCol) {
