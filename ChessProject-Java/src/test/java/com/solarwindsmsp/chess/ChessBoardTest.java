@@ -1,11 +1,14 @@
 package com.solarwindsmsp.chess;
 
-import junit.framework.TestCase;
+import com.solarwindsmsp.chess.board.ChessBoard;
+import com.solarwindsmsp.chess.piece.Pawn;
+
+import com.solarwindsmsp.chess.piece.attribute.PieceColor;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ChessBoardTest extends TestCase {
+public class ChessBoardTest {
 
     private ChessBoard testSubject;
 
@@ -16,18 +19,18 @@ public class ChessBoardTest extends TestCase {
 
     @Test
     public void testHas_MaxBoardWidth_of_7() {
-        assertEquals(7, ChessBoard.MAX_BOARD_HEIGHT);
+        Assert.assertEquals(7, ChessBoard.MAX_BOARD_HEIGHT);
     }
 
     @Test
     public void testHas_MaxBoardHeight_of_7() {
-        assertEquals(7, ChessBoard.MAX_BOARD_HEIGHT);
+        Assert.assertEquals(7, ChessBoard.MAX_BOARD_HEIGHT);
     }
 
     @Test
     public void testIsLegalBoardPosition_True_X_equals_0_Y_equals_0() {
         boolean isValidPosition = testSubject.isLegalBoardPosition(0, 0);
-        assertTrue(isValidPosition);
+        Assert.assertTrue(isValidPosition);
     }
 
     @Test
@@ -39,19 +42,20 @@ public class ChessBoardTest extends TestCase {
     @Test
     public void testIsLegalBoardPosition_False_X_equals_11_Y_equals_5() {
         boolean isValidPosition = testSubject.isLegalBoardPosition(11, 5);
-        assertTrue(isValidPosition);
+        // Test was faulty. Asserted true, however [11,5] is invalid as outside bounds of [0,0] through [7,7]
+        Assert.assertFalse(isValidPosition);
     }
 
     @Test
     public void testIsLegalBoardPosition_False_X_equals_0_Y_equals_9() {
         boolean isValidPosition = testSubject.isLegalBoardPosition(0, 9);
-        assertFalse(isValidPosition);
+        Assert.assertFalse(isValidPosition);
     }
 
     @Test
     public void testIsLegalBoardPosition_False_X_equals_11_Y_equals_0() {
         boolean isValidPosition = testSubject.isLegalBoardPosition(11, 0);
-        assertFalse(isValidPosition);
+        Assert.assertFalse(isValidPosition);
     }
 
     @Test
@@ -61,19 +65,19 @@ public class ChessBoardTest extends TestCase {
     }
 
     @Test
-    public void testAvoids_Duplicate_Positioning() {
+    public void testAdd_Avoids_Duplicate_Positioning() {
         Pawn firstPawn = new Pawn(PieceColor.BLACK);
         Pawn secondPawn = new Pawn(PieceColor.BLACK);
         testSubject.addPiece(firstPawn, 6, 3, PieceColor.BLACK);
         testSubject.addPiece(secondPawn, 6, 3, PieceColor.BLACK);
-        assertEquals(6, firstPawn.getXCoordinate());
-        assertEquals(3, firstPawn.getYCoordinate());
-        assertEquals(-1, secondPawn.getXCoordinate());
-        assertEquals(-1, secondPawn.getYCoordinate());
+        Assert.assertEquals(6, firstPawn.getRowCoordinate());
+        Assert.assertEquals(3, firstPawn.getColCoordinate());
+        Assert.assertEquals(-1, secondPawn.getRowCoordinate());
+        Assert.assertEquals(-1, secondPawn.getColCoordinate());
     }
 
     @Test
-    public void testLimits_The_Number_Of_Pawns()
+    public void testAdd_Limits_The_Number_Of_Pawns()
     {
         for (int i = 0; i < 10; i++)
         {
@@ -82,13 +86,13 @@ public class ChessBoardTest extends TestCase {
             testSubject.addPiece(pawn, 6 + row, i % ChessBoard.MAX_BOARD_WIDTH, PieceColor.BLACK);
             if (row < 1)
             {
-                assertEquals(6 + row, pawn.getXCoordinate());
-                assertEquals(i % ChessBoard.MAX_BOARD_WIDTH, pawn.getYCoordinate());
+                Assert.assertEquals(6 + row, pawn.getRowCoordinate());
+                Assert.assertEquals(i % ChessBoard.MAX_BOARD_WIDTH, pawn.getColCoordinate());
             }
             else
             {
-                assertEquals(-1, pawn.getXCoordinate());
-                Assert.assertEquals(-1, pawn.getYCoordinate());
+                Assert.assertEquals(-1, pawn.getRowCoordinate());
+                Assert.assertEquals(-1, pawn.getColCoordinate());
             }
         }
     }
