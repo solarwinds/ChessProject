@@ -72,18 +72,18 @@ public class PawnTest {
     @Test
     public void testPawn_Move_LegalCoordinates_Black_Forward_UpdatesCoordinates() {
         /* Pawns move forward. Their ROW changes from 3 to 2 as a BLACK pawn moves forward */
-        chessBoard.addPiece(testSubject, 3, 6);
-        testSubject.move(MovementType.MOVE, 2, 6);
+        chessBoard.addPiece(testSubject, 6, 6);
+        testSubject.move(MovementType.MOVE, 5, 6);
         assertEquals(6, testSubject.getColCoordinate());
-        assertEquals(2, testSubject.getRowCoordinate());
+        assertEquals(5, testSubject.getRowCoordinate());
     }
 
     @Test
     public void testPawn_Move_LegalCoordinates_White_Backward_UpdatesCoordinates() {
         Pawn whitePiece = new Pawn(PieceColor.WHITE);
-        chessBoard.addPiece(whitePiece, 3, 6);
-        whitePiece.move(MovementType.MOVE, 4, 6);
+        chessBoard.addPiece(whitePiece, 1, 6);
+        whitePiece.move(MovementType.MOVE, 2, 6);
         assertEquals(6, whitePiece.getColCoordinate());
-        assertEquals(4, whitePiece.getRowCoordinate());
+        assertEquals(2, whitePiece.getRowCoordinate());
     }
 }

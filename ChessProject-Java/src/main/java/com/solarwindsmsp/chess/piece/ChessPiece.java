@@ -72,6 +72,7 @@ public abstract class ChessPiece {
     }
 
     public abstract boolean isValidMove(int newRow, int newCol);
+    public abstract boolean isValidSpaceToAdd(int row, int col);
 
     @Override
     public String toString() {

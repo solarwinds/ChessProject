@@ -76,19 +76,30 @@ public class ChessBoardTest {
         Assert.assertEquals(-1, secondPawn.getColCoordinate());
     }
 
+    /**
+     * This test isn't great. It's not actually limiting the number of pawns, but rather it's checking that pawns can
+     * only be added to a valid row.
+     */
     @Test
-    public void testAdd_Limits_The_Number_Of_Pawns()
+    public void testAdd_PawnsOnlyAddedToValidRow7()
     {
         for (int i = 0; i < 10; i++)
         {
             Pawn pawn = new Pawn(PieceColor.BLACK);
-            int maxIndex = (ChessBoard.MAX_BOARD_WIDTH + 1);
-            int column = i / maxIndex;
-            testSubject.addPiece(pawn, i % maxIndex, 6 + column);
-            if (column < 1)
+            int row = i / ChessBoard.MAX_BOARD_WIDTH;
+
+            testSubject.addPiece(pawn, 6 + row, i % (ChessBoard.MAX_BOARD_WIDTH + 1));
+
+            /*
+             * This test is under the assumption that pieces can only *initially* be placed on their expected row
+             * (so row 1 or row 6 for pawns), however the example reminds us that the board can be set up in many
+             * configurations to re-run previous games...
+             */
+
+            if (row < 1)
             {
-                Assert.assertEquals(6 + column, pawn.getColCoordinate());
-                Assert.assertEquals(i % maxIndex, pawn.getRowCoordinate());
+                Assert.assertEquals(6 + row, pawn.getRowCoordinate());
+                Assert.assertEquals(i % ChessBoard.MAX_BOARD_WIDTH, pawn.getColCoordinate());
             }
             else
             {

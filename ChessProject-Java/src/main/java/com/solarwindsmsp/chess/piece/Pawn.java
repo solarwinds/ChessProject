@@ -5,6 +5,9 @@ import com.solarwindsmsp.chess.piece.attribute.PieceType;
 
 public class Pawn extends ChessPiece {
 
+    private static final int ALLOWED_BLACK_ROW = 6;
+    private static final int ALLOWED_WHTIE_ROW = 1;
+
     public Pawn(PieceColor pieceColor) {
         super(pieceColor);
         setPieceType(PieceType.PAWN);
@@ -23,5 +26,10 @@ public class Pawn extends ChessPiece {
         } else {
             return (this.getRowCoordinate() - allowedMovement) == newRow;
         }
+    }
+
+    @Override
+    public boolean isValidSpaceToAdd(int row, int col) {
+        return row == ((this.getPieceColor() == PieceColor.WHITE) ? ALLOWED_WHTIE_ROW : ALLOWED_BLACK_ROW);
     }
 }

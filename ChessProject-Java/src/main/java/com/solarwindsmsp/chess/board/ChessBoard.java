@@ -62,6 +62,12 @@ public class ChessBoard {
             return;
         }
 
+        if (!piece.isValidSpaceToAdd(rowCoordinate, colCoordinate)) {
+            logger.warning(MessageFormat.format("Cannot add piece to location as invalid start position, [{0},{1}]", rowCoordinate, colCoordinate));
+            piece.removeFromBoard();
+            return;
+        }
+
         piece.setRowCoordinate(rowCoordinate);
         piece.setColCoordinate(colCoordinate);
         squares[rowCoordinate][colCoordinate] = piece;
