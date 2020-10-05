@@ -34,7 +34,7 @@ namespace SolarWinds.MSP.Chess
             protected set { strColor = value; }
         }
 
-        public abstract void Move(MovementType movementType, int newX, int newY);
+        public abstract bool Move(MovementType movementType, int newX, int newY);
 
         public override string ToString()
         {

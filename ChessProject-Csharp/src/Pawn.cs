@@ -14,50 +14,54 @@ namespace SolarWinds.MSP.Chess
             this.direction = direction;
         }
 
-        public override void Move(MovementType movementType, int newX, int newY)
+        public override bool Move(MovementType movementType, int newX, int newY)
         {
             int availableY = 1;
             if (initialMove == true){
                 availableY = 2;
                 this.initialMove = false;
             }
-            if (this.direction == MovementDirection.Positive) {
+            if (this.direction == MovementDirection.Positive) 
+            {
                 if (movementType == MovementType.Move){
                     if (newX == XCoordinate && 
                         (newY > YCoordinate && newY <= YCoordinate + availableY))
                     {
-                        XCoordinate = newX;
-                        YCoordinate = newY;
+                        return true;
                     }
+                    return false;
 
                 } 
-                else if (movementType == MovementType.Capture){
+                else
+                {
                     if ((newX == XCoordinate + 1 || newX == XCoordinate - 1) && 
                         (newY == YCoordinate + 1))
                     {
-                        XCoordinate = newX;
-                        YCoordinate = newY;
+                        return true;
                     }
+                    return false;
                 }
             } 
             else
             {
-                if (movementType == MovementType.Move){
+                if (movementType == MovementType.Move)
+                {
                     if (newX == XCoordinate && 
                         (newY < YCoordinate && newY >= YCoordinate - availableY))
                     {
-                        XCoordinate = newX;
-                        YCoordinate = newY;
+                        return true;
                     }
+                    return false;
 
                 } 
-                else if (movementType == MovementType.Capture){
+                else
+                {
                     if ((newX == XCoordinate + 1 || newX == XCoordinate - 1) && 
                         (newY == YCoordinate - 1))
                     {
-                        XCoordinate = newX;
-                        YCoordinate = newY;
+                        return true;
                     }
+                    return false;
                 }
             }
         }
