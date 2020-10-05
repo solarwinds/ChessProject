@@ -6,7 +6,7 @@ namespace SolarWinds.MSP.Chess
     {
         public Pawn(PieceColor pieceColor)
         {
-            this.pieceColor = pieceColor;
+            this.PieceColor = pieceColor;
         }
 
         public override void Move(MovementType movementType, int newX, int newY)
