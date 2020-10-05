@@ -21,12 +21,18 @@ namespace SolarWinds.MSP.Chess
 	{
 		private AvailablePieces availablePieces;
 		private AvailablePieces availablePiecesCustom;
+		private Pawn whitePawn;
+		private Pawn blackPawn;
+		private Pawn blackQueen;
 
         [SetUp]
 		public void SetUp()
 		{
 			availablePieces = new AvailablePieces();
 			availablePiecesCustom = new AvailablePieces(blackPawn: 1);
+			whitePawn = new Pawn(PieceColor.White);
+			blackPawn = new Pawn(PieceColor.Black);
+
 		}
 
         [Test]
@@ -69,33 +75,22 @@ namespace SolarWinds.MSP.Chess
 		public void Decrement_True_Appropriately_Decriments_Piece_Count()
 		{
 			Assert.AreEqual(8, availablePieces.White.Pawn);
-			Assert.IsTrue(availablePieces.Decrement("White", "Pawn"));
+			Assert.IsTrue(availablePieces.Decrement(whitePawn));
 			Assert.AreEqual(7, availablePieces.White.Pawn);
-			Assert.AreEqual(1, availablePiecesCustom.Black.Queen);
-			Assert.IsTrue(availablePiecesCustom.Decrement("Black", "Queen"));
-			Assert.AreEqual(0, availablePiecesCustom.Black.Queen);
+			Assert.AreEqual(8, availablePiecesCustom.White.Pawn);
+			Assert.IsTrue(availablePiecesCustom.Decrement(whitePawn));
+			Assert.AreEqual(7, availablePiecesCustom.White.Pawn);
 		}
 
 		[Test]
 		public void Decrement_False_Will_Not_Pass_0()
 		{
 			Assert.AreEqual(1, availablePiecesCustom.Black.Pawn);
-			Assert.IsTrue(availablePiecesCustom.Decrement("Black", "Pawn"));
+			Assert.IsTrue(availablePiecesCustom.Decrement(blackPawn));
 			Assert.AreEqual(0, availablePiecesCustom.Black.Pawn);
-			Assert.IsFalse(availablePiecesCustom.Decrement("Black", "Pawn"));
+			Assert.IsFalse(availablePiecesCustom.Decrement(blackPawn));
 			Assert.AreEqual(0, availablePiecesCustom.Black.Pawn);
 		}
 
-		[Test]
-		public void Decrement_Error_Bad_Color()
-		{
-			Assert.Throws<ArgumentException>(() => availablePieces.Decrement("Grey", "Pawn"));
-		}
-
-		[Test]
-		public void Decrement_Error_Bad_Piece_Type()
-		{
-			Assert.Throws<ArgumentException>(() => availablePieces.Decrement("Black", "Prawn"));
-		}
 	}
 }
