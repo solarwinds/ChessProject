@@ -5,6 +5,10 @@ namespace SolarWinds.MSP.Chess
     public abstract class ChessPiece
     {
         private PieceColor pieceColor;
+
+        private string strType;
+
+        private string strColor;
         
         public ChessBoard ChessBoard { get; set; }
 
@@ -16,6 +20,18 @@ namespace SolarWinds.MSP.Chess
         {
             get { return pieceColor; }
             protected set { pieceColor = value; }
+        }
+
+        public string StrType
+        {
+            get { return strType; }
+            protected set { strType = value; }
+        }
+
+        public string StrColor
+        {
+            get { return strColor; }
+            protected set { strColor = value; }
         }
 
         public abstract void Move(MovementType movementType, int newX, int newY);
