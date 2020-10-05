@@ -4,17 +4,9 @@ namespace SolarWinds.MSP.Chess
 {
     public class AvailablePieces
     {
-        private PieceColor pieceColor;
 
-        public PieceColor PieceColor
+        public AvailablePieces()
         {
-            get { return pieceColor; }
-            private set { pieceColor = value; }
-        }
-
-        public AvailablePieces(PieceColor color)
-        {
-            this.PieceColor = color;
             this.pawns = 8;
             this.rooks = 2;
             this.knights = 2;
@@ -23,9 +15,8 @@ namespace SolarWinds.MSP.Chess
             this.kings = 1;
         }
 
-        public AvailablePieces(PieceColor color, int pawns, int rooks, int knights, int bishops, int queens, int kings)
+        public AvailablePieces(int pawns, int rooks, int knights, int bishops, int queens, int kings)
         {
-            this.PieceColor = color;
             this.pawns = pawns;
             this.rooks = rooks;
             this.knights = knights;
@@ -40,7 +31,7 @@ namespace SolarWinds.MSP.Chess
         {
             get { return pawns; }
             set { 
-                if (value == -1){
+                if (value == (pawns - 1)){
                     pawns--;
                 }
             }
@@ -52,7 +43,7 @@ namespace SolarWinds.MSP.Chess
         {
             get { return rooks; }
             set { 
-                if (value == -1){
+                if (value == (rooks - 1)){
                     rooks--;
                 }
             }
@@ -64,7 +55,7 @@ namespace SolarWinds.MSP.Chess
         {
             get { return knights; }
             set { 
-                if (value == -1){
+                if (value == (knights - 1)){
                     knights--;
                 }
             }
@@ -76,7 +67,7 @@ namespace SolarWinds.MSP.Chess
         {
             get { return bishops; }
             set { 
-                if (value == -1){
+                if (value == (bishops - 1)){
                     bishops--;
                 }
             }
@@ -88,7 +79,7 @@ namespace SolarWinds.MSP.Chess
         {
             get { return queens; }
             set { 
-                if (value == -1){
+                if (value == (queens - 1)){
                     queens--;
                 }
             }
@@ -100,7 +91,7 @@ namespace SolarWinds.MSP.Chess
         {
             get { return kings; }
             set { 
-                if (value == -1){
+                if (value == (kings - 1)){
                     kings--;
                 }
             }
