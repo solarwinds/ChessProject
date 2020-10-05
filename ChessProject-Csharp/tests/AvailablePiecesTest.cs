@@ -23,7 +23,6 @@ namespace SolarWinds.MSP.Chess
 		private AvailablePieces availablePiecesCustom;
 		private Pawn whitePawn;
 		private Pawn blackPawn;
-		private Pawn blackQueen;
 
         [SetUp]
 		public void SetUp()
