@@ -15,54 +15,82 @@ namespace SolarWinds.MSP.Chess
 	public class PawnTest
 	{
 		private ChessBoard chessBoard;
-		private Pawn pawn;
+		private Pawn pawnPositive;
+		private Pawn pawnNegative;
 
 		[SetUp]
 		public void SetUp()	
 		{
 			chessBoard = new ChessBoard();
-			pawn = new Pawn(PieceColor.Black, MovementDirection.Negative);
+			pawnPositive = new Pawn(PieceColor.White, MovementDirection.Positive);
+			pawnNegative = new Pawn(PieceColor.Black, MovementDirection.Negative);
 		}
 
 		[Test]
 		public void ChessBoard_Add_Sets_XCoordinate()
 		{
-			chessBoard.Add(pawn, 6, 3);
-			Assert.AreEqual(6, pawn.XCoordinate);
+			// Positive movement
+			chessBoard.Add(pawnPositive, 1, 3);
+			Assert.AreEqual(1, pawnPositive.XCoordinate);
+			// Negative movement
+			chessBoard.Add(pawnPositive, 6, 3);
+			Assert.AreEqual(6, pawnPositive.XCoordinate);
 		}
 
 		[Test]
 		public void ChessBoard_Add_Sets_YCoordinate()
 		{
-			chessBoard.Add(pawn, 6, 3);
-			Assert.AreEqual(3, pawn.YCoordinate);
+			// Positive movement
+			chessBoard.Add(pawnPositive, 1, 3);
+			Assert.AreEqual(3, pawnPositive.YCoordinate);
+			// Negative movement
+			chessBoard.Add(pawnNegative, 6, 3);
+			Assert.AreEqual(3, pawnNegative.YCoordinate);
 		}
 
 		[Test]
 		public void Pawn_Move_IllegalCoordinates_Right_DoesNotMove()
 		{
-			chessBoard.Add(pawn, 6, 3);
-			pawn.Move(MovementType.Move, 7, 3);
-            Assert.AreEqual(6, pawn.XCoordinate);
-            Assert.AreEqual(3, pawn.YCoordinate);
+			// Positive movement
+			chessBoard.Add(pawnPositive, 1, 3);
+			pawnPositive.Move(MovementType.Move, 7, 3);
+            Assert.AreEqual(1, pawnPositive.XCoordinate);
+            Assert.AreEqual(3, pawnPositive.YCoordinate);
+			// Negative movement
+			chessBoard.Add(pawnNegative, 6, 3);
+			pawnNegative.Move(MovementType.Move, 7, 3);
+            Assert.AreEqual(6, pawnNegative.XCoordinate);
+            Assert.AreEqual(3, pawnNegative.YCoordinate);
 		}
 
 		[Test]
 		public void Pawn_Move_IllegalCoordinates_Left_DoesNotMove()
 		{
-			chessBoard.Add(pawn, 6, 3);
-			pawn.Move(MovementType.Move, 4, 3);
-            Assert.AreEqual(6, pawn.XCoordinate);
-            Assert.AreEqual(3, pawn.YCoordinate);
+			// Positive movement
+			chessBoard.Add(pawnPositive, 1, 3);
+			pawnPositive.Move(MovementType.Move, 0, 3);
+            Assert.AreEqual(1, pawnPositive.XCoordinate);
+            Assert.AreEqual(3, pawnPositive.YCoordinate);
+			// Negative movement
+			chessBoard.Add(pawnNegative, 6, 3);
+			pawnNegative.Move(MovementType.Move, 5, 3);
+            Assert.AreEqual(6, pawnNegative.XCoordinate);
+            Assert.AreEqual(3, pawnNegative.YCoordinate);
 		}
 
 		[Test]
 		public void Pawn_Move_LegalCoordinates_Forward_UpdatesCoordinates()
 		{
-			chessBoard.Add(pawn, 6, 3);
-			pawn.Move(MovementType.Move, 6, 2);
-			Assert.AreEqual(6, pawn.XCoordinate);
-            Assert.AreEqual(2, pawn.YCoordinate);
+			// Positive movement
+			chessBoard.Add(pawnPositive, 1, 3);
+			pawnPositive.Move(MovementType.Move, 1, 4);
+			Assert.AreEqual(1, pawnPositive.XCoordinate);
+            Assert.AreEqual(4, pawnPositive.YCoordinate);
+			// Negative movement
+			chessBoard.Add(pawnNegative, 6, 3);
+			pawnNegative.Move(MovementType.Move, 6, 2);
+            Assert.AreEqual(6, pawnNegative.XCoordinate);
+            Assert.AreEqual(2, pawnNegative.YCoordinate);
 		}
 	}
 }
