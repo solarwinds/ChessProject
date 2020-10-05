@@ -47,26 +47,26 @@ namespace SolarWinds.MSP.Chess
             private set { white = value; }
         }
 
-        public bool Decrement(string color, string pieceType)
+        public bool Decrement(ChessPiece piece)
         {
-            if (color != "Black" && color != "White")
+            if (piece.StrColor != "Black" && piece.StrColor != "White")
             {
                 throw new ArgumentException("Color must be either 'Black' or 'White'");
             }
-            PossiblePieces colorPieceCounts = (PossiblePieces)this[color];
+            PossiblePieces colorPieceCounts = (PossiblePieces)this[piece.StrColor];
             int curr;
             try
             {
-                curr = (int)colorPieceCounts[pieceType];
+                curr = (int)colorPieceCounts[piece.StrType];
             } catch (NullReferenceException)
             {
-                throw new ArgumentException("Cannot decrement an unrecognized pieceType. Got: {0}", pieceType);
+                throw new ArgumentException("Cannot decrement an unrecognized pieceType. Got: {0}", piece.StrType);
             }
-            Console.WriteLine("Decrementing {0} {1} (Currently: {2})...", color, pieceType, curr);
+            Console.WriteLine("Decrementing {0} {1} (Currently: {2})...", piece.StrColor, piece.StrType, curr);
             if (curr > 0)
             {
-                colorPieceCounts[pieceType] = --curr;
-                Console.WriteLine("Decremented {0}", colorPieceCounts[pieceType]);
+                colorPieceCounts[piece.StrType] = --curr;
+                Console.WriteLine("Decremented {0}", colorPieceCounts[piece.StrType]);
                 return true;
             }
             else
