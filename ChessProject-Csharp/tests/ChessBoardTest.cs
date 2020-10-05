@@ -91,8 +91,8 @@ namespace SolarWinds.MSP.Chess
         [Test]
 		public void Avoids_Duplicate_Positioning()
 		{
-			Pawn firstPawn = new Pawn(PieceColor.Black);
-			Pawn secondPawn = new Pawn(PieceColor.Black);
+			Pawn firstPawn = new Pawn(PieceColor.Black, MovementDirection.Negative);
+			Pawn secondPawn = new Pawn(PieceColor.Black, MovementDirection.Negative);
 			chessBoard.Add(firstPawn, 6, 3);
 			try 
 			{
@@ -110,8 +110,8 @@ namespace SolarWinds.MSP.Chess
 		[Test]
 		public void Avoids_Invalid_Positioning()
 		{
-			Pawn firstPawn = new Pawn(PieceColor.Black);
-			Pawn secondPawn = new Pawn(PieceColor.Black);
+			Pawn firstPawn = new Pawn(PieceColor.Black, MovementDirection.Negative);
+			Pawn secondPawn = new Pawn(PieceColor.Black, MovementDirection.Negative);
 			chessBoard.Add(firstPawn, 6, 3);
 			try 
 			{
@@ -129,7 +129,7 @@ namespace SolarWinds.MSP.Chess
 		[Test]
 		public void IsPieceAvailable_Fails_When_Unavailable()
 		{
-			Pawn pawn = new Pawn(PieceColor.Black);
+			Pawn pawn = new Pawn(PieceColor.Black, MovementDirection.Negative);
 			for (int i = 0; i < 10; i++){
 				if (i < 8)
 				{
@@ -146,7 +146,7 @@ namespace SolarWinds.MSP.Chess
 		{
 			for (int i = 0; i < 10; i++)
 			{
-				Pawn pawn = new Pawn(PieceColor.Black);
+				Pawn pawn = new Pawn(PieceColor.Black, MovementDirection.Negative);
 				int row = i / (ChessBoard.MaxBoardWidth + 1);
 				int col = i % (ChessBoard.MaxBoardWidth + 1);
 				Console.WriteLine("Row: {0}, Col: {1}", row, col);

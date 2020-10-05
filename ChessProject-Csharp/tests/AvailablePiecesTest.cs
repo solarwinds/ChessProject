@@ -29,8 +29,8 @@ namespace SolarWinds.MSP.Chess
 		{
 			availablePieces = new AvailablePieces();
 			availablePiecesCustom = new AvailablePieces(blackPawn: 1);
-			whitePawn = new Pawn(PieceColor.White);
-			blackPawn = new Pawn(PieceColor.Black);
+			whitePawn = new Pawn(PieceColor.White, MovementDirection.Positive);
+			blackPawn = new Pawn(PieceColor.Black, MovementDirection.Negative);
 
 		}
 
