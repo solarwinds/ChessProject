@@ -86,10 +86,15 @@ namespace SolarWinds.MSP.Chess
             if (space is ChessPiece)
             {
                 // Space is taken
-                ChessPiece existingPiece = (ChessPiece)pieces[xCoordinate, yCoordinate];
+                ChessPiece existingPiece = (ChessPiece)pieces[piece.XCoordinate, piece.YCoordinate];
                 if (existingPiece.PieceColor == piece.PieceColor)
                 {
                     Console.WriteLine("({0}, {1}) is taken by the same color", xCoordinate, yCoordinate);
+                    return false;
+                }
+                bool isValidMove = existingPiece.Move(mvmtType, xCoordinate, yCoordinate);
+                if (!isValidMove){
+                    Console.WriteLine("Illegal move for given piece");
                     return false;
                 }
                 else if (mvmtType == MovementType.Capture)

@@ -21,8 +21,10 @@ namespace SolarWinds.MSP.Chess
                 availableY = 2;
                 this.initialMove = false;
             }
+
             if (this.direction == MovementDirection.Positive) 
             {
+                Console.WriteLine("here");
                 if (movementType == MovementType.Move){
                     if (newX == XCoordinate && 
                         (newY > YCoordinate && newY <= YCoordinate + availableY))

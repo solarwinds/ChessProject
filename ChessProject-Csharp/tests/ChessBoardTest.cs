@@ -171,7 +171,7 @@ namespace SolarWinds.MSP.Chess
 		}
 
 		[Test]
-		public void Move_True_When_Legal_Occupied_Position_Diff_Color_Capture()
+		public void Move_True_When_Legal_Position_Occupied_By_Diff_Color_Capture()
 		{
 			Pawn pawn = new Pawn(PieceColor.White, MovementDirection.Positive);
 			Pawn oppPawn = new Pawn(PieceColor.Black, MovementDirection.Negative);
@@ -187,7 +187,7 @@ namespace SolarWinds.MSP.Chess
 		}
 
 		[Test]
-		public void Move_False_When_Legal_Occupied_Position_Diff_Color_Move()
+		public void Move_False_When_Legal_Position_Occupied_By_Diff_Color_Move()
 		{
 			Pawn pawn = new Pawn(PieceColor.White, MovementDirection.Positive);
 			Pawn oppPawn = new Pawn(PieceColor.Black, MovementDirection.Negative);
