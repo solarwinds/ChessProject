@@ -1,5 +1,14 @@
 ﻿using NUnit.Framework;
 
+/*
+- Pawn backward move fails
+- Pawn initial move of 2 spacess works
+- Pawn subsequent move of 2 spaces fails
+- Pawn move to the right fails
+- Pawn move the the left fails
+
+*/
+
 namespace SolarWinds.MSP.Chess
 {
 	[TestFixture]
@@ -18,42 +27,42 @@ namespace SolarWinds.MSP.Chess
 		[Test]
 		public void ChessBoard_Add_Sets_XCoordinate()
 		{
-			chessBoard.Add(pawn, 6, 3, PieceColor.Black);
-			Assert.AreEqual(pawn.XCoordinate, 6);
+			chessBoard.Add(pawn, 6, 3);
+			Assert.AreEqual(6, pawn.XCoordinate);
 		}
 
 		[Test]
 		public void ChessBoard_Add_Sets_YCoordinate()
 		{
-			chessBoard.Add(pawn, 6, 3, PieceColor.Black);
-			Assert.AreEqual(pawn.YCoordinate, 3);
+			chessBoard.Add(pawn, 6, 3);
+			Assert.AreEqual(3, pawn.YCoordinate);
 		}
 
 		[Test]
 		public void Pawn_Move_IllegalCoordinates_Right_DoesNotMove()
 		{
-			chessBoard.Add(pawn, 6, 3, PieceColor.Black);
+			chessBoard.Add(pawn, 6, 3);
 			pawn.Move(MovementType.Move, 7, 3);
-            Assert.AreEqual(pawn.XCoordinate, 6);
-            Assert.AreEqual(pawn.YCoordinate, 3);
+            Assert.AreEqual(6, pawn.XCoordinate);
+            Assert.AreEqual(3, pawn.YCoordinate);
 		}
 
 		[Test]
 		public void Pawn_Move_IllegalCoordinates_Left_DoesNotMove()
 		{
-			chessBoard.Add(pawn, 6, 3, PieceColor.Black);
+			chessBoard.Add(pawn, 6, 3);
 			pawn.Move(MovementType.Move, 4, 3);
-            Assert.AreEqual(pawn.XCoordinate, 6);
-            Assert.AreEqual(pawn.YCoordinate, 3);
+            Assert.AreEqual(6, pawn.XCoordinate);
+            Assert.AreEqual(3, pawn.YCoordinate);
 		}
 
 		[Test]
 		public void Pawn_Move_LegalCoordinates_Forward_UpdatesCoordinates()
 		{
-			chessBoard.Add(pawn, 6, 3, PieceColor.Black);
+			chessBoard.Add(pawn, 6, 3);
 			pawn.Move(MovementType.Move, 6, 2);
-			Assert.AreEqual(pawn.XCoordinate, 6);
-            Assert.AreEqual(pawn.YCoordinate, 2);
+			Assert.AreEqual(6, pawn.XCoordinate);
+            Assert.AreEqual(2, pawn.YCoordinate);
 		}
 	}
 }
