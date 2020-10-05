@@ -10,21 +10,40 @@ namespace SolarWinds.MSP.Chess
 
         public ChessBoard ()
         {
-            pieces = new object[MaxBoardHeight, MaxBoardWidth];
+            this.pieces = new object[MaxBoardHeight, MaxBoardWidth];
         }
         public ChessBoard (object[,] board)
         {
-            pieces = board;
+            this.pieces = board;
         }
 
-        public void Add<T>(T piece, int xCoordinate, int yCoordinate, PieceColor pieceColor)
+        public void Add(ChessPiece piece, int xCoordinate, int yCoordinate)
         {
-            throw new NotImplementedException("Need to implement ChessBoard.Add()");
+            var space = pieces[xCoordinate, yCoordinate];
+            if (space is ChessPiece){
+                piece.XCoordinate = -1;
+                piece.YCoordinate = -1;
+                throw new DuplicatePositioningException("Position ({0},{1}) is already taken. Cannot Add a piece to a duplicate position.");
+            } else {
+                // Space is available
+                Console.WriteLine("space is available");
+                piece.XCoordinate = xCoordinate;
+                piece.YCoordinate = yCoordinate;
+                pieces[xCoordinate, yCoordinate] = piece;
+            }
+            Console.WriteLine("Position contains: {0}", space != null ? space : "null" );
         }
 
         public bool IsLegalBoardPosition(int xCoordinate, int yCoordinate)
         {
-            throw new NotImplementedException("Need to implement ChessBoard.IsLegalBoardPosition()");
+            if (xCoordinate >= 0 && 
+                xCoordinate <= MaxBoardWidth && 
+                yCoordinate >= 0 && 
+                yCoordinate <= MaxBoardHeight){
+                return true;
+            } else {
+                return false;
+            }
         }
 
         // public void Print()
@@ -36,10 +55,10 @@ namespace SolarWinds.MSP.Chess
         //     }
         // }
 
-        protected string CurrentBoardAsString()
-        {
+        // protected string CurrentBoardAsString()
+        // {
 
-            return string.Format("=========", Environment.NewLine, XCoordinate, YCoordinate, PieceColor);
-        }
+        //     return string.Format("=========", Environment.NewLine, XCoordinate, YCoordinate, PieceColor);
+        // }
     }
 }
