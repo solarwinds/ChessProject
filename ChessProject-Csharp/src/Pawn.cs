@@ -21,23 +21,43 @@ namespace SolarWinds.MSP.Chess
                 availableY = 2;
                 this.initialMove = false;
             }
-            if (this.PieceColor == PieceColor.Black) {
+            if (this.direction == MovementDirection.Positive) {
+                if (movementType == MovementType.Move){
+                    if (newX == XCoordinate && 
+                        (newY > YCoordinate && newY <= YCoordinate + availableY))
+                    {
+                        XCoordinate = newX;
+                        YCoordinate = newY;
+                    }
 
-            }
-            if (movementType == MovementType.Move){
-                if (newX == XCoordinate && 
-                    (newY > YCoordinate && newY <= YCoordinate + availableY))
-                {
-                    XCoordinate = newX;
-                    YCoordinate = newY;
+                } 
+                else if (movementType == MovementType.Capture){
+                    if ((newX == XCoordinate + 1 || newX == XCoordinate - 1) && 
+                        (newY == YCoordinate + 1))
+                    {
+                        XCoordinate = newX;
+                        YCoordinate = newY;
+                    }
                 }
-
             } 
-            else if (movementType == MovementType.Capture){
-                if ((newX == XCoordinate + 1 || newX == XCoordinate - 1) && 
-                    (newY == YCoordinate + 1))
-                {
+            else
+            {
+                if (movementType == MovementType.Move){
+                    if (newX == XCoordinate && 
+                        (newY < YCoordinate && newY >= YCoordinate - availableY))
+                    {
+                        XCoordinate = newX;
+                        YCoordinate = newY;
+                    }
 
+                } 
+                else if (movementType == MovementType.Capture){
+                    if ((newX == XCoordinate + 1 || newX == XCoordinate - 1) && 
+                        (newY == YCoordinate - 1))
+                    {
+                        XCoordinate = newX;
+                        YCoordinate = newY;
+                    }
                 }
             }
         }
