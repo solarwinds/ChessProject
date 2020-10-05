@@ -30,13 +30,13 @@ namespace SolarWinds.MSP.Chess
         [Test]
 		public void Has_MaxBoardWidth_of_7()
 		{
-			Assert.AreEqual(ChessBoard.MaxBoardWidth, 7);
+			Assert.AreEqual(7, ChessBoard.MaxBoardWidth);
 		}
 
         [Test]
 		public void Has_MaxBoardHeight_of_7()
 		{
-			Assert.AreEqual(ChessBoard.MaxBoardHeight, 7);
+			Assert.AreEqual(7, ChessBoard.MaxBoardHeight);
 		}
 
         [Test]
@@ -101,10 +101,10 @@ namespace SolarWinds.MSP.Chess
 			} 
 			catch (DuplicatePositioningException)
 			{/* pass */}
-			Assert.AreEqual(firstPawn.XCoordinate, 6);
-            Assert.AreEqual(firstPawn.YCoordinate, 3);
-            Assert.AreEqual(secondPawn.XCoordinate, -1);
-            Assert.AreEqual(secondPawn.YCoordinate, -1);
+			Assert.AreEqual(6, firstPawn.XCoordinate);
+            Assert.AreEqual(3, firstPawn.YCoordinate);
+            Assert.AreEqual(-1, secondPawn.XCoordinate);
+            Assert.AreEqual(-1, secondPawn.YCoordinate);
 		}
 
 		[Test]
@@ -120,10 +120,10 @@ namespace SolarWinds.MSP.Chess
 			} 
 			catch (InvalidPositioningException)
 			{/* pass */}
-			Assert.AreEqual(firstPawn.XCoordinate, 6);
-            Assert.AreEqual(firstPawn.YCoordinate, 3);
-            Assert.AreEqual(secondPawn.XCoordinate, -1);
-            Assert.AreEqual(secondPawn.YCoordinate, -1);
+			Assert.AreEqual(6, firstPawn.XCoordinate);
+            Assert.AreEqual(3, firstPawn.YCoordinate);
+            Assert.AreEqual(-1, secondPawn.XCoordinate);
+            Assert.AreEqual(-1, secondPawn.YCoordinate);
 		}
 
 		[Test]
@@ -153,15 +153,15 @@ namespace SolarWinds.MSP.Chess
 				try 
 				{
 					chessBoard.Add(pawn, row, col);
-					Assert.AreEqual(pawn.XCoordinate, row);
-					Assert.AreEqual(pawn.YCoordinate, col);
+					Assert.AreEqual(row, pawn.XCoordinate);
+					Assert.AreEqual(col, pawn.YCoordinate);
 				} 
 				catch (UnavailablePieceException)
 				{
 					if (i > 7)
 					{
-						Assert.AreEqual(pawn.XCoordinate, -1);
-						Assert.AreEqual(pawn.YCoordinate, -1);
+						Assert.AreEqual(-1, pawn.XCoordinate);
+						Assert.AreEqual(-1, pawn.YCoordinate);
 					}
 					else
 					{
