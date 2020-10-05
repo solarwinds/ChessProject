@@ -6,7 +6,7 @@
 - Pawn subsequent move of 2 spaces fails
 - Pawn move to the right fails
 - Pawn move the the left fails
-
+- Cannot capture two spaces up from initial move
 */
 
 namespace SolarWinds.MSP.Chess
@@ -21,7 +21,7 @@ namespace SolarWinds.MSP.Chess
 		public void SetUp()	
 		{
 			chessBoard = new ChessBoard();
-			pawn = new Pawn(PieceColor.Black);
+			pawn = new Pawn(PieceColor.Black, MovementDirection.Negative);
 		}
 
 		[Test]
