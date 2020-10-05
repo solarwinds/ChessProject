@@ -141,6 +141,98 @@ namespace SolarWinds.MSP.Chess
 			}
 		}
 
+		[Test]
+		public void Move_Updates_Board_And_Piece_Coordinates()
+		{
+			Pawn pawn = new Pawn(PieceColor.White, MovementDirection.Positive);
+			chessBoard.Add(pawn, 1, 3);
+			Assert.AreEqual(1, pawn.XCoordinate);
+            Assert.AreEqual(3, pawn.YCoordinate);
+			Assert.AreEqual(chessBoard.pieces[1,3], pawn);
+            chessBoard.Move(pawn, 1, 4, MovementType.Move);
+			Assert.AreEqual(chessBoard.pieces[1,4], pawn);
+			Assert.AreEqual(1, pawn.XCoordinate);
+            Assert.AreEqual(4, pawn.YCoordinate);
+			
+		}
+
+		[Test]
+		public void Move_True_When_Legal_Available_Position()
+		{
+			Pawn pawn = new Pawn(PieceColor.White, MovementDirection.Positive);
+			chessBoard.Add(pawn, 1, 3);
+			Assert.AreEqual(1, pawn.XCoordinate);
+            Assert.AreEqual(3, pawn.YCoordinate);
+			Assert.AreEqual(chessBoard.pieces[1,3], pawn);
+            Assert.IsTrue(chessBoard.Move(pawn, 1, 4, MovementType.Move));
+			Assert.AreEqual(chessBoard.pieces[1,4], pawn);
+			Assert.AreEqual(1, pawn.XCoordinate);
+            Assert.AreEqual(4, pawn.YCoordinate);
+		}
+
+		[Test]
+		public void Move_True_When_Legal_Occupied_Position_Diff_Color_Capture()
+		{
+			Pawn pawn = new Pawn(PieceColor.White, MovementDirection.Positive);
+			Pawn oppPawn = new Pawn(PieceColor.Black, MovementDirection.Negative);
+			chessBoard.Add(pawn, 1, 3);
+			chessBoard.Add(oppPawn, 2, 4);
+			Assert.AreEqual(1, pawn.XCoordinate);
+            Assert.AreEqual(3, pawn.YCoordinate);
+			Assert.AreEqual(chessBoard.pieces[1,3], pawn);
+            Assert.IsTrue(chessBoard.Move(pawn, 2, 4, MovementType.Capture));
+			Assert.AreEqual(chessBoard.pieces[2,4], pawn);
+			Assert.AreEqual(2, pawn.XCoordinate);
+            Assert.AreEqual(4, pawn.YCoordinate);
+		}
+
+		[Test]
+		public void Move_False_When_Legal_Occupied_Position_Diff_Color_Move()
+		{
+			Pawn pawn = new Pawn(PieceColor.White, MovementDirection.Positive);
+			Pawn oppPawn = new Pawn(PieceColor.Black, MovementDirection.Negative);
+			chessBoard.Add(pawn, 1, 3);
+			chessBoard.Add(oppPawn, 1, 4);
+			Assert.AreEqual(1, pawn.XCoordinate);
+            Assert.AreEqual(3, pawn.YCoordinate);
+			Assert.AreEqual(chessBoard.pieces[1,3], pawn);
+            Assert.IsFalse(chessBoard.Move(pawn, 1, 4, MovementType.Move));
+			Assert.AreEqual(chessBoard.pieces[1,3], pawn);
+			Assert.AreEqual(1, pawn.XCoordinate);
+            Assert.AreEqual(3, pawn.YCoordinate);
+		}
+
+		[Test]
+		public void Move_False_When_Legal_Occupied_Position_Same_Color()
+		{
+			Pawn pawn = new Pawn(PieceColor.White, MovementDirection.Positive);
+			Pawn oppPawn = new Pawn(PieceColor.White, MovementDirection.Positive);
+			chessBoard.Add(pawn, 1, 3);
+			chessBoard.Add(oppPawn, 1, 4);
+			Assert.AreEqual(1, pawn.XCoordinate);
+            Assert.AreEqual(3, pawn.YCoordinate);
+			Assert.AreEqual(chessBoard.pieces[1,3], pawn);
+            Assert.IsFalse(chessBoard.Move(pawn, 1, 4, MovementType.Move));
+			Assert.AreEqual(chessBoard.pieces[1,3], pawn);
+			Assert.AreEqual(1, pawn.XCoordinate);
+            Assert.AreEqual(3, pawn.YCoordinate);
+		}
+
+		[Test]
+		public void Move_False_When_Illegal_Position()
+		{
+			Pawn pawn = new Pawn(PieceColor.White, MovementDirection.Positive);
+			chessBoard.Add(pawn, 1, 7);
+			Assert.AreEqual(1, pawn.XCoordinate);
+            Assert.AreEqual(7, pawn.YCoordinate);
+			Assert.AreEqual(chessBoard.pieces[1,7], pawn);
+            Assert.IsFalse(chessBoard.Move(pawn, 1, 8, MovementType.Move));
+			Assert.AreEqual(chessBoard.pieces[1,7], pawn);
+			Assert.AreEqual(1, pawn.XCoordinate);
+            Assert.AreEqual(7, pawn.YCoordinate);
+			
+		}
+
         [Test]
 		public void Add_Limits_The_Number_Of_Pawns()
 		{
