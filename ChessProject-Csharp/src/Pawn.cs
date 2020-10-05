@@ -2,55 +2,70 @@
 
 namespace SolarWinds.MSP.Chess
 {
-    public class Pawn
+    public class Pawn : ChessPiece
     {
-        private ChessBoard chessBoard;
-        private int xCoordinate;
-        private int yCoordinate;
-        private PieceColor pieceColor;
-        
-        public ChessBoard ChessBoard
+        private bool initialMove = true;
+        private MovementDirection direction;
+        public Pawn(PieceColor pieceColor, MovementDirection direction)
         {
-            get { return chessBoard; }
-            set { chessBoard = value; }
+            this.PieceColor = pieceColor;
+            this.StrType = "Pawn";
+            this.StrColor = pieceColor == PieceColor.Black ? "Black" : "White";
+            this.direction = direction;
         }
 
-        public int XCoordinate
+        public override bool Move(MovementType movementType, int newX, int newY)
         {
-            get { return xCoordinate; }
-            set { xCoordinate = value; }
-        }
-        
-        public int YCoordinate
-        {
-            get { return yCoordinate; }
-            set { yCoordinate = value; }
-        }
+            int availableY = 1;
+            if (initialMove == true){
+                availableY = 2;
+                this.initialMove = false;
+            }
 
-        public PieceColor PieceColor
-        {
-            get { return pieceColor; }
-            private set { pieceColor = value; }
-        }
+            if (this.direction == MovementDirection.Positive) 
+            {
+                Console.WriteLine("here");
+                if (movementType == MovementType.Move){
+                    if (newX == XCoordinate && 
+                        (newY > YCoordinate && newY <= YCoordinate + availableY))
+                    {
+                        return true;
+                    }
+                    return false;
 
-        public Pawn(PieceColor pieceColor)
-        {
-            this.pieceColor = pieceColor;
-        }
+                } 
+                else
+                {
+                    if ((newX == XCoordinate + 1 || newX == XCoordinate - 1) && 
+                        (newY == YCoordinate + 1))
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+            } 
+            else
+            {
+                if (movementType == MovementType.Move)
+                {
+                    if (newX == XCoordinate && 
+                        (newY < YCoordinate && newY >= YCoordinate - availableY))
+                    {
+                        return true;
+                    }
+                    return false;
 
-        public void Move(MovementType movementType, int newX, int newY)
-        {
-            throw new NotImplementedException("Need to implement Pawn.Move()");
-        }
-
-        public override string ToString()
-        {
-            return CurrentPositionAsString();
-        }
-
-        protected string CurrentPositionAsString()
-        {
-            return string.Format("Current X: {1}{0}Current Y: {2}{0}Piece Color: {3}", Environment.NewLine, XCoordinate, YCoordinate, PieceColor);
+                } 
+                else
+                {
+                    if ((newX == XCoordinate + 1 || newX == XCoordinate - 1) && 
+                        (newY == YCoordinate - 1))
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+            }
         }
 
     }
