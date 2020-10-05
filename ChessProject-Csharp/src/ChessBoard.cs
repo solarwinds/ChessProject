@@ -7,7 +7,7 @@ namespace SolarWinds.MSP.Chess
         public static readonly int MaxBoardWidth = 7;
         public static readonly int MaxBoardHeight = 7;
 
-        private object[,] pieces;
+        public object[,] pieces;
 
         private static AvailablePieces pieceCounts;
 
@@ -71,6 +71,53 @@ namespace SolarWinds.MSP.Chess
                 Console.WriteLine("Available {1} {2} before: {0}", currCount, piece.StrColor, piece.StrType);
                 colorPieceCounts[piece.StrType] = --currCount;
                 Console.WriteLine("Available {1} {2} after: {0}", currCount, piece.StrColor, piece.StrType);
+            }
+        }
+
+        public bool Move(ChessPiece piece, int xCoordinate, int yCoordinate, MovementType mvmtType)
+        {
+            Console.WriteLine("Attempting to Move() to ({0}, {1})...", xCoordinate, yCoordinate);
+            if (!IsLegalBoardPosition(xCoordinate, yCoordinate))
+            {
+                return false;
+            }
+            
+            object space = pieces[xCoordinate, yCoordinate];
+            if (space is ChessPiece)
+            {
+                // Space is taken
+                ChessPiece existingPiece = (ChessPiece)pieces[xCoordinate, yCoordinate];
+                if (existingPiece.PieceColor == piece.PieceColor)
+                {
+                    Console.WriteLine("({0}, {1}) is taken by the same color", xCoordinate, yCoordinate);
+                    return false;
+                }
+                else if (mvmtType == MovementType.Capture)
+                {
+                    // NOTE: Make sure the piece is removed when this functionality is added.
+                    Console.WriteLine("({0}, {1}) is taken by a different color", xCoordinate, yCoordinate);
+                    piece.XCoordinate = xCoordinate;
+                    piece.YCoordinate = yCoordinate;
+                    pieces[xCoordinate, yCoordinate] = piece;
+                    return true;
+                }
+                else 
+                {
+                    // NOTE: Make sure the piece is removed when this functionality is added.
+                    Console.WriteLine("({0}, {1}) is taken by a different color. Must Capture.", xCoordinate, yCoordinate);
+                    return false;
+                }
+                
+                throw new DuplicatePositioningException("Position ({0},{1}) is already taken. Cannot Add a piece to a duplicate position.");
+            } 
+            else 
+            {
+                // Space is available
+                Console.WriteLine("({0}, {1}) is available", xCoordinate, yCoordinate);
+                piece.XCoordinate = xCoordinate;
+                piece.YCoordinate = yCoordinate;
+                pieces[xCoordinate, yCoordinate] = piece;
+                return true;
             }
         }
 
