@@ -134,7 +134,7 @@ namespace SolarWinds.MSP.Chess
 				if (i < 8)
 				{
 					Assert.IsTrue(chessBoard.IsPieceAvailable(pawn));
-					// chessBoard.AvailablePiecesBlack.Pawns--;
+					chessBoard.PieceCounts.Decrement(pawn);
 				} else {
 					Assert.IsFalse(chessBoard.IsPieceAvailable(pawn));
 				}
@@ -144,27 +144,29 @@ namespace SolarWinds.MSP.Chess
         [Test]
 		public void Add_Limits_The_Number_Of_Pawns()
 		{
-			for (int i = 0; i <= ChessBoard.MaxBoardHeight; i++)
+			for (int i = 0; i < 10; i++)
 			{
 				Pawn pawn = new Pawn(PieceColor.Black);
-				int row = i / ChessBoard.MaxBoardWidth;
-				Console.WriteLine("Row: {0}, Col: {1}", (6 + row), i % ChessBoard.MaxBoardWidth);
-				if (row < 1)
+				int row = i / (ChessBoard.MaxBoardWidth + 1);
+				int col = i % (ChessBoard.MaxBoardWidth + 1);
+				Console.WriteLine("Row: {0}, Col: {1}", row, col);
+				try 
 				{
-					chessBoard.Add(pawn, (6 + row), i % ChessBoard.MaxBoardWidth);
-					Assert.AreEqual(pawn.XCoordinate, (6 + row));
-					Assert.AreEqual(pawn.YCoordinate, (i % ChessBoard.MaxBoardWidth));
-				}
-				else
+					chessBoard.Add(pawn, row, col);
+					Assert.AreEqual(pawn.XCoordinate, row);
+					Assert.AreEqual(pawn.YCoordinate, col);
+				} 
+				catch (UnavailablePieceException)
 				{
-					try 
+					if (i > 7)
 					{
-						chessBoard.Add(pawn, 6 + row, i % ChessBoard.MaxBoardWidth);
-					} 
-					catch (InvalidPositioningException)
-					{}
-					Assert.AreEqual(pawn.XCoordinate, -1);
-                    Assert.AreEqual(pawn.YCoordinate, -1);
+						Assert.AreEqual(pawn.XCoordinate, -1);
+						Assert.AreEqual(pawn.YCoordinate, -1);
+					}
+					else
+					{
+						throw new Exception("Chessboard unable to add correct number of pawns.");
+					}
 				}
 			}
 		}
