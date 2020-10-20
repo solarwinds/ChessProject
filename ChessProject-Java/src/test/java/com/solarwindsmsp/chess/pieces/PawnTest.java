@@ -30,28 +30,18 @@ public class PawnTest {
     }
 
 
-    @Test
-    public void testPawn_Move_IllegalCoordinates_Right_DoesNotMove() throws IllegalBoardPlacementException {
+    @Test(expected = IllegalMoveException.class)
+    public void testPawn_Move_IllegalCoordinates_Right_DoesNotMove() throws IllegalBoardPlacementException, IllegalMoveException {
         chessBoard.add(testSubject, 6, 3);
-        try {
-            testSubject.move(MovementType.MOVE, 7, 3);
-        } catch (IllegalMoveException e) {
-            e.printStackTrace();
-        }
+        testSubject.move(MovementType.MOVE, 7, 3);
         assertEquals(6, testSubject.getXCoordinate());
         assertEquals(3, testSubject.getYCoordinate());
     }
 
-    @Test
-    public void testPawn_Move_IllegalCoordinates_Left_DoesNotMove() throws IllegalBoardPlacementException {
+    @Test(expected = IllegalMoveException.class)
+    public void testPawn_Move_IllegalCoordinates_Left_DoesNotMove() throws IllegalBoardPlacementException, IllegalMoveException {
         chessBoard.add(testSubject, 6, 3);
-        try {
-            testSubject.move(MovementType.MOVE, 4, 3);
-        } catch (IllegalMoveException e) {
-            e.printStackTrace();
-        }
-        assertEquals(6, testSubject.getXCoordinate());
-        assertEquals(3, testSubject.getYCoordinate());
+        testSubject.move(MovementType.MOVE, 4, 3);
     }
 
     @Test
