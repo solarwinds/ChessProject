@@ -24,6 +24,21 @@ public class Pawn extends Piece {
                 return false;
             }
         }
+
+        if (movementType == MovementType.CAPTURE) {
+            if (Math.abs(newX - getXCoordinate()) != 1) {
+                return false;
+            }
+
+            if (getPieceColor() == PieceColor.WHITE && newY - getYCoordinate() != 1) {
+                return false;
+            }
+
+            if (getPieceColor() == PieceColor.BLACK && newY - getYCoordinate() != -1) {
+                return false;
+            }
+        }
+
         return true;
     }
 
