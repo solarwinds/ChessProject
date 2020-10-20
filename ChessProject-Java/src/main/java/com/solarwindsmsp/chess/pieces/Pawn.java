@@ -10,35 +10,34 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isValidTransition(MovementType movementType, int newX, int newY) {
-        if (movementType == MovementType.MOVE) {
-            if (newX != getXCoordinate()) {
-                return false;
-            }
-
-            if (getPieceColor() == PieceColor.WHITE && newY - getYCoordinate() != 1) {
-                return false;
-            }
-
-            if (getPieceColor() == PieceColor.BLACK && newY - getYCoordinate() != -1) {
-                return false;
-            }
+    public boolean isValidMoveTransition(MovementType movementType, int newX, int newY) {
+        if (newX != getXCoordinate()) {
+            return false;
         }
 
-        if (movementType == MovementType.CAPTURE) {
-            if (Math.abs(newX - getXCoordinate()) != 1) {
-                return false;
-            }
-
-            if (getPieceColor() == PieceColor.WHITE && newY - getYCoordinate() != 1) {
-                return false;
-            }
-
-            if (getPieceColor() == PieceColor.BLACK && newY - getYCoordinate() != -1) {
-                return false;
-            }
+        if (getPieceColor() == PieceColor.WHITE && newY - getYCoordinate() != 1) {
+            return false;
         }
 
+        if (getPieceColor() == PieceColor.BLACK && newY - getYCoordinate() != -1) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean isValidCaptureTransition(MovementType movementType, int newX, int newY) {
+        if (Math.abs(newX - getXCoordinate()) != 1) {
+            return false;
+        }
+
+        if (getPieceColor() == PieceColor.WHITE && newY - getYCoordinate() != 1) {
+            return false;
+        }
+
+        if (getPieceColor() == PieceColor.BLACK && newY - getYCoordinate() != -1) {
+            return false;
+        }
         return true;
     }
 

@@ -75,7 +75,18 @@ public abstract class Piece {
         }
     }
 
-    public abstract boolean isValidTransition(MovementType movementType, int newX, int newY);
+    public boolean isValidTransition(MovementType movementType, int newX, int newY) {
+        if (movementType == MovementType.MOVE) {
+            return isValidMoveTransition(movementType, newX, newY);
+        }
+        if (movementType == MovementType.CAPTURE) {
+            return isValidCaptureTransition(movementType, newX, newY);
+        }
+        return false;
+    }
+
+    public abstract boolean isValidMoveTransition(MovementType movementType, int newX, int newY);
+    public abstract boolean isValidCaptureTransition(MovementType movementType, int newX, int newY);
 
     public boolean IsLegalPiecePosition(int xCoordinate, int yCoordinate) {
         if (!getChesssBoard().isLegalBoardPosition(xCoordinate, yCoordinate)) {
