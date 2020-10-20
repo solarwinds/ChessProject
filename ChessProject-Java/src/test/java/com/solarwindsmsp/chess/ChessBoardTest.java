@@ -1,5 +1,6 @@
 package com.solarwindsmsp.chess;
 
+import com.solarwindsmsp.chess.model.Pawn;
 import junit.framework.TestCase;
 import org.junit.Assert;
 import org.junit.Before;
@@ -39,7 +40,7 @@ public class ChessBoardTest extends TestCase {
     @Test
     public void testIsLegalBoardPosition_False_X_equals_11_Y_equals_5() {
         boolean isValidPosition = testSubject.isLegalBoardPosition(11, 5);
-        assertTrue(isValidPosition);
+        assertFalse(isValidPosition);
     }
 
     @Test

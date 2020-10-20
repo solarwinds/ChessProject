@@ -1,5 +1,6 @@
 package com.solarwindsmsp.chess;
 
+import com.solarwindsmsp.chess.model.Pawn;
 import org.junit.Before;
 import org.junit.Test;
 
