@@ -4,8 +4,10 @@ import com.solarwindsmsp.chess.ChessBoard;
 import com.solarwindsmsp.chess.MovementType;
 import com.solarwindsmsp.chess.PieceColor;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 @Data
+@Slf4j
 public class Pawn implements ChessPiece {
 
     private ChessBoard chessBoard;
@@ -27,40 +29,60 @@ public class Pawn implements ChessPiece {
         return chessBoard;
     }
 
+    public void setCoordinates(int x, int y) {
+        this.xCoordinate = x;
+        this.yCoordinate = y;
+    }
+
     public void move(MovementType movementType, int newX, int newY) {
+        log.info("Move: type {} x {} y {}", movementType, newX, newY);
+
         if (this.isLegalMove(movementType, newX, newY)) {
+            log.info("Move is legal.");
             this.chessBoard.getPieces()[this.xCoordinate][this.yCoordinate] = null;
             this.xCoordinate = newX;
             this.yCoordinate = newY;
             this.chessBoard.getPieces()[this.xCoordinate][this.yCoordinate] = this;
-        } else {
-            throw new IllegalStateException("Move is illegal.") ;
         }
     }
 
     public boolean isLegalMove(MovementType movementType, int newX, int newY) {
+        log.info("Is legal move: color {} move type {} oldX {} oldY {} newX {} newY {}",
+                this.pieceColor, movementType, this.xCoordinate, this.yCoordinate, newX, newY);
+
         if (!this.chessBoard.isLegalBoardPosition(newX ,newY)) {
             return false;
         }
 
         int advanceX = newX - this.xCoordinate;
-        int deltaY = Math.abs(newY - this.yCoordinate);
+        int advanceY = newY - this.yCoordinate;
+        // BLACK moves downwards only, WHITE upwards only
+        if (advanceY > 0 && this.pieceColor == PieceColor.BLACK
+                || advanceY < 0 && this.pieceColor == PieceColor.WHITE) {
+            return false;
+        }
+        int deltaX = Math.abs(advanceX);
+        int deltaY = Math.abs(advanceY);
 
         switch (movementType) {
             case MOVE: {
-                if (deltaY != 0 || !this.chessBoard.isEmptyAtCoordinates(newX, newY)) {
+                if (deltaX != 0 || !this.chessBoard.isEmptyAtCoordinates(newX, newY)) {
                     return false;
                 }
-                if (advanceX == 1
-                        || (advanceX == 2
-                            && this.xCoordinate == 1
-                            && this.chessBoard.isEmptyAtCoordinates(this.xCoordinate + 1, newY))) {
+                if (this.chessBoard.isEmptyAtCoordinates(newX, newY) && (deltaY == 1
+                        || (deltaY == 2
+                        // can jump 2 spaces only if in initial position
+                            && this.yCoordinate == (this.pieceColor == PieceColor.WHITE ? 1 : 6)
+                            && this.chessBoard.isEmptyAtCoordinates(this.yCoordinate + 1, newY)))) {
                     return true;
                 }
                 break;
             }
             case CAPTURE: {
-                if (deltaY == 1 && advanceX == 1 && !this.chessBoard.isEmptyAtCoordinates(newX, newY)) {
+                if (deltaY == 1 && deltaX == 1
+                        && !this.chessBoard.isEmptyAtCoordinates(newX, newY)
+                        // cannot attack same color
+                        && this.pieceColor != this.chessBoard.getPieces()[newX][newY].getPieceColor()) {
                     return true;
                 }
                 break;
@@ -69,6 +91,13 @@ public class Pawn implements ChessPiece {
         }
 
         return false;
+    }
+
+    @Override
+    public boolean isLegalInitialCoordinates(int x, int y) {
+        return x >= 0 && x <= ChessBoard.MAX_BOARD_WIDTH
+                    && ((this.pieceColor == PieceColor.WHITE && y == 1)
+                        || (this.pieceColor == PieceColor.BLACK && y == ChessBoard.MAX_BOARD_HEIGHT - 1));
     }
 
     @Override
