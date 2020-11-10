@@ -87,4 +87,21 @@ public class ChessBoardTest extends TestCase {
             }
         }
     }
+
+    @Test
+    public void testAll_Pawns() throws IllegalBoardCoordinatesException {
+        for (int i = 0; i < ChessBoard.MAX_BOARD_WIDTH; i++) {
+            Pawn blackPawn = new Pawn(PieceColor.BLACK);
+            Pawn whitePawn = new Pawn(PieceColor.BLACK);
+
+            testSubject.addPiece(blackPawn, i, 6);
+            testSubject.addPiece(whitePawn, i, 1);
+
+            assertEquals(6, blackPawn.getYCoordinate());
+            assertEquals(i, blackPawn.getXCoordinate());
+
+            assertEquals(1, whitePawn.getYCoordinate());
+            assertEquals(i, whitePawn.getXCoordinate());
+        }
+    }
 }
