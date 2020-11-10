@@ -2,8 +2,8 @@ package com.solarwindsmsp.chess;
 
 public class ChessBoard {
 
-    public static int MAX_BOARD_WIDTH = 7;
-    public static int MAX_BOARD_HEIGHT = 7;
+    public static int MAX_BOARD_WIDTH = 8;
+    public static int MAX_BOARD_HEIGHT = 8;
 
     private Pawn[][] pieces;
 
@@ -15,21 +15,25 @@ public class ChessBoard {
         if (!isLegalBoardPosition(xCoordinate, yCoordinate)) {
             throw new IllegalBoardCoordinatesException("Invalid coordinates.", xCoordinate, yCoordinate);
         }
+        if ((pawn.getPieceColor() == PieceColor.WHITE && yCoordinate < 1) ||
+                (pawn.getPieceColor() == PieceColor.BLACK && yCoordinate > 6) ||
+                pieces[xCoordinate][yCoordinate] != null) {
+
+            setProperties(pawn, -1, -1);
+            return;
+
+        }
         setProperties(pawn, xCoordinate, yCoordinate);
         pieces[xCoordinate][yCoordinate] = pawn;
     }
 
-    public boolean removePiece(int xCoordinate, int yCoordinate) {
-        if (pieces[xCoordinate][yCoordinate] == null) {
-            return false;
-        }
+    public void removePiece(int xCoordinate, int yCoordinate) {
         pieces[xCoordinate][yCoordinate] = null;
-        return true;
     }
 
     public boolean isLegalBoardPosition(int xCoordinate, int yCoordinate) {
-        return xCoordinate >= 0 && xCoordinate < MAX_BOARD_WIDTH &&
-                yCoordinate >= 0 && yCoordinate < MAX_BOARD_HEIGHT;
+        return xCoordinate >= 0 && xCoordinate <= MAX_BOARD_WIDTH &&
+                yCoordinate >= 0 && yCoordinate <= MAX_BOARD_HEIGHT;
     }
 
     private void setProperties(Pawn pawn, int xCoordinate, int yCoordinate) {

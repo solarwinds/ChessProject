@@ -69,11 +69,8 @@ public class Pawn {
                 break;
         }
 
-        if (chessBoard.removePiece(xCoordinate, yCoordinate)) {
-            chessBoard.addPiece(this, newX, newY);
-        } else {
-            throw new IllegalBoardCoordinatesException("Invalid current coordinates.", xCoordinate, yCoordinate);
-        }
+        chessBoard.removePiece(xCoordinate, yCoordinate);
+        chessBoard.addPiece(this, newX, newY);
     }
 
     @Override
