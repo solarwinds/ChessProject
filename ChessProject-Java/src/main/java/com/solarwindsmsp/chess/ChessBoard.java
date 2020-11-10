@@ -11,11 +11,15 @@ public class ChessBoard {
         pieces = new Pawn[MAX_BOARD_WIDTH][MAX_BOARD_HEIGHT];
     }
 
-    public void addPiece(Pawn pawn, int xCoordinate, int yCoordinate, PieceColor pieceColor) {
-        throw new UnsupportedOperationException("Need to implement ChessBoard.add()");
+    public void addPiece(Pawn pawn, int xCoordinate, int yCoordinate) throws IllegalBoardCoordinatesException {
+        if (!isLegalBoardPosition(xCoordinate, yCoordinate)) {
+            throw new IllegalBoardCoordinatesException("Invalid coordinates.", xCoordinate, yCoordinate);
+        }
+        pieces[xCoordinate][yCoordinate] = pawn;
     }
 
     public boolean isLegalBoardPosition(int xCoordinate, int yCoordinate) {
-        throw new UnsupportedOperationException("Need to implement ChessBoard.IsLegalBoardPosition()");
+        return xCoordinate >= 0 && xCoordinate < MAX_BOARD_WIDTH &&
+                yCoordinate >= 0 && yCoordinate < MAX_BOARD_HEIGHT;
     }
 }
