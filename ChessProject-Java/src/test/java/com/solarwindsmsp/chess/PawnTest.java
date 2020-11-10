@@ -54,4 +54,15 @@ public class PawnTest {
         assertEquals(2, testSubject.getYCoordinate());
     }
 
+    @Test
+    public void testPawn_Complete_Path() throws IllegalBoardCoordinatesException, InvalidArgumentException {
+        int currentY = ChessBoard.MAX_BOARD_HEIGHT - 2;
+        chessBoard.addPiece(testSubject, 0, currentY);
+
+        while (currentY != 0) {
+            testSubject.move(MovementType.MOVE, 0, --currentY);
+            assertEquals(currentY, testSubject.getYCoordinate());
+        }
+    }
+
 }
