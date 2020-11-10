@@ -1,5 +1,6 @@
 package com.solarwindsmsp.chess;
 
+import com.sun.javaws.exceptions.InvalidArgumentException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -29,16 +30,16 @@ public class PawnTest {
     }
 
 
-    @Test
-    public void testPawn_Move_IllegalCoordinates_Right_DoesNotMove() throws IllegalBoardCoordinatesException {
+    @Test(expected = IllegalBoardCoordinatesException.class)
+    public void testPawn_Move_IllegalCoordinates_Right_DoesNotMove() throws IllegalBoardCoordinatesException, InvalidArgumentException {
         chessBoard.addPiece(testSubject, 6, 3);
         testSubject.move(MovementType.MOVE, 7, 3);
         assertEquals(6, testSubject.getXCoordinate());
         assertEquals(3, testSubject.getYCoordinate());
     }
 
-    @Test
-    public void testPawn_Move_IllegalCoordinates_Left_DoesNotMove() throws IllegalBoardCoordinatesException {
+    @Test(expected = IllegalBoardCoordinatesException.class)
+    public void testPawn_Move_IllegalCoordinates_Left_DoesNotMove() throws IllegalBoardCoordinatesException, InvalidArgumentException {
         chessBoard.addPiece(testSubject, 6, 3);
         testSubject.move(MovementType.MOVE, 4, 3);
         assertEquals(6, testSubject.getXCoordinate());
@@ -46,7 +47,7 @@ public class PawnTest {
     }
 
     @Test
-    public void testPawn_Move_LegalCoordinates_Forward_UpdatesCoordinates() throws IllegalBoardCoordinatesException {
+    public void testPawn_Move_LegalCoordinates_Forward_UpdatesCoordinates() throws IllegalBoardCoordinatesException, InvalidArgumentException {
         chessBoard.addPiece(testSubject, 6, 3);
         testSubject.move(MovementType.MOVE, 6, 2);
         assertEquals(6, testSubject.getXCoordinate());

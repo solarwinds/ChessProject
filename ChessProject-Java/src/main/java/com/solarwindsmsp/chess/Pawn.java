@@ -1,5 +1,7 @@
 package com.solarwindsmsp.chess;
 
+import com.sun.javaws.exceptions.InvalidArgumentException;
+
 public class Pawn {
 
     private ChessBoard chessBoard;
@@ -43,8 +45,35 @@ public class Pawn {
         pieceColor = value;
     }
 
-    public void move(MovementType movementType, int newX, int newY) {
-        throw new UnsupportedOperationException("Need to implement Pawn.Move()") ;
+    public void move(MovementType movementType, int newX, int newY) throws IllegalBoardCoordinatesException, InvalidArgumentException {
+        if (movementType != MovementType.MOVE) {
+            throw new InvalidArgumentException(new String[]{movementType.name()});
+        }
+
+        IllegalBoardCoordinatesException e =
+                new IllegalBoardCoordinatesException(
+                        "Invalid new coordinates for " + pieceColor.name() + " piece with current coordinates x=" + xCoordinate + " and y=" + yCoordinate + ".",
+                        newX, newY);
+        switch (pieceColor) {
+            case BLACK:
+                // A black piece can only move downwards
+                if (yCoordinate - newY != 1 || xCoordinate != newX) {
+                    throw e;
+                }
+                break;
+            case WHITE:
+                // A white piece can only move upwards
+                if (newY - yCoordinate != 1 || xCoordinate != newX) {
+                    throw e;
+                }
+                break;
+        }
+
+        if (chessBoard.removePiece(xCoordinate, yCoordinate)) {
+            chessBoard.addPiece(this, newX, newY);
+        } else {
+            throw new IllegalBoardCoordinatesException("Invalid current coordinates.", xCoordinate, yCoordinate);
+        }
     }
 
     @Override
