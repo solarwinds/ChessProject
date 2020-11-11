@@ -32,8 +32,8 @@ public class ChessBoard {
     }
 
     public boolean isLegalBoardPosition(int xCoordinate, int yCoordinate) {
-        return xCoordinate >= 0 && xCoordinate <= MAX_BOARD_WIDTH &&
-                yCoordinate >= 0 && yCoordinate <= MAX_BOARD_HEIGHT;
+        return xCoordinate >= 0 && xCoordinate < MAX_BOARD_WIDTH &&
+                yCoordinate >= 0 && yCoordinate < MAX_BOARD_HEIGHT;
     }
 
     private void setProperties(Pawn pawn, int xCoordinate, int yCoordinate) {
