@@ -1,50 +1,27 @@
 package com.solarwindsmsp.chess;
 
-public class Pawn {
-
-    private ChessBoard chessBoard;
-    private int xCoordinate;
-    private int yCoordinate;
-    private PieceColor pieceColor;
+public class Pawn extends Figure {
 
     public Pawn(PieceColor pieceColor) {
-        this.pieceColor = pieceColor;
-    }
-
-    public ChessBoard getChessBoard() {
-        return chessBoard;
-    }
-
-    public void setChessBoard(ChessBoard chessBoard) {
-        this.chessBoard = chessBoard;
-    }
-
-    public int getXCoordinate() {
-        return xCoordinate;
-    }
-
-    public void setXCoordinate(int value) {
-        this.xCoordinate = value;
-    }
-
-    public int getYCoordinate() {
-        return yCoordinate;
-    }
-
-    public void setYCoordinate(int value) {
-        this.yCoordinate = value;
-    }
-
-    public PieceColor getPieceColor() {
-        return this.pieceColor;
-    }
-
-    private void setPieceColor(PieceColor value) {
-        pieceColor = value;
+        this.setXCoordinate(-1);
+        this.setYCoordinate(-1);
+        this.setPieceColor(pieceColor);
     }
 
     public void move(MovementType movementType, int newX, int newY) {
-        throw new UnsupportedOperationException("Need to implement Pawn.Move()") ;
+        if (!getChessBoard().isLegalBoardPosition(newX, newY) || !canMove(movementType, newX, newY)) {
+            return;
+        }
+        if (MovementType.MOVE.equals(movementType)) {
+            this.setXCoordinate(newX);
+            this.setYCoordinate(newY);
+        } else {
+            throw new UnsupportedOperationException("Not implemented yet");
+        };
+    }
+
+    public boolean canMove(MovementType movementType, int newX, int newY) {
+        return PieceColor.WHITE.equals(getPieceColor()) ? newY == getYCoordinate() + 1 : newY == getYCoordinate() - 1;
     }
 
     @Override
@@ -54,6 +31,6 @@ public class Pawn {
 
     protected String getCurrentPositionAsString() {
         String eol = System.lineSeparator();
-        return String.format("Current X: {1}{0}Current Y: {2}{0}Piece Color: {3}", eol, xCoordinate, yCoordinate, pieceColor);
+        return String.format("Current X: {1}{0}Current Y: {2}{0}Piece Color: {3}", eol, getXCoordinate(), getYCoordinate(), getPieceColor());
     }
 }
