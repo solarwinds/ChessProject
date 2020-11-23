@@ -16,18 +16,18 @@ public class ChessBoard {
     }
 
     public void addPiece(Piece piece, int xCoordinate, int yCoordinate, PieceColor pieceColor) {
-        if (!this.isLegalBoardPosition(xCoordinate, yCoordinate)) {
-            this.reject(piece);
+        if (!isLegalBoardPosition(xCoordinate, yCoordinate)) {
+            reject(piece);
             return;
         }
 
-        if (this.count(piece.getClass(), pieceColor) == MAX_ALLOWED.get(piece.getClass())) {
-            this.reject(piece);
+        if (count(piece.getClass(), pieceColor) == MAX_ALLOWED.get(piece.getClass())) {
+            reject(piece);
             return;
         }
 
         if (pieces[xCoordinate][yCoordinate] != null) {
-            this.reject(piece);
+            reject(piece);
             return;
         }
 

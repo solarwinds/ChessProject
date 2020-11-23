@@ -21,13 +21,13 @@ public abstract class Piece {
     }
 
     public void move(MovementType movementType, int newX, int newY) {
-        if (!this.isLegalMove(movementType, newX, newY)) {
+        if (!isLegalMove(movementType, newX, newY)) {
             return;
         }
 
-        this.chessBoard.removePiece(this.xCoordinate, this.yCoordinate);
-        this.chessBoard.removePiece(newX, newY);
-        this.chessBoard.addPiece(this, newX, newY, this.pieceColor);
+        chessBoard.removePiece(this.xCoordinate, this.yCoordinate);
+        chessBoard.removePiece(newX, newY);
+        chessBoard.addPiece(this, newX, newY, this.pieceColor);
     }
 
     protected abstract boolean isLegalMove(MovementType movementType, int newX, int newY);

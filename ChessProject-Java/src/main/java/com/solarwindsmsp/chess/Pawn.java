@@ -18,16 +18,31 @@ public class Pawn extends Piece {
             return false;
         }
 
-        if (movementType.equals(MovementType.CAPTURE) && chessBoard.piecePresent(pieceColor.opposite(), newX, newY)) {
-            return (pieceColor.equals(PieceColor.WHITE) && newY == yCoordinate + 1 && (newX == xCoordinate - 1 || newX == xCoordinate + 1)) ||
-                    (pieceColor.equals(PieceColor.BLACK) && newY == yCoordinate - 1 && (newX == xCoordinate - 1 || newX == xCoordinate + 1));
+        if (isCapture(movementType, newX, newY)) {
+            return isValidWhiteCapture(newX, newY) || isValidBlackCapture(newX, newY);
         }
 
-        if (this.pieceColor.equals(PieceColor.WHITE)) {
+        if (pieceColor.equals(PieceColor.WHITE)) {
             return newX == xCoordinate && (newY == yCoordinate + 1 || yCoordinate == 1 && newY == yCoordinate + 2);
         } else {
             return newX == xCoordinate && (newY == yCoordinate - 1 || yCoordinate == 6 && newY == yCoordinate - 2);
         }
+    }
+
+    private boolean isValidBlackCapture(int newX, int newY) {
+        return pieceColor.equals(PieceColor.BLACK) &&
+                newY == yCoordinate - 1 &&
+                (newX == xCoordinate - 1 || newX == xCoordinate + 1);
+    }
+
+    private boolean isValidWhiteCapture(int newX, int newY) {
+        return pieceColor.equals(PieceColor.WHITE) &&
+                newY == yCoordinate + 1 &&
+                (newX == xCoordinate - 1 || newX == xCoordinate + 1);
+    }
+
+    private boolean isCapture(MovementType movementType, int newX, int newY) {
+        return movementType.equals(MovementType.CAPTURE) && chessBoard.piecePresent(pieceColor.opposite(), newX, newY);
     }
 
     @Override
