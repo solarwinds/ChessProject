@@ -1,6 +1,5 @@
 package com.solarwindsmsp.chess;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class ChessBoard {
@@ -8,35 +7,38 @@ public class ChessBoard {
     public static int MAX_BOARD_WIDTH = 8;
     public static int MAX_BOARD_HEIGHT = 8;
 
-    private final Pawn[][] pieces;
-    private final Map<PieceColor, Integer> pawnsByColor = new HashMap<>();
+    private final static Map<Class<? extends Piece>, Integer> MAX_ALLOWED = Map.of(Pawn.class, 8);
+
+    private final Piece[][] pieces;
 
     public ChessBoard() {
         pieces = new Pawn[MAX_BOARD_WIDTH][MAX_BOARD_HEIGHT];
-        pawnsByColor.put(PieceColor.WHITE, 0);
-        pawnsByColor.put(PieceColor.BLACK, 0);
     }
 
-    public void addPiece(Pawn pawn, int xCoordinate, int yCoordinate, PieceColor pieceColor) {
+    public void addPiece(Piece piece, int xCoordinate, int yCoordinate, PieceColor pieceColor) {
         if (!this.isLegalBoardPosition(xCoordinate, yCoordinate)) {
-            throw new IllegalArgumentException("Illegal board position");
-        }
-
-        if (pawnsByColor.get(pieceColor) == 8) {
-            pawn.setXCoordinate(-1);
-            pawn.setYCoordinate(-1);
+            this.reject(piece);
             return;
         }
 
-        if (pieces[xCoordinate][yCoordinate] == null) {
-            pawn.setXCoordinate(xCoordinate);
-            pawn.setYCoordinate(yCoordinate);
-            pieces[xCoordinate][yCoordinate] = pawn;
-            pawnsByColor.put(pieceColor, pawnsByColor.get(pieceColor) + 1);
-        } else {
-            pawn.setXCoordinate(-1);
-            pawn.setYCoordinate(-1);
+        if (this.count(piece.getClass(), pieceColor) == MAX_ALLOWED.get(piece.getClass())) {
+            this.reject(piece);
+            return;
         }
+
+        if (pieces[xCoordinate][yCoordinate] != null) {
+            this.reject(piece);
+            return;
+        }
+
+        piece.setXCoordinate(xCoordinate);
+        piece.setYCoordinate(yCoordinate);
+        pieces[xCoordinate][yCoordinate] = piece;
+    }
+
+    private void reject(Piece piece) {
+        piece.setXCoordinate(-1);
+        piece.setYCoordinate(-1);
     }
 
     public void removePiece(int xCoordinate, int yCoordinate) {
@@ -50,5 +52,20 @@ public class ChessBoard {
 
     public boolean piecePresent(PieceColor color, int x, int y) {
         return pieces[x][y] != null && pieces[x][y].getPieceColor().equals(color);
+    }
+
+    private int count(Class<? extends Piece> clazz, PieceColor pieceColor) {
+        int res = 0;
+        for (int i = 0; i < MAX_BOARD_WIDTH; i++) {
+            for (int j = 0; j < MAX_BOARD_HEIGHT; j++) {
+                if (pieces[i][j] != null &&
+                        pieces[i][j].getPieceColor().equals(pieceColor) &&
+                        pieces[i][j].getClass().equals(clazz)) {
+                    res++;
+                }
+            }
+        }
+
+        return res;
     }
 }
