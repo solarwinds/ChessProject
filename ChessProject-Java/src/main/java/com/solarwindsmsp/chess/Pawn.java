@@ -1,50 +1,48 @@
 package com.solarwindsmsp.chess;
 
-public class Pawn {
+import lombok.Getter;
+import lombok.Setter;
 
-    private ChessBoard chessBoard;
-    private int xCoordinate;
-    private int yCoordinate;
-    private PieceColor pieceColor;
+import java.text.MessageFormat;
 
-    public Pawn(PieceColor pieceColor) {
-        this.pieceColor = pieceColor;
+@Getter
+@Setter
+public class Pawn extends Piece {
+
+    public Pawn(PieceColor pieceColor, ChessBoard chessBoard) {
+        super(pieceColor, chessBoard);
     }
 
-    public ChessBoard getChessBoard() {
-        return chessBoard;
+    protected boolean isLegalMove(MovementType movementType, int newX, int newY) {
+        if (!chessBoard.isLegalBoardPosition(newX, newY)) {
+            return false;
+        }
+
+        if (isCapture(movementType, newX, newY)) {
+            return isValidWhiteCapture(newX, newY) || isValidBlackCapture(newX, newY);
+        }
+
+        if (pieceColor.equals(PieceColor.WHITE)) {
+            return newX == xCoordinate && (newY == yCoordinate + 1 || yCoordinate == 1 && newY == yCoordinate + 2);
+        } else {
+            return newX == xCoordinate && (newY == yCoordinate - 1 || yCoordinate == 6 && newY == yCoordinate - 2);
+        }
     }
 
-    public void setChessBoard(ChessBoard chessBoard) {
-        this.chessBoard = chessBoard;
+    private boolean isValidBlackCapture(int newX, int newY) {
+        return pieceColor.equals(PieceColor.BLACK) &&
+                newY == yCoordinate - 1 &&
+                (newX == xCoordinate - 1 || newX == xCoordinate + 1);
     }
 
-    public int getXCoordinate() {
-        return xCoordinate;
+    private boolean isValidWhiteCapture(int newX, int newY) {
+        return pieceColor.equals(PieceColor.WHITE) &&
+                newY == yCoordinate + 1 &&
+                (newX == xCoordinate - 1 || newX == xCoordinate + 1);
     }
 
-    public void setXCoordinate(int value) {
-        this.xCoordinate = value;
-    }
-
-    public int getYCoordinate() {
-        return yCoordinate;
-    }
-
-    public void setYCoordinate(int value) {
-        this.yCoordinate = value;
-    }
-
-    public PieceColor getPieceColor() {
-        return this.pieceColor;
-    }
-
-    private void setPieceColor(PieceColor value) {
-        pieceColor = value;
-    }
-
-    public void move(MovementType movementType, int newX, int newY) {
-        throw new UnsupportedOperationException("Need to implement Pawn.Move()") ;
+    private boolean isCapture(MovementType movementType, int newX, int newY) {
+        return movementType.equals(MovementType.CAPTURE) && chessBoard.piecePresent(pieceColor.opposite(), newX, newY);
     }
 
     @Override
@@ -54,6 +52,13 @@ public class Pawn {
 
     protected String getCurrentPositionAsString() {
         String eol = System.lineSeparator();
-        return String.format("Current X: {1}{0}Current Y: {2}{0}Piece Color: {3}", eol, xCoordinate, yCoordinate, pieceColor);
+
+        return MessageFormat.format(
+                "Current X: {1}{0}Current Y: {2}{0}Piece Color: {3}",
+                eol,
+                xCoordinate,
+                yCoordinate,
+                pieceColor
+        );
     }
 }
