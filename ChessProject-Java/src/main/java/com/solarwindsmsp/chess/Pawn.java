@@ -1,50 +1,50 @@
 package com.solarwindsmsp.chess;
 
+import lombok.Getter;
+import lombok.Setter;
+
+import java.text.MessageFormat;
+
+@Getter
+@Setter
 public class Pawn {
 
-    private ChessBoard chessBoard;
+    private final PieceColor pieceColor;
+    private final ChessBoard chessBoard;
+
     private int xCoordinate;
     private int yCoordinate;
-    private PieceColor pieceColor;
 
-    public Pawn(PieceColor pieceColor) {
+    public Pawn(PieceColor pieceColor, ChessBoard chessBoard) {
         this.pieceColor = pieceColor;
-    }
-
-    public ChessBoard getChessBoard() {
-        return chessBoard;
-    }
-
-    public void setChessBoard(ChessBoard chessBoard) {
         this.chessBoard = chessBoard;
     }
 
-    public int getXCoordinate() {
-        return xCoordinate;
-    }
-
-    public void setXCoordinate(int value) {
-        this.xCoordinate = value;
-    }
-
-    public int getYCoordinate() {
-        return yCoordinate;
-    }
-
-    public void setYCoordinate(int value) {
-        this.yCoordinate = value;
-    }
-
-    public PieceColor getPieceColor() {
-        return this.pieceColor;
-    }
-
-    private void setPieceColor(PieceColor value) {
-        pieceColor = value;
-    }
-
     public void move(MovementType movementType, int newX, int newY) {
-        throw new UnsupportedOperationException("Need to implement Pawn.Move()") ;
+        if (!this.isLegalMove(movementType, newX, newY)) {
+            return;
+        }
+
+        this.chessBoard.removePiece(this.xCoordinate, this.yCoordinate);
+        this.chessBoard.removePiece(newX, newY);
+        this.chessBoard.addPiece(this, newX, newY, this.pieceColor);
+    }
+
+    private boolean isLegalMove(MovementType movementType, int newX, int newY) {
+        if (!this.chessBoard.isLegalBoardPosition(newX, newY)) {
+            return false;
+        }
+
+        if (movementType.equals(MovementType.CAPTURE) && this.chessBoard.piecePresent(this.pieceColor.opposite(), newX, newY)) {
+            return (this.pieceColor.equals(PieceColor.WHITE) && newY == this.yCoordinate + 1 && (newX == this.xCoordinate - 1 || newX == this.xCoordinate + 1)) ||
+                    (this.pieceColor.equals(PieceColor.BLACK) && newY == this.yCoordinate - 1 && (newX == this.xCoordinate - 1 || newX == this.xCoordinate + 1));
+        }
+
+        if (this.pieceColor.equals(PieceColor.WHITE)) {
+            return newX == this.xCoordinate && (newY == this.yCoordinate + 1 || this.yCoordinate == 1 && newY == this.yCoordinate + 2);
+        } else {
+            return newX == this.xCoordinate && (newY == this.yCoordinate - 1 || this.yCoordinate == 6 && newY == this.yCoordinate - 2);
+        }
     }
 
     @Override
@@ -54,6 +54,13 @@ public class Pawn {
 
     protected String getCurrentPositionAsString() {
         String eol = System.lineSeparator();
-        return String.format("Current X: {1}{0}Current Y: {2}{0}Piece Color: {3}", eol, xCoordinate, yCoordinate, pieceColor);
+
+        return MessageFormat.format(
+                "Current X: {1}{0}Current Y: {2}{0}Piece Color: {3}",
+                eol,
+                xCoordinate,
+                yCoordinate,
+                pieceColor
+        );
     }
 }
