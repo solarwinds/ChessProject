@@ -1,15 +1,15 @@
 package com.solarwindsmsp.chess;
 
-import junit.framework.TestCase;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-public class ChessBoardTest extends TestCase {
+import static org.junit.jupiter.api.Assertions.*;
+
+public class ChessBoardTest {
 
     private ChessBoard board;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         board = new ChessBoard();
     }
@@ -33,7 +33,7 @@ public class ChessBoardTest extends TestCase {
     @Test
     public void testIsLegalBoardPosition_True_X_equals_5_Y_equals_5() {
         boolean isValidPosition = board.isLegalBoardPosition(5, 5);
-        Assert.assertTrue(isValidPosition);
+        assertTrue(isValidPosition);
     }
 
     @Test
@@ -57,7 +57,7 @@ public class ChessBoardTest extends TestCase {
     @Test
     public void testIsLegalBoardPosition_False_For_Negative_Y_Values() {
         boolean isValidPosition = board.isLegalBoardPosition(5, -1);
-        Assert.assertFalse(isValidPosition);
+        assertFalse(isValidPosition);
     }
 
     @Test

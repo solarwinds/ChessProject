@@ -1,16 +1,16 @@
 package com.solarwindsmsp.chess;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BlackPawnTest {
 
     private ChessBoard chessBoard;
     private Pawn pawn;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         chessBoard = new ChessBoard();
         pawn = new Pawn(PieceColor.BLACK, chessBoard);
