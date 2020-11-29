@@ -1,21 +1,46 @@
 package com.solarwindsmsp.chess;
 
+import com.solarwindsmsp.chess.models.Piece;
+
 public class ChessBoard {
 
-    public static int MAX_BOARD_WIDTH = 7;
-    public static int MAX_BOARD_HEIGHT = 7;
+    public static final int MAX_BOARD_WIDTH = 8;
+    public static final int MAX_BOARD_HEIGHT = 8;
 
-    private Pawn[][] pieces;
+    private static final int INVALIDATE_COORDINATE = -1;
+    private static final ChessBoard INSTANCE = new ChessBoard();
 
-    public ChessBoard() {
-        pieces = new Pawn[MAX_BOARD_WIDTH][MAX_BOARD_HEIGHT];
+    private Piece[][] pieces;
+
+    private ChessBoard() {
+        clearBoard();
     }
 
-    public void addPiece(Pawn pawn, int xCoordinate, int yCoordinate, PieceColor pieceColor) {
-        throw new UnsupportedOperationException("Need to implement ChessBoard.add()");
+    public void clearBoard() {
+        pieces = new Piece[MAX_BOARD_WIDTH][MAX_BOARD_HEIGHT];
+    }
+
+    public static ChessBoard getInstance() {
+        return INSTANCE;
+    }
+
+    public void addPiece(Piece piece, int xCoordinate, int yCoordinate) {
+        if (!isLegalBoardPosition(xCoordinate, yCoordinate) || pieces[xCoordinate][yCoordinate] != null) {
+            piece.setXCoordinate(INVALIDATE_COORDINATE);
+            piece.setYCoordinate(INVALIDATE_COORDINATE);
+        } else {
+            piece.setXCoordinate(xCoordinate);
+            piece.setYCoordinate(yCoordinate);
+            pieces[xCoordinate][yCoordinate] = piece;
+        }
     }
 
     public boolean isLegalBoardPosition(int xCoordinate, int yCoordinate) {
-        throw new UnsupportedOperationException("Need to implement ChessBoard.IsLegalBoardPosition()");
+        if (xCoordinate >= MAX_BOARD_WIDTH || yCoordinate >= MAX_BOARD_HEIGHT) {
+            return false;
+        }
+
+        return xCoordinate >= 0 && yCoordinate >= 0;
     }
+
 }

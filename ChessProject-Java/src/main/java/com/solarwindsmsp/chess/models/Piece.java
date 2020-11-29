@@ -1,22 +1,20 @@
-package com.solarwindsmsp.chess;
+package com.solarwindsmsp.chess.models;
 
-public class Pawn {
+import com.solarwindsmsp.chess.PieceColor;
+import com.solarwindsmsp.chess.actions.MoveAction;
 
-    private ChessBoard chessBoard;
+public abstract class Piece implements MoveAction {
+
+    public enum Type {
+        Pawn
+    }
+
     private int xCoordinate;
     private int yCoordinate;
-    private PieceColor pieceColor;
+    private final PieceColor pieceColor;
 
-    public Pawn(PieceColor pieceColor) {
+    public Piece(PieceColor pieceColor) {
         this.pieceColor = pieceColor;
-    }
-
-    public ChessBoard getChessBoard() {
-        return chessBoard;
-    }
-
-    public void setChessBoard(ChessBoard chessBoard) {
-        this.chessBoard = chessBoard;
     }
 
     public int getXCoordinate() {
@@ -39,12 +37,10 @@ public class Pawn {
         return this.pieceColor;
     }
 
-    private void setPieceColor(PieceColor value) {
-        pieceColor = value;
-    }
-
-    public void move(MovementType movementType, int newX, int newY) {
-        throw new UnsupportedOperationException("Need to implement Pawn.Move()") ;
+    @Override
+    public void updatePosition(int newX, int newY) {
+        setXCoordinate(newX);
+        setYCoordinate(newY);
     }
 
     @Override
@@ -56,4 +52,5 @@ public class Pawn {
         String eol = System.lineSeparator();
         return String.format("Current X: {1}{0}Current Y: {2}{0}Piece Color: {3}", eol, xCoordinate, yCoordinate, pieceColor);
     }
+
 }
