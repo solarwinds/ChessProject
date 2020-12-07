@@ -79,10 +79,10 @@ namespace SolarWinds.MSP.Chess
 		{
 			Pawn firstPawn = new Pawn(PieceColor.Black);
 			Pawn secondPawn = new Pawn(PieceColor.Black);
-			chessBoard.Add(firstPawn, 6, 3, PieceColor.Black);
-			chessBoard.Add(secondPawn, 6, 3, PieceColor.Black);
-			Assert.AreEqual(firstPawn.XCoordinate, 6);
-            Assert.AreEqual(firstPawn.YCoordinate, 3);
+			chessBoard.Add(firstPawn, 5, 3, PieceColor.Black);
+			chessBoard.Add(secondPawn, 5, 3, PieceColor.Black);
+			Assert.AreEqual(firstPawn.XCoordinate, 5);
+			Assert.AreEqual(firstPawn.YCoordinate, 3) ;
             Assert.AreEqual(secondPawn.XCoordinate, -1);
             Assert.AreEqual(secondPawn.YCoordinate, -1);
 		}
@@ -94,10 +94,11 @@ namespace SolarWinds.MSP.Chess
 			{
 				Pawn pawn = new Pawn(PieceColor.Black);
 				int row = i / ChessBoard.MaxBoardWidth;
-				chessBoard.Add(pawn, 6 + row, i % ChessBoard.MaxBoardWidth, PieceColor.Black);
+				chessBoard.Add(pawn, 5 + row, i % ChessBoard.MaxBoardWidth, PieceColor.Black);
+				
 				if (row < 1)
 				{
-					Assert.AreEqual(pawn.XCoordinate, (6 + row));
+					Assert.AreEqual(pawn.XCoordinate, (5 + row));
 					Assert.AreEqual(pawn.YCoordinate, (i % ChessBoard.MaxBoardWidth));
 				}
 				else
