@@ -48,6 +48,35 @@ namespace SolarWinds.MSP.Chess
 		}
 
 		[Test]
+		public void Pawn_Move_IllegalCoordinates_Two_Forwards_DoesNotMove()
+		{
+			chessBoard.Add(pawn, 6, 3, PieceColor.Black);
+			pawn.Move(MovementType.Move, 6, 5);
+			Assert.AreEqual(pawn.XCoordinate, 6);
+			Assert.AreEqual(pawn.YCoordinate, 3);
+		}
+
+		[Test]
+		public void Pawn_Move_IllegalCoordinates_Backwards_DoesNotMove()
+		{
+			chessBoard.Add(pawn, 6, 3, PieceColor.Black);
+			pawn.Move(MovementType.Move, 6, 4);
+			Assert.AreEqual(pawn.XCoordinate, 6);
+			Assert.AreEqual(pawn.YCoordinate, 3);
+		}
+
+		[Test]
+		public void Pawn_Move_IllegalCoordinates_Occupied_Position_DoesNotMove()
+		{
+			Pawn SecondPawn = new Pawn(PieceColor.Black);
+			chessBoard.Add(pawn, 6, 3, PieceColor.Black);
+			chessBoard.Add(SecondPawn, 5, 3, PieceColor.Black);
+			pawn.Move(MovementType.Move, 5, 3);
+			Assert.AreEqual(pawn.XCoordinate, 6);
+			Assert.AreEqual(pawn.YCoordinate, 3);
+		}
+
+		[Test]
 		public void Pawn_Move_LegalCoordinates_Forward_UpdatesCoordinates()
 		{
 			chessBoard.Add(pawn, 6, 3, PieceColor.Black);
@@ -55,5 +84,6 @@ namespace SolarWinds.MSP.Chess
 			Assert.AreEqual(pawn.XCoordinate, 6);
             Assert.AreEqual(pawn.YCoordinate, 2);
 		}
+
 	}
 }
