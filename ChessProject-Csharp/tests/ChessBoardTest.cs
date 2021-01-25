@@ -14,15 +14,15 @@ namespace SolarWinds.MSP.Chess
 		}
 
         [Test]
-		public void Has_MaxBoardWidth_of_7()
+		public void Has_MaxBoardWidth_of_8()
 		{
-			Assert.AreEqual(ChessBoard.MaxBoardWidth, 7);
+			Assert.AreEqual(ChessBoard.MaxBoardWidth, 8);
 		}
 
         [Test]
-		public void Has_MaxBoardHeight_of_7()
+		public void Has_MaxBoardHeight_of_8()
 		{
-			Assert.AreEqual(ChessBoard.MaxBoardHeight, 7);
+			Assert.AreEqual(ChessBoard.MaxBoardHeight, 8);
 		}
 
         [Test]
