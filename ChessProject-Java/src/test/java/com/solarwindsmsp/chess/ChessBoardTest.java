@@ -4,14 +4,30 @@ import junit.framework.TestCase;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
-public class ChessBoardTest extends TestCase {
+import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.when;
+
+@RunWith(MockitoJUnitRunner.class)
+public class ChessBoardTest {
 
     private ChessBoard testSubject;
+
+    @Mock
+    private MovementStrategyFactory movementStrategyFactory;
+
+    @Mock
+    private MovementStrategy movementStrategy;
 
     @Before
     public void setUp() throws Exception {
         testSubject = new ChessBoard();
+        testSubject.setStrategyFactory(movementStrategyFactory);
     }
 
     @Test
@@ -33,13 +49,13 @@ public class ChessBoardTest extends TestCase {
     @Test
     public void testIsLegalBoardPosition_True_X_equals_5_Y_equals_5() {
         boolean isValidPosition = testSubject.isLegalBoardPosition(5, 5);
-        Assert.assertTrue(isValidPosition);
+        assertTrue(isValidPosition);
     }
 
     @Test
     public void testIsLegalBoardPosition_False_X_equals_11_Y_equals_5() {
         boolean isValidPosition = testSubject.isLegalBoardPosition(11, 5);
-        assertTrue(isValidPosition);
+        assertFalse(isValidPosition);
     }
 
     @Test
@@ -57,7 +73,7 @@ public class ChessBoardTest extends TestCase {
     @Test
     public void testIsLegalBoardPosition_False_For_Negative_Y_Values() {
         boolean isValidPosition = testSubject.isLegalBoardPosition(5, -1);
-        Assert.assertFalse(isValidPosition);
+        assertFalse(isValidPosition);
     }
 
     @Test
@@ -88,8 +104,21 @@ public class ChessBoardTest extends TestCase {
             else
             {
                 assertEquals(-1, pawn.getXCoordinate());
-                Assert.assertEquals(-1, pawn.getYCoordinate());
+                assertEquals(-1, pawn.getYCoordinate());
             }
         }
+    }
+
+    @Test
+    public void testShouldMovePiece(){
+        when(movementStrategyFactory.getMovementStrategy(any())).thenReturn(movementStrategy);
+        when(movementStrategy.canMove(any(), anyInt(), anyInt())).thenReturn(true);
+        Pawn pawn = new Pawn(PieceColor.BLACK);
+        testSubject.addPiece(pawn, 0, 0, PieceColor.BLACK);
+        testSubject.movePiece(pawn, 1,1);
+
+        assertEquals(1, pawn.getXCoordinate());
+        assertEquals(1, pawn.getYCoordinate());
+
     }
 }

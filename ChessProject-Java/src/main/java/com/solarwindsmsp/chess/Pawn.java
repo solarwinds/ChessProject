@@ -1,10 +1,10 @@
 package com.solarwindsmsp.chess;
 
-public class Pawn {
+public class Pawn implements Piece{
 
     private ChessBoard chessBoard;
-    private int xCoordinate;
-    private int yCoordinate;
+    private int xCoordinate = -1;
+    private int yCoordinate = -1;
     private PieceColor pieceColor;
 
     public Pawn(PieceColor pieceColor) {
@@ -35,6 +35,11 @@ public class Pawn {
         this.yCoordinate = value;
     }
 
+    @Override
+    public PieceColor getColor() {
+        return this.pieceColor;
+    }
+
     public PieceColor getPieceColor() {
         return this.pieceColor;
     }
@@ -44,7 +49,7 @@ public class Pawn {
     }
 
     public void move(MovementType movementType, int newX, int newY) {
-        throw new UnsupportedOperationException("Need to implement Pawn.Move()") ;
+        this.chessBoard.movePiece(this, newX, newY);
     }
 
     @Override
