@@ -1,59 +1,37 @@
 package com.solarwindsmsp.chess;
 
-public class Pawn {
+public class Pawn extends Piece{
 
-    private ChessBoard chessBoard;
-    private int xCoordinate;
-    private int yCoordinate;
-    private PieceColor pieceColor;
+    public static final int ONE_SQUARE = 1;
 
     public Pawn(PieceColor pieceColor) {
-        this.pieceColor = pieceColor;
-    }
-
-    public ChessBoard getChessBoard() {
-        return chessBoard;
-    }
-
-    public void setChessBoard(ChessBoard chessBoard) {
-        this.chessBoard = chessBoard;
-    }
-
-    public int getXCoordinate() {
-        return xCoordinate;
-    }
-
-    public void setXCoordinate(int value) {
-        this.xCoordinate = value;
-    }
-
-    public int getYCoordinate() {
-        return yCoordinate;
-    }
-
-    public void setYCoordinate(int value) {
-        this.yCoordinate = value;
-    }
-
-    public PieceColor getPieceColor() {
-        return this.pieceColor;
-    }
-
-    private void setPieceColor(PieceColor value) {
-        pieceColor = value;
+        super(pieceColor);
     }
 
     public void move(MovementType movementType, int newX, int newY) {
-        throw new UnsupportedOperationException("Need to implement Pawn.Move()") ;
+        if (ChessBoard.getInstance().isLegalBoardPosition(newX, newY)) {
+            if (movementType == MovementType.MOVE){
+                if (this.getXCoordinate() == newX) {
+                    setXCoordinate(newX);
+                    setYCoordinate(newY);
+                }
+            } else{
+                if (isValidCaptureLeft(newX, newY) || isValidCaptureRight(newX, newY)) {
+                    setXCoordinate(newX);
+                    setYCoordinate(newY);
+                } else {
+                    throw new UnsupportedOperationException("Capture conditions not met");
+                }
+            }
+        }
     }
 
-    @Override
-    public String toString() {
-        return getCurrentPositionAsString();
+    private boolean isValidCaptureLeft(int newX, int newY) {
+        return getXCoordinate() - ONE_SQUARE == newX && getYCoordinate() + ONE_SQUARE == newY;
     }
 
-    protected String getCurrentPositionAsString() {
-        String eol = System.lineSeparator();
-        return String.format("Current X: {1}{0}Current Y: {2}{0}Piece Color: {3}", eol, xCoordinate, yCoordinate, pieceColor);
+    private boolean isValidCaptureRight(int newX, int newY) {
+        return getXCoordinate() + ONE_SQUARE == newX && getYCoordinate() + ONE_SQUARE == newY;
     }
+
 }
