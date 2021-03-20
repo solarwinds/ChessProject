@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using src;
+using src.Consts;
 using src.Enums;
 using src.Pieces;
 using System;
@@ -79,6 +80,17 @@ namespace tests
                     Assert.AreEqual(0, _chessBoard.PieceCount[(type, color)]);
                 }
             }
+        }
+
+        [Test]
+        public void Chessboard_Piece_Limit()
+        {
+            Assert.AreEqual(8, PieceTypeLimit.GetPieceLimit(PieceType.Pawn));
+            Assert.AreEqual(2, PieceTypeLimit.GetPieceLimit(PieceType.Knight));
+            Assert.AreEqual(2, PieceTypeLimit.GetPieceLimit(PieceType.Bishop));
+            Assert.AreEqual(2, PieceTypeLimit.GetPieceLimit(PieceType.Rook));
+            Assert.AreEqual(1, PieceTypeLimit.GetPieceLimit(PieceType.Queen));
+            Assert.AreEqual(1, PieceTypeLimit.GetPieceLimit(PieceType.King));
         }
 
         [Test]
