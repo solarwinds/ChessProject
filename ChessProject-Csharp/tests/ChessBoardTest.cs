@@ -1,111 +1,149 @@
 ﻿using NUnit.Framework;
+using src;
+using src.Consts;
+using src.Enums;
+using src.Pieces;
+using System;
 
-namespace SolarWinds.MSP.Chess
+namespace tests
 {
     [TestFixture]
-	public class ChessBoardTest
-	{
-		private ChessBoard chessBoard;
+    public class ChessBoardTest
+    {
+        private ChessBoard _chessBoard;
 
         [SetUp]
-		public void SetUp()
-		{
-			chessBoard = new ChessBoard();
-		}
+        public void SetUp()
+        {
+            _chessBoard = new ChessBoard();
+        }
 
         [Test]
-		public void Has_MaxBoardWidth_of_7()
-		{
-			Assert.AreEqual(ChessBoard.MaxBoardWidth, 7);
-		}
+        public void Has_MaxBoardWidth_of_8()
+        {
+            Assert.AreEqual(8, ChessBoard.MaxBoardWidth);
+        }
 
         [Test]
-		public void Has_MaxBoardHeight_of_7()
-		{
-			Assert.AreEqual(ChessBoard.MaxBoardHeight, 7);
-		}
+        public void Has_MaxBoardHeight_of_8()
+        {
+            Assert.AreEqual(8, ChessBoard.MaxBoardHeight);
+        }
 
         [Test]
-		public void IsLegalBoardPosition_True_X_equals_0_Y_equals_0()
-		{
-			var isValidPosition = chessBoard.IsLegalBoardPosition(0, 0);
-			Assert.IsTrue(isValidPosition);
-		}
+        public void IsLegalBoardPosition_True()
+        {
+            Assert.IsTrue(_chessBoard.IsLegalBoardPosition(0, 0));
+            Assert.IsTrue(_chessBoard.IsLegalBoardPosition(5, 5));
+        }
+
 
         [Test]
-		public void IsLegalBoardPosition_True_X_equals_5_Y_equals_5()
-		{
-			var isValidPosition = chessBoard.IsLegalBoardPosition(5, 5);
-            Assert.IsTrue(isValidPosition);
-		}
+        public void IsLegalBoardPosition_False()
+        {
+            Assert.IsFalse(_chessBoard.IsLegalBoardPosition(11, 5));
+            Assert.IsFalse(_chessBoard.IsLegalBoardPosition(0, 9));
+            Assert.IsFalse(_chessBoard.IsLegalBoardPosition(11, 0));
+        }
+
 
         [Test]
-		public void IsLegalBoardPosition_False_X_equals_11_Y_equals_5()
-		{
-			var isValidPosition = chessBoard.IsLegalBoardPosition(11, 5);
-            Assert.IsFalse(isValidPosition);
-		}
+        public void IsLegalBoardPosition_False_For_Negative_Values()
+        {
+            Assert.IsFalse(_chessBoard.IsLegalBoardPosition(-1, 5));
+            Assert.IsFalse(_chessBoard.IsLegalBoardPosition(5, -1));
+        }
+
 
         [Test]
-		public void IsLegalBoardPosition_False_X_equals_0_Y_equals_9()
-		{
-			var isValidPosition = chessBoard.IsLegalBoardPosition(0, 9);
-            Assert.IsFalse(isValidPosition);
-		}
+        public void IsEmptySquare_True()
+        {
+            Assert.IsTrue(_chessBoard.IsSquareEmpty(5, 5));
+            Assert.IsTrue(_chessBoard.IsSquareEmpty(1, 7));
+        }
 
         [Test]
-		public void IsLegalBoardPosition_False_X_equals_11_Y_equals_0()
-		{
-			var isValidPosition = chessBoard.IsLegalBoardPosition(11, 0);
-            Assert.IsFalse(isValidPosition);
-		}
+        public void IsEmptySquare_False()
+        {
+            Pawn pawn = new Pawn(PieceColor.Black);
+            Assert.IsTrue(_chessBoard.AddPiece(pawn, 5, 5));
+            Assert.IsFalse(_chessBoard.IsSquareEmpty(5, 5));
+        }
 
         [Test]
-		public void IsLegalBoardPosition_False_For_Negative_X_Values()
-		{
-			var isValidPosition = chessBoard.IsLegalBoardPosition(-1, 5);
-            Assert.IsFalse(isValidPosition);
-		}
+        public void Chessboard_Pieces_Count_Set_To_Zero()
+        {
+            foreach (PieceType type in Enum.GetValues(typeof(PieceType)))
+            {
+                foreach (PieceColor color in Enum.GetValues(typeof(PieceColor)))
+                {
+                    Assert.AreEqual(0, _chessBoard.PieceCount[(type, color)]);
+                }
+            }
+        }
 
         [Test]
-		public void IsLegalBoardPosition_False_For_Negative_Y_Values()
-		{
-			var isValidPosition = chessBoard.IsLegalBoardPosition(5, -1);
-            Assert.IsFalse(isValidPosition);
-		}
+        public void Chessboard_Piece_Limit()
+        {
+            Assert.AreEqual(8, PieceTypeLimit.GetPieceLimit(PieceType.Pawn));
+            Assert.AreEqual(2, PieceTypeLimit.GetPieceLimit(PieceType.Knight));
+            Assert.AreEqual(2, PieceTypeLimit.GetPieceLimit(PieceType.Bishop));
+            Assert.AreEqual(2, PieceTypeLimit.GetPieceLimit(PieceType.Rook));
+            Assert.AreEqual(1, PieceTypeLimit.GetPieceLimit(PieceType.Queen));
+            Assert.AreEqual(1, PieceTypeLimit.GetPieceLimit(PieceType.King));
+        }
 
         [Test]
-		public void Avoids_Duplicate_Positioning()
-		{
-			Pawn firstPawn = new Pawn(PieceColor.Black);
-			Pawn secondPawn = new Pawn(PieceColor.Black);
-			chessBoard.Add(firstPawn, 6, 3, PieceColor.Black);
-			chessBoard.Add(secondPawn, 6, 3, PieceColor.Black);
-			Assert.AreEqual(firstPawn.XCoordinate, 6);
-            Assert.AreEqual(firstPawn.YCoordinate, 3);
-            Assert.AreEqual(secondPawn.XCoordinate, -1);
-            Assert.AreEqual(secondPawn.YCoordinate, -1);
-		}
+        public void Avoids_Duplicate_Positioning()
+        {
+            var firstPawn = new Pawn(PieceColor.Black);
+            var secondPawn = new Pawn(PieceColor.Black);
+            Assert.IsTrue(_chessBoard.AddPiece(firstPawn, 6, 3));
+            Assert.IsFalse(_chessBoard.AddPiece(secondPawn, 6, 3));
+        }
+
 
         [Test]
-		public void Limits_The_Number_Of_Pawns()
-		{
-			for (int i = 0; i < 10; i++)
-			{
-				Pawn pawn = new Pawn(PieceColor.Black);
-				int row = i / ChessBoard.MaxBoardWidth;
-				chessBoard.Add(pawn, 6 + row, i % ChessBoard.MaxBoardWidth, PieceColor.Black);
-				if (row < 1)
-				{
-					Assert.AreEqual(pawn.XCoordinate, (6 + row));
-					Assert.AreEqual(pawn.YCoordinate, (i % ChessBoard.MaxBoardWidth));
-				}
-				else
-				{
-					Assert.AreEqual(pawn.XCoordinate, -1);
-                    Assert.AreEqual(pawn.YCoordinate, -1);
-				}
-			}
-		}
-	}
+        public void Increments_And_Limits_The_Number_Of_Pawns()
+        {
+            for (var i = 0; i < 10; i++)
+            {
+                var pawn = new Pawn(PieceColor.Black);
+                var row = i / ChessBoard.MaxBoardWidth;
+
+                if (row < 1)
+                {
+                    Assert.IsTrue(_chessBoard.AddPiece(pawn, 6 + row, i % ChessBoard.MaxBoardWidth));
+                    Assert.AreEqual(i + 1, _chessBoard.PieceCount[(pawn.PieceType, pawn.PieceColor)]);
+                }
+                else
+                {
+                    Assert.IsFalse(_chessBoard.AddPiece(pawn, 6 + row, i % ChessBoard.MaxBoardWidth));
+                    Assert.AreEqual(8, _chessBoard.PieceCount[(pawn.PieceType, pawn.PieceColor)]);
+                }
+            }
+        }
+
+        [Test]
+        public void Capture_Move_Removes_Existing_Piece()
+        {
+            var firstPawn = new Pawn(PieceColor.Black);
+            var secondPawn = new Pawn(PieceColor.White);
+            Assert.IsTrue(_chessBoard.AddPiece(firstPawn, 6, 4));
+            Assert.IsTrue(_chessBoard.AddPiece(secondPawn, 6, 3));
+            Assert.IsTrue(_chessBoard.MovePiece(firstPawn, 6, 3, MovementType.Capture));
+            Assert.AreEqual(0, _chessBoard.PieceCount[(PieceType.Pawn, PieceColor.White)]);
+        }
+
+        [Test]
+        public void Capture_Move_Does_Not_Removes_Existing_Piece()
+        {
+            var firstPawn = new Pawn(PieceColor.Black);
+            var secondPawn = new Pawn(PieceColor.White);
+            Assert.IsTrue(_chessBoard.AddPiece(firstPawn, 6, 4));
+            Assert.IsTrue(_chessBoard.AddPiece(secondPawn, 6, 2));
+            Assert.IsTrue(_chessBoard.MovePiece(firstPawn, 6, 3, MovementType.Capture));
+            Assert.AreEqual(1, _chessBoard.PieceCount[(PieceType.Pawn, PieceColor.White)]);
+        }
+    }
 }
