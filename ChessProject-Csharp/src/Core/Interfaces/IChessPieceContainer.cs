@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 namespace src.Core.Interfaces
 {
+    // TODO: add docs here
     public interface IChessPieceContainer
     {
         IEnumerable<IChessPiece> BlackPieces { get; }

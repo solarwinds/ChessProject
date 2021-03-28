@@ -80,6 +80,12 @@ namespace SolarWinds.MSP.Chess
             }
         }
 
+        /// <summary>
+        /// Determines whether the move of a black piece is valid
+        /// </summary>
+        /// <param name="xCoordinate">The new X coordinate</param>
+        /// <param name="yCoordinate">The new Y coordinate</param>
+        /// <returns>True if the move is valid</returns>
         private bool ValidateBlackPieceMove(int xCoordinate, int yCoordinate)
         {
             if (yCoordinate > YCoordinate)
@@ -101,6 +107,12 @@ namespace SolarWinds.MSP.Chess
             }
         }
 
+        /// <summary>
+        /// Determines whether the move of a white piece is valid
+        /// </summary>
+        /// <param name="xCoordinate">The new X coordinate</param>
+        /// <param name="yCoordinate">The new Y coordinate</param>
+        /// <returns>True if the move is valid</returns>
         private bool ValidateWhitePieceMove(int xCoordinate, int yCoordinate)
         {
             if (YCoordinate > yCoordinate)

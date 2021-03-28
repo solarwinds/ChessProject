@@ -3,6 +3,7 @@ using System.Drawing;
 
 namespace SolarWinds.MSP.Chess.Core.Interfaces
 {
+    // TODO: add docs here
     public interface IChessPiece
     {
         PieceColor PieceColor { get; }
