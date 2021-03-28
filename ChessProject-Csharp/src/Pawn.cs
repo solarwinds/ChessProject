@@ -43,6 +43,8 @@ namespace SolarWinds.MSP.Chess
             ValidWhiteStartPositions = m_validWhiteStartCoordinates;
         }
 
+        // Would like this to be called from a movement engine class, which will then update the X and Y coordinates accordingly. 
+        // Currently tested with calls to Move() method.
         public override bool IsValidMove(int xCoordinate, int yCoordinate)
         {
             // TODO: Consider breaking this out in to the PawnMoveValidator, and injecting it into the base class

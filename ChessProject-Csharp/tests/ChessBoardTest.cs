@@ -2,7 +2,9 @@
 
 namespace SolarWinds.MSP.Chess
 {
-    [TestFixture]
+	// These tests aren't using the IChessPieceContainer interface yet.
+	// Should refactor to turn these into proper unit tests, rather than the current integration test feel
+	[TestFixture]
 	public class ChessBoardTest
 	{
 		private ChessBoard chessBoard;
