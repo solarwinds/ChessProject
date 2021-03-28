@@ -28,6 +28,11 @@ namespace src.Core
             return m_ChessPieces.FirstOrDefault(piece => piece.XCoordinate == xCoordinate && piece.YCoordinate == yCoordinate);
         }
 
+        public IEnumerable<T> GetPiecesOfType<T>() where T : IChessPiece
+        {
+                return m_ChessPieces.OfType<T>();
+        }
+
         // Consider overload with no parameter and filtering after retrieval
         public IEnumerable<T> GetPiecesOfType<T>(PieceColor color) where T : IChessPiece
         {

@@ -1,6 +1,8 @@
 ﻿using SolarWinds.MSP.Chess.Core.Interfaces;
 using src.Core;
+using src.Core.BaseImplementations;
 using System;
+using System.Linq;
 
 namespace SolarWinds.MSP.Chess
 {
@@ -9,6 +11,7 @@ namespace SolarWinds.MSP.Chess
         public static readonly int MaxBoardWidth = 8;
         public static readonly int MaxBoardHeight = 8;
         private ChessPieceContainer m_pieceContainer;
+        public bool HasPieces => m_pieceContainer.GetPiecesOfType<ChessPieceBase>().Any();
 
         public ChessBoard ()
         {

@@ -50,7 +50,7 @@ namespace SolarWinds.MSP.Chess
             if (XCoordinate != xCoordinate)
                 return false;
 
-            return PieceColor == PieceColor.Black ? ValidateBlackPiece(xCoordinate, yCoordinate) : ValidateWhitePiece(xCoordinate, yCoordinate);
+            return PieceColor == PieceColor.Black ? ValidateBlackPieceMove(xCoordinate, yCoordinate) : ValidateWhitePieceMove(xCoordinate, yCoordinate);
         }
 
         // Not a fan of this method being inside the chess piece itself. Having to validate the move in here, means we're less able to make the move logic generic.
@@ -78,7 +78,7 @@ namespace SolarWinds.MSP.Chess
             }
         }
 
-        private bool ValidateBlackPiece(int xCoordinate, int yCoordinate)
+        private bool ValidateBlackPieceMove(int xCoordinate, int yCoordinate)
         {
             if (yCoordinate > YCoordinate)
                 return false;
@@ -99,7 +99,7 @@ namespace SolarWinds.MSP.Chess
             }
         }
 
-        private bool ValidateWhitePiece(int xCoordinate, int yCoordinate)
+        private bool ValidateWhitePieceMove(int xCoordinate, int yCoordinate)
         {
             if (YCoordinate > yCoordinate)
                 return false;
