@@ -1,56 +1,123 @@
-﻿using System;
+﻿using SolarWinds.MSP.Chess.Core.Interfaces;
+using src.Core.BaseImplementations;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
 
 namespace SolarWinds.MSP.Chess
 {
-    public class Pawn
+    public class Pawn : ChessPieceBase
     {
-        private ChessBoard chessBoard;
-        private int xCoordinate;
-        private int yCoordinate;
-        private PieceColor pieceColor;
-        
-        public ChessBoard ChessBoard
-        {
-            get { return chessBoard; }
-            set { chessBoard = value; }
-        }
+        private bool m_isFirstMove = true;
 
-        public int XCoordinate
+        // These rules are tied to the chess board size, but have no reference to it. Consider refactoring into more generic way of setting initial coordinates
+        private List<Point> m_validWhiteStartCoordinates = new List<Point>
         {
-            get { return xCoordinate; }
-            set { xCoordinate = value; }
-        }
-        
-        public int YCoordinate
-        {
-            get { return yCoordinate; }
-            set { yCoordinate = value; }
-        }
+            new Point(0, 1),
+            new Point(1, 1),
+            new Point(2, 1),
+            new Point(3, 1),
+            new Point(4, 1),
+            new Point(5, 1),
+            new Point(6, 1),
+            new Point(7, 1)
+        };
 
-        public PieceColor PieceColor
+        // These rules are tied to the chess board size, but have no reference to it. Consider refactoring into more generic way of setting initial coordinates
+        private List<Point> m_validBlackStartCoordinates = new List<Point> 
         {
-            get { return pieceColor; }
-            private set { pieceColor = value; }
-        }
+            new Point(0, 6),
+            new Point(1, 6),
+            new Point(2, 6),
+            new Point(3, 6),
+            new Point(4, 6),
+            new Point(5, 6),
+            new Point(6, 6),
+            new Point(7, 6)
+        };
 
         public Pawn(PieceColor pieceColor)
         {
-            this.pieceColor = pieceColor;
+            PieceColor = pieceColor;
+            ValidBlackStartPositions = m_validBlackStartCoordinates;
+            ValidWhiteStartPositions = m_validWhiteStartCoordinates;
         }
 
-        public void Move(MovementType movementType, int newX, int newY)
+        public override bool IsValidMove(int xCoordinate, int yCoordinate)
         {
-            throw new NotImplementedException("Need to implement Pawn.Move()");
+            // TODO: Consider breaking this out in to the PawnMoveValidator, and injecting it into the base class
+            // Pawn is potentially doing too much here;
+            if (XCoordinate != xCoordinate)
+                return false;
+
+            return PieceColor == PieceColor.Black ? ValidateBlackPiece(xCoordinate, yCoordinate) : ValidateWhitePiece(xCoordinate, yCoordinate);
         }
 
-        public override string ToString()
+        // Not a fan of this method being inside the chess piece itself. Having to validate the move in here, means we're less able to make the move logic generic.
+        // Would prefer to have separate move engine, which can handle movement of pieces in a more generic manner, called from the chess board instead.
+        public override void Move(MovementType movementType, int newX, int newY)
         {
-            return CurrentPositionAsString();
+            switch (movementType)
+            {
+                case MovementType.Move:
+                    {
+                        if (IsValidMove(newX, newY))
+                        {
+                            XCoordinate = newX;
+                            YCoordinate = newY;
+
+                            m_isFirstMove = false;
+                        }
+
+                        break;
+                    }
+                default:
+                    {
+                        throw new NotImplementedException("Need to implement Pawn.Move()");
+                    }
+            }
         }
 
-        protected string CurrentPositionAsString()
+        private bool ValidateBlackPiece(int xCoordinate, int yCoordinate)
         {
-            return string.Format("Current X: {1}{0}Current Y: {2}{0}Piece Color: {3}", Environment.NewLine, XCoordinate, YCoordinate, PieceColor);
+            if (yCoordinate > YCoordinate)
+                return false;
+
+            if (m_isFirstMove)
+            {
+                if (YCoordinate - yCoordinate > 2)
+                    return false;
+
+                return true;
+            }
+            else
+            {
+                if (YCoordinate - yCoordinate > 1)
+                    return false;
+
+                return true;
+            }
+        }
+
+        private bool ValidateWhitePiece(int xCoordinate, int yCoordinate)
+        {
+            if (YCoordinate > yCoordinate)
+                return false;
+
+            if (m_isFirstMove)
+            {
+                if (yCoordinate - YCoordinate > 2)
+                    return false;
+
+                return true;
+            }
+            else
+            {
+                if (yCoordinate - YCoordinate > 1)
+                    return false;
+
+                return true;
+            }
         }
 
     }

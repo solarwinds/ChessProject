@@ -1,26 +1,40 @@
-﻿using System;
+﻿using SolarWinds.MSP.Chess.Core.Interfaces;
+using src.Core;
+using System;
 
 namespace SolarWinds.MSP.Chess
 {
     public class ChessBoard
     {
-        public static readonly int MaxBoardWidth = 7;
-        public static readonly int MaxBoardHeight = 7;
-        private Pawn[,] pieces;
+        public static readonly int MaxBoardWidth = 8;
+        public static readonly int MaxBoardHeight = 8;
+        private ChessPieceContainer m_pieceContainer;
 
         public ChessBoard ()
         {
-            pieces = new Pawn[MaxBoardWidth, MaxBoardHeight];
+            m_pieceContainer = new ChessPieceContainer();
         }
 
-        public void Add(Pawn pawn, int xCoordinate, int yCoordinate, PieceColor pieceColor)
+        public bool Add(IChessPiece piece, int xCoordinate, int yCoordinate)
         {
-            throw new NotImplementedException("Need to implement ChessBoard.Add()");
+            if (!IsLegalBoardPosition(xCoordinate, yCoordinate) || 
+                !piece.IsValidStartingPosition(xCoordinate, yCoordinate) ||
+                !m_pieceContainer.HasCapacityFor(piece) || 
+                m_pieceContainer.GetPieceAtCoordinates(xCoordinate, yCoordinate) != null)
+            {
+                piece.XCoordinate = -1;
+                piece.YCoordinate = -1;
+                return false;
+            }
+            
+            m_pieceContainer.RegisterPiece(piece, xCoordinate, yCoordinate);
+
+            return true;
         }
 
         public bool IsLegalBoardPosition(int xCoordinate, int yCoordinate)
         {
-            throw new NotImplementedException("Need to implement ChessBoard.IsLegalBoardPosition()");
+            return (xCoordinate < MaxBoardWidth && xCoordinate >= 0) && (yCoordinate < MaxBoardHeight && yCoordinate >= 0);
         }
     }
 }

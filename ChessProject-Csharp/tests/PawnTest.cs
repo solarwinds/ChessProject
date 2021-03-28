@@ -18,42 +18,42 @@ namespace SolarWinds.MSP.Chess
 		[Test]
 		public void ChessBoard_Add_Sets_XCoordinate()
 		{
-			chessBoard.Add(pawn, 6, 3, PieceColor.Black);
-			Assert.AreEqual(pawn.XCoordinate, 6);
+			chessBoard.Add(pawn, 3, 6);
+			Assert.AreEqual(pawn.XCoordinate, 3);
 		}
 
 		[Test]
 		public void ChessBoard_Add_Sets_YCoordinate()
 		{
-			chessBoard.Add(pawn, 6, 3, PieceColor.Black);
-			Assert.AreEqual(pawn.YCoordinate, 3);
+			chessBoard.Add(pawn, 3, 6);
+			Assert.AreEqual(pawn.YCoordinate, 6);
 		}
 
 		[Test]
 		public void Pawn_Move_IllegalCoordinates_Right_DoesNotMove()
 		{
-			chessBoard.Add(pawn, 6, 3, PieceColor.Black);
-			pawn.Move(MovementType.Move, 7, 3);
-            Assert.AreEqual(pawn.XCoordinate, 6);
-            Assert.AreEqual(pawn.YCoordinate, 3);
+			chessBoard.Add(pawn, 3, 6);
+			pawn.Move(MovementType.Move, 7, 6);
+            Assert.AreEqual(pawn.XCoordinate, 3);
+            Assert.AreEqual(pawn.YCoordinate, 6);
 		}
 
 		[Test]
 		public void Pawn_Move_IllegalCoordinates_Left_DoesNotMove()
 		{
-			chessBoard.Add(pawn, 6, 3, PieceColor.Black);
-			pawn.Move(MovementType.Move, 4, 3);
-            Assert.AreEqual(pawn.XCoordinate, 6);
-            Assert.AreEqual(pawn.YCoordinate, 3);
+			chessBoard.Add(pawn, 3, 6);
+			pawn.Move(MovementType.Move, 1, 3);
+            Assert.AreEqual(pawn.XCoordinate, 3);
+            Assert.AreEqual(pawn.YCoordinate, 6);
 		}
 
 		[Test]
 		public void Pawn_Move_LegalCoordinates_Forward_UpdatesCoordinates()
 		{
-			chessBoard.Add(pawn, 6, 3, PieceColor.Black);
-			pawn.Move(MovementType.Move, 6, 2);
-			Assert.AreEqual(pawn.XCoordinate, 6);
-            Assert.AreEqual(pawn.YCoordinate, 2);
+			chessBoard.Add(pawn, 3, 6);
+			pawn.Move(MovementType.Move, 3, 4);
+			Assert.AreEqual(pawn.XCoordinate, 3);
+            Assert.AreEqual(pawn.YCoordinate, 4);
 		}
 	}
 }
