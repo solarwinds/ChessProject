@@ -2,56 +2,74 @@
 
 namespace SolarWinds.MSP.Chess
 {
-    public class Pawn
+    /// <summary>
+    /// Class represnting pawn chess piece
+    /// </summary>
+    public class Pawn : ChessPiece<IChessPiecePawn>, IChessPiecePawn
     {
-        private ChessBoard chessBoard;
-        private int xCoordinate;
-        private int yCoordinate;
-        private PieceColor pieceColor;
-        
-        public ChessBoard ChessBoard
+        /// <summary>
+        /// Initializes pawn chess piece
+        /// </summary>
+        /// <param name="chessBoard">Chess board holding the piece</param>
+        /// <param name="direction">Direction towards which chess piece can move.</param>
+        /// <param name="color">Color of chess piece</param>
+        /// <exception cref="ArgumentNullException">chessBoard or direction</exception>
+        public Pawn(ChessBoard chessBoard, Direction direction, PieceColor color) : base(chessBoard, direction, color)
         {
-            get { return chessBoard; }
-            set { chessBoard = value; }
         }
 
-        public int XCoordinate
+        protected override IChessPiecePawn GetInstance() => this;
+
+        /// <see cref="IForwardMoveCommand.TryMoveForward(int)"/>
+        public bool TryMoveForward(int steps)
         {
-            get { return xCoordinate; }
-            set { xCoordinate = value; }
-        }
-        
-        public int YCoordinate
-        {
-            get { return yCoordinate; }
-            set { yCoordinate = value; }
+            PerformValidationBeforeMove(steps);
+
+            Position newPosition = CurrentDirection.MoveForward(CurrentPosition);
+            return TryMoveChessPiece(newPosition);
         }
 
-        public PieceColor PieceColor
+        /// <see cref="IDiagonalForwardMoveCommand.TryMoveDiagonalLeftForward(int)"/>
+        public bool TryMoveDiagonalLeftForward(int steps)
         {
-            get { return pieceColor; }
-            private set { pieceColor = value; }
+            PerformValidationBeforeMove(steps);
+
+            Position newPosition = CurrentDirection.MoveForward(CurrentPosition);
+            newPosition = CurrentDirection.MoveLeft(newPosition);
+
+            return Capture(newPosition);
         }
 
-        public Pawn(PieceColor pieceColor)
+        /// <see cref="IDiagonalForwardMoveCommand.TryMoveDiagonalRightForward(int)"/>
+        public bool TryMoveDiagonalRightForward(int steps)
         {
-            this.pieceColor = pieceColor;
+            PerformValidationBeforeMove(steps);
+
+            Position newPosition = CurrentDirection.MoveForward(CurrentPosition);
+            newPosition = CurrentDirection.MoveRight(newPosition);
+
+            return Capture(newPosition);
         }
 
-        public void Move(MovementType movementType, int newX, int newY)
+        private void PerformValidationBeforeMove(int steps)
         {
-            throw new NotImplementedException("Need to implement Pawn.Move()");
+            if (steps != 1)
+                throw new InvalidOperationException("Pawn can only move one step at a time");
+
+            if (IsCaptured)
+                throw new InvalidOperationException("Pawn is already captured and cannot move.");
         }
 
-        public override string ToString()
+        private bool Capture(Position position)
         {
-            return CurrentPositionAsString();
-        }
+            if (!ChessBoard.IsLegalBoardPosition(position))
+                return false;
 
-        protected string CurrentPositionAsString()
-        {
-            return string.Format("Current X: {1}{0}Current Y: {2}{0}Piece Color: {3}", Environment.NewLine, XCoordinate, YCoordinate, PieceColor);
-        }
+            //Do not allow to move if no piece to capture
+            if (ChessBoard.Cells[position.XCoordinate, position.YCoordinate].IsEmpty)
+                return false;
 
+            return TryMoveChessPiece(position);
+        }
     }
 }
