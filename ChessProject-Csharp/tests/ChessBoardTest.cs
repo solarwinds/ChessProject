@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using SolarWinds.MSP.Chess.Models;
 
 namespace SolarWinds.MSP.Chess
 {
@@ -10,7 +11,7 @@ namespace SolarWinds.MSP.Chess
         [SetUp]
 		public void SetUp()
 		{
-			chessBoard = new ChessBoard();
+			chessBoard = ChessBoard.ChessBoardInstance;
 		}
 
         [Test]
@@ -77,6 +78,7 @@ namespace SolarWinds.MSP.Chess
         [Test]
 		public void Avoids_Duplicate_Positioning()
 		{
+			chessBoard.ResetBoard();
 			Pawn firstPawn = new Pawn(PieceColor.Black);
 			Pawn secondPawn = new Pawn(PieceColor.Black);
 			chessBoard.Add(firstPawn, 6, 3, PieceColor.Black);
@@ -90,6 +92,7 @@ namespace SolarWinds.MSP.Chess
         [Test]
 		public void Limits_The_Number_Of_Pawns()
 		{
+			chessBoard.ResetBoard();
 			for (int i = 0; i < 10; i++)
 			{
 				Pawn pawn = new Pawn(PieceColor.Black);
@@ -107,5 +110,32 @@ namespace SolarWinds.MSP.Chess
 				}
 			}
 		}
+
+		[Test]
+		public void Prevents_Add_ILegal_Board_Position()
+        {
+			chessBoard.ResetBoard();
+			Pawn outsideYRangePawn = new Pawn(PieceColor.Black);
+			Pawn outsideXRangePawn = new Pawn(PieceColor.Black);
+			chessBoard.Add(outsideYRangePawn, 6, 8, PieceColor.Black);
+			chessBoard.Add(outsideXRangePawn, 8, 6, PieceColor.Black);
+			Assert.AreEqual(outsideYRangePawn.XCoordinate, -1);
+			Assert.AreEqual(outsideYRangePawn.YCoordinate, -1);
+			Assert.AreEqual(outsideXRangePawn.XCoordinate, -1);
+			Assert.AreEqual(outsideXRangePawn.YCoordinate, -1);
+
+		}
+
+		[Test]
+		public void Correctly_Reports_Empty()
+        {
+			chessBoard.ResetBoard();
+			Pawn pawn = new Pawn(PieceColor.Black);
+			chessBoard.Add(pawn, 6, 3, PieceColor.Black);
+			Assert.IsFalse(chessBoard.CoordinateIsEmpty(6, 3));
+			Assert.IsTrue(chessBoard.CoordinateIsEmpty(6, 4));
+		}
+
+
 	}
 }
