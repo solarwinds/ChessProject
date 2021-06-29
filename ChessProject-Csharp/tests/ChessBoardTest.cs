@@ -90,20 +90,39 @@ namespace SolarWinds.MSP.Chess
         [Test]
 		public void Limits_The_Number_Of_Pawns()
 		{
+			// Add black pawns board
 			for (int i = 0; i < 10; i++)
 			{
 				Pawn pawn = new Pawn(PieceColor.Black);
-				int row = i / ChessBoard.MaxBoardWidth;
-				chessBoard.Add(pawn, 6 + row, i % ChessBoard.MaxBoardWidth);
+				int row = i / ChessBoard.MaxBoardHeight;
+				chessBoard.Add(pawn, i % ChessBoard.MaxBoardWidth, 6 + row);
 				if (row < 1)
 				{
-					Assert.AreEqual(pawn.XCoordinate, (6 + row));
-					Assert.AreEqual(pawn.YCoordinate, (i % ChessBoard.MaxBoardWidth));
+					Assert.AreEqual(pawn.XCoordinate, (i % ChessBoard.MaxBoardWidth));
+					Assert.AreEqual(pawn.YCoordinate, (6 + row));
 				}
 				else
 				{
 					Assert.AreEqual(pawn.XCoordinate, -1);
                     Assert.AreEqual(pawn.YCoordinate, -1);
+				}
+			}
+
+			// Add white pawns to board
+			for (int i = 0; i < 10; i++)
+			{
+				Pawn pawn = new Pawn(PieceColor.White);
+				int row = i / ChessBoard.MaxBoardHeight;
+				chessBoard.Add(pawn, i % ChessBoard.MaxBoardWidth, row + 1);
+				if (row < 1)
+				{
+					Assert.AreEqual(pawn.XCoordinate, (i % ChessBoard.MaxBoardWidth));
+					Assert.AreEqual(pawn.YCoordinate, (row + 1));
+				}
+				else
+				{
+					Assert.AreEqual(pawn.XCoordinate, -1);
+					Assert.AreEqual(pawn.YCoordinate, -1);
 				}
 			}
 		}

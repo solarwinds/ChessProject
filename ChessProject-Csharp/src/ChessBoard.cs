@@ -20,6 +20,7 @@ namespace SolarWinds.MSP.Chess
             {
                 piece.XCoordinate = xCoordinate;
                 piece.YCoordinate = yCoordinate;
+                piece.ChessBoard = this;
                 
                 pieces[xCoordinate, yCoordinate] = piece;
             }
@@ -42,7 +43,7 @@ namespace SolarWinds.MSP.Chess
             return true;
         }
 
-        private bool IsPositionOccupied(int xCoordinate, int yCoordinate)
+        public bool IsPositionOccupied(int xCoordinate, int yCoordinate)
         {
             return pieces[xCoordinate, yCoordinate] != null;
         }

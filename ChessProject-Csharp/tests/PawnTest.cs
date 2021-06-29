@@ -55,5 +55,34 @@ namespace SolarWinds.MSP.Chess
 			Assert.AreEqual(pawn.XCoordinate, 6);
             Assert.AreEqual(pawn.YCoordinate, 2);
 		}
+
+		[Test]
+		public void Pawn_Move_IllegalCoordinates_Backward_DoesNotMove()
+        {
+			chessBoard.Add(pawn, 6, 3);
+			pawn.Move(MovementType.Move, 6, 4);
+			Assert.AreEqual(pawn.XCoordinate, 6);
+			Assert.AreEqual(pawn.YCoordinate, 3);
+		}
+
+		[Test]
+		public void Pawn_Move_IllegalCoordinates_ForwardTwoSpaces_DoesNotMove()
+        {
+			chessBoard.Add(pawn, 6, 3);
+			pawn.Move(MovementType.Move, 6, 1);
+			Assert.AreEqual(pawn.XCoordinate, 6);
+			Assert.AreEqual(pawn.YCoordinate, 3);
+		}
+
+		[Test]
+		public void Pawn_Move_LegalCoordinates_Forward_SpaceOccupied_DoesNotMove()
+        {
+			Pawn pawn2 = new Pawn(PieceColor.Black);
+			chessBoard.Add(pawn, 6, 3);
+			chessBoard.Add(pawn2, 6, 2);
+			pawn.Move(MovementType.Move, 6, 2);
+			Assert.AreEqual(pawn.XCoordinate, 6);
+			Assert.AreEqual(pawn.YCoordinate, 3);
+		}
 	}
 }

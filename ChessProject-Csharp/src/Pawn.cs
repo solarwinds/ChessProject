@@ -17,6 +17,9 @@ namespace SolarWinds.MSP.Chess
         {
             if (movementType == MovementType.Move)
             {
+                if (ChessBoard.IsPositionOccupied(newX, newY))
+                    return;
+
                 if (newX != XCoordinate)
                     return;
 
