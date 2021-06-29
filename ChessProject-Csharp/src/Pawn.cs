@@ -8,6 +8,7 @@ namespace SolarWinds.MSP.Chess
         private int xCoordinate;
         private int yCoordinate;
         private PieceColor pieceColor;
+        private const int MaxNumberOfPawns = 8;
         
         public ChessBoard ChessBoard
         {
@@ -32,6 +33,8 @@ namespace SolarWinds.MSP.Chess
             get { return pieceColor; }
             private set { pieceColor = value; }
         }
+
+        public int MaxNumberOfPieces => MaxNumberOfPawns;
 
         public Pawn(PieceColor pieceColor)
         {

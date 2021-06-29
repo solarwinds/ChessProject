@@ -4,23 +4,25 @@ namespace SolarWinds.MSP.Chess
 {
     public class ChessBoard
     {
-        public static readonly int MaxBoardWidth = 7;
-        public static readonly int MaxBoardHeight = 7;
+        public static readonly int MaxBoardWidth = 8;
+        public static readonly int MaxBoardHeight = 8;
         private Pawn[,] pieces;
+        private int numPawns = 0;
 
         public ChessBoard ()
         {
             pieces = new Pawn[MaxBoardWidth, MaxBoardHeight];
         }
 
-        public void Add(Pawn pawn, int xCoordinate, int yCoordinate, PieceColor pieceColor)
+        public void Add(Pawn pawn, int xCoordinate, int yCoordinate)
         {
-            if (IsLegalBoardPosition(xCoordinate, yCoordinate))
+            if (IsLegalBoardPosition(xCoordinate, yCoordinate) && numPawns < pawn.MaxNumberOfPieces)
             {
                 pawn.XCoordinate = xCoordinate;
                 pawn.YCoordinate = yCoordinate;
                 
                 pieces[xCoordinate, yCoordinate] = pawn;
+                numPawns++;
             }
             else
             {
