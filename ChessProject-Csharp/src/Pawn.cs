@@ -1,47 +1,19 @@
-﻿using System;
+﻿using src;
+using System;
 
 namespace SolarWinds.MSP.Chess
 {
-    public class Pawn
+    public class Pawn : ChessPiece
     {
-        private ChessBoard chessBoard;
-        private int xCoordinate;
-        private int yCoordinate;
-        private PieceColor pieceColor;
-        private const int MaxNumberOfPawns = 8;
-        
-        public ChessBoard ChessBoard
+        private const int MaxNumberOfPawnsPerColour = 8;
+       
+        public override int MaxNumberOfPiecesPerColour => MaxNumberOfPawnsPerColour;
+
+        public Pawn(PieceColor pieceColor) : base(pieceColor)
         {
-            get { return chessBoard; }
-            set { chessBoard = value; }
         }
 
-        public int XCoordinate
-        {
-            get { return xCoordinate; }
-            set { xCoordinate = value; }
-        }
-        
-        public int YCoordinate
-        {
-            get { return yCoordinate; }
-            set { yCoordinate = value; }
-        }
-
-        public PieceColor PieceColor
-        {
-            get { return pieceColor; }
-            private set { pieceColor = value; }
-        }
-
-        public int MaxNumberOfPieces => MaxNumberOfPawns;
-
-        public Pawn(PieceColor pieceColor)
-        {
-            this.pieceColor = pieceColor;
-        }
-
-        public void Move(MovementType movementType, int newX, int newY)
+        public override void Move(MovementType movementType, int newX, int newY)
         {
             if (movementType == MovementType.Move)
             {
@@ -71,6 +43,5 @@ namespace SolarWinds.MSP.Chess
         {
             return string.Format("Current X: {1}{0}Current Y: {2}{0}Piece Color: {3}", Environment.NewLine, XCoordinate, YCoordinate, PieceColor);
         }
-
     }
 }
