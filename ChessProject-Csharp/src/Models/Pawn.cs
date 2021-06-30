@@ -1,4 +1,5 @@
 ﻿using src;
+using src.Interfaces;
 using System;
 
 namespace SolarWinds.MSP.Chess
@@ -9,6 +10,8 @@ namespace SolarWinds.MSP.Chess
     public class Pawn : ChessPiece
     {
         private const int MaxNumberOfPawnsPerColour = 8;
+        private MovementService _movementSerivce;
+        private IMoveValidator _validator;
        
         /// <summary>
         /// Returns max numbers of pawns allowed on the board per colour
@@ -20,7 +23,15 @@ namespace SolarWinds.MSP.Chess
         /// </summary>
         /// <param name="pieceColor">Chess piece colour</param>
         public Pawn(PieceColor pieceColor) : base(pieceColor)
-        {
+        {          
+            // Going forward we could potentially get rid of this Pawn class and store the chess piece 
+            // type in the main ChessPiece class. Since the movement and movement validation is now handled
+            // within the movement service we don't really need to override the move method.
+            // Could have a ValidatorFactory or something similar to get the correct
+            // validator depending on ChessPiece type.
+
+            _validator = new PawnMoveValidator(this);
+            _movementSerivce = new MovementService(_validator);
         }
 
         /// <inheritdoc/>
@@ -28,23 +39,7 @@ namespace SolarWinds.MSP.Chess
         {
             if (movementType == MovementType.Move)
             {
-                if (ChessBoard.IsPositionOccupied(newX, newY))
-                    return;
-
-                if (newX != XCoordinate)
-                    return;
-
-                if (PieceColor == PieceColor.Black && newY == (YCoordinate - 1))
-                {
-                    YCoordinate = newY;
-                    return;
-                }
-
-                if (PieceColor == PieceColor.White && newY == (YCoordinate + 1))
-                {
-                    YCoordinate = newY;
-                    return;
-                }
+                _movementSerivce.Move(newX, newY);
             }
         }
 
