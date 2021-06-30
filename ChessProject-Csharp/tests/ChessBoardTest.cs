@@ -14,15 +14,15 @@ namespace SolarWinds.MSP.Chess
 		}
 
         [Test]
-		public void Has_MaxBoardWidth_of_7()
+		public void Has_MaxBoardWidth_of_8()
 		{
-			Assert.AreEqual(ChessBoard.MaxBoardWidth, 7);
+			Assert.AreEqual(ChessBoard.MaxBoardWidth, 8);
 		}
 
         [Test]
-		public void Has_MaxBoardHeight_of_7()
+		public void Has_MaxBoardHeight_of_8()
 		{
-			Assert.AreEqual(ChessBoard.MaxBoardHeight, 7);
+			Assert.AreEqual(ChessBoard.MaxBoardHeight, 8);
 		}
 
         [Test]
@@ -79,8 +79,8 @@ namespace SolarWinds.MSP.Chess
 		{
 			Pawn firstPawn = new Pawn(PieceColor.Black);
 			Pawn secondPawn = new Pawn(PieceColor.Black);
-			chessBoard.Add(firstPawn, 6, 3, PieceColor.Black);
-			chessBoard.Add(secondPawn, 6, 3, PieceColor.Black);
+			chessBoard.Add(firstPawn, 6, 3);
+			chessBoard.Add(secondPawn, 6, 3);
 			Assert.AreEqual(firstPawn.XCoordinate, 6);
             Assert.AreEqual(firstPawn.YCoordinate, 3);
             Assert.AreEqual(secondPawn.XCoordinate, -1);
@@ -90,20 +90,39 @@ namespace SolarWinds.MSP.Chess
         [Test]
 		public void Limits_The_Number_Of_Pawns()
 		{
+			// Add black pawns board
 			for (int i = 0; i < 10; i++)
 			{
 				Pawn pawn = new Pawn(PieceColor.Black);
-				int row = i / ChessBoard.MaxBoardWidth;
-				chessBoard.Add(pawn, 6 + row, i % ChessBoard.MaxBoardWidth, PieceColor.Black);
+				int row = i / ChessBoard.MaxBoardHeight;
+				chessBoard.Add(pawn, i % ChessBoard.MaxBoardWidth, 6 + row);
 				if (row < 1)
 				{
-					Assert.AreEqual(pawn.XCoordinate, (6 + row));
-					Assert.AreEqual(pawn.YCoordinate, (i % ChessBoard.MaxBoardWidth));
+					Assert.AreEqual(pawn.XCoordinate, (i % ChessBoard.MaxBoardWidth));
+					Assert.AreEqual(pawn.YCoordinate, (6 + row));
 				}
 				else
 				{
 					Assert.AreEqual(pawn.XCoordinate, -1);
                     Assert.AreEqual(pawn.YCoordinate, -1);
+				}
+			}
+
+			// Add white pawns to board
+			for (int i = 0; i < 10; i++)
+			{
+				Pawn pawn = new Pawn(PieceColor.White);
+				int row = i / ChessBoard.MaxBoardHeight;
+				chessBoard.Add(pawn, i % ChessBoard.MaxBoardWidth, row + 1);
+				if (row < 1)
+				{
+					Assert.AreEqual(pawn.XCoordinate, (i % ChessBoard.MaxBoardWidth));
+					Assert.AreEqual(pawn.YCoordinate, (row + 1));
+				}
+				else
+				{
+					Assert.AreEqual(pawn.XCoordinate, -1);
+					Assert.AreEqual(pawn.YCoordinate, -1);
 				}
 			}
 		}
